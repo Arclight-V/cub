@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 19:41:12 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 20:48:49 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 # define MALLOC_9 "Error : Malloc fail (initializing_west_wall_structure)"
 # define MALLOC_10 "Error : Malloc fail (initializing_east_wall_structure)"
 # define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
+# define FD_1 "Error : Couldn't read fd"
+
 
 
 /*
@@ -309,7 +311,7 @@ int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_
 int			ft_skip_spaces(char *line, int *i);
 int			ft_strerror(int err);
 int			ft_atoi_mod(const char *nptr, int *i);
-int			ft_errorstr(char *str);
+int			ft_errorstr(char *str, int num);
 /*
 ** free memory
 */

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 17:49:24 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 21:07:47 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,40 +266,12 @@ void		checking_coordinates_h(t_all *s)
 		&& (s->map->y_horizont > 0 && s->map->y_horizont < s->ConstValue->yMapMax))
 	{
 		if (s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '1')
-			// s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '2' ||
-			// s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != 'W' ||
-			// s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != 'S')
 			{
 				s->map->y_horizont += s->map->Y_a_h;
 				s->map->x_horizont += s->map->X_a_h;
 				checking_coordinates_h(s);
 			}
 	}
-	// else if (s->map->x_horizont >= s->ConstValue->xMapMax)
-	// 	s->map->x_horizont = s->ConstValue->xMapMax;
-	// else if (s->map->x_horizont <= 0)
-	// 	s->map->x_horizont = 0;
-	// else if (s->map->y_horizont >= s->ConstValue->yMapMax)
-	// 	s->map->y_horizont = s->ConstValue->yMapMax;
-	// else if (s->map->y_horizont <= 0)
-	// 	s->map->y_horizont = 0;
-
-	
-	// while (s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '1')
-	// 		{
-	// 			s->map->x_horizont += s->map->X_a_h;
-	// 			s->map->y_horizont += s->map->Y_a_h;
-	// 			// printf("x = %i\n", s->map->x_horizont);
-	// 		if (s->map->x_horizont >= s->ConstValue->xMapMax)
-	// 			s->map->x_horizont = s->ConstValue->xMapMax;
-	// 		else if (s->map->x_horizont <= 0)
-	// 			s->map->x_horizont = 0;
-	// 		else if (s->map->y_horizont >= s->ConstValue->yMapMax)
-	// 			s->map->y_horizont = s->ConstValue->yMapMax;
-	// 		else if (s->map->y_horizont <= 0)
-	// 			s->map->y_horizont = 0;
-		
-	// 		}
 }
 
 void		checking_coordinates_v(t_all *s)
@@ -384,7 +356,7 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
 		s->sprite[i].distance = sqrt(pow(s->map->x_pp - s->sprite[i].x, 2) + pow(s->map->y_pp - s->sprite[i].y, 2));
 		s->sprite[i].sprite_screen_size_full = (CUBE_SIZE / (s->sprite[i].distance  * cos(s->map->a_p - s->sprite[i].sprite_angle))) * s->ConstValue->DistanceProjectionPlan;
 		s->sprite[i].sprite_screen_size_coor = s->sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : s->sprite[i].sprite_screen_size_full;
-		s->sprite[i].sprite_width = s->sprite[i].sprite_screen_size_coor;
+		s->sprite[i].sprite_width = CUBE_SIZE / s->sprite[i].distance * s->ConstValue->DistanceProjectionPlan;
 		s->sprite[i].sprite_screen_size_half = s->sprite[i].sprite_screen_size_coor / 2;
 		delta = calculating_delta(s->ConstValue->two_pi, s->map->a_p + s->ConstValue->thiry_degrees, s->sprite[i].sprite_angle);
 		s->sprite[i].h_offset =  delta / ( FOV / s->win->x) - s->sprite[i].sprite_screen_size_half;
@@ -829,20 +801,18 @@ int			make_windows(t_all *s, t_win *win)
 
 
 int			ft_parser(char *cub, t_all *s)
-// int			ft_parser(char *cub)
 {
 	t_list	*head;
 	char	*line;
 
 	head = NULL;
 	line = NULL;
-	// s->fd->fd = open(argv[1], O_RDONLY);
-	if ((s->fd->fd = open("cub2.cub", O_RDONLY)) < 0)
-		return (ft_strerror(-91));
+	if ((s->fd->fd = open(cub, O_RDONLY)) < 0)
+		return (ft_errorstr(FD_1, 0));
 	while ((s->fd->ret = get_next_line(s->fd->fd, &line)) > 0)
 	{
 		if ((head = ft_creat_list(head, s, line)) < 0)
-			return (ft_strerror(s->err->num));
+			return (ft_errorstr(NULL,s->err->num));
 	}
 	if (!(head = ft_creat_list(head, s, line)))
 		return (ft_strerror(-15));

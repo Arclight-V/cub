@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/09/25 12:57:21 by anatashi         ###   ########.fr        #
+#    Updated: 2020/09/28 20:07:03 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(SRCS_DIR)/structure_initialization_one.c\
 		$(SRCS_DIR)/free_memory.c \
 		$(SRCS_DIR)/parser_tools.c \
-		$(SRCS_DIR)/sorting_of_distances_of_sprites.c
+		$(SRCS_DIR)/sorting_of_distances_of_sprites.c\
+		$(SRCS_DIR)/error_output.c
 
 
 # SRCS = 	$(SRCS_DIR)/put_test.c \

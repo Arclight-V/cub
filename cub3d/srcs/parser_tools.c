@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/22 14:06:47 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 20:49:36 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int				ft_forb_char_map(t_list **head, char *line, t_all *s, int *i)
 			;
 		else if (line[*i] == '2')
 		{
-			s->map->item++	;
+			s->map->item++;
 		}
 		else if (line[*i] != '\0')
 		{
