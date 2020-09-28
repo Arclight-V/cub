@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 15:02:30 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 16:57:54 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,32 +314,6 @@ void		checking_coordinates_v(t_all *s)
 				checking_coordinates_v(s);
 			}
 	}
-	// else if (s->map->x_vertical >= s->ConstValue->xMapMax)
-	// 	s->map->x_vertical = s->ConstValue->xMapMax;
-	// else if (s->map->x_vertical <= 0)
-	// 	s->map->x_vertical = 0;
-	// else if (s->map->y_vertical >= s->ConstValue->yMapMax)
-	// 	s->map->y_vertical = s->ConstValue->yMapMax;
-	// else if (s->map->y_vertical <= 0)
-	// 	s->map->y_vertical = 0;
-
-	
-
-	// while (s->map->level[(int)s->map->y_vertical/CUBE_SIZE][(int)s->map->x_vertical/CUBE_SIZE] != '1')
-	// 		{
-	// 			s->map->x_vertical += s->map->X_a_v;
-	// 			s->map->y_vertical += s->map->Y_a_v;
-	// 		if (s->map->x_vertical >= s->ConstValue->xMapMax)
-	// 			s->map->x_vertical = s->ConstValue->xMapMax;
-	// 		else if (s->map->x_vertical <= 0)
-	// 			s->map->x_vertical = 0;
-	// 		else if (s->map->y_vertical >= s->ConstValue->yMapMax)
-	// 			s->map->y_vertical = s->ConstValue->yMapMax;
-	// 		else if (s->map->y_vertical <= 0)
-	// 			s->map->y_vertical = 0;
-	// 		}
-	
-
 }
 
 int			get_color_pixel(t_all *s, char *adr, int size_line, int bits_per_pixel)
@@ -407,14 +381,14 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
 	while (++i < s->map->item)
 	{
 		s->sprite[i].sprite_angle = calculating_sprite_direction(s->ConstValue->two_pi,s->map->x_pp, s->map->y_pp, s->sprite[i].x, s->sprite[i].y);
-		s->sprite[i].distance = sqrt(pow(s->map->x_pp - s->sprite[i].x, 2) + pow(s->map->y_pp - s->sprite[i].y, 2)) * cos(s->map->a_p - s->sprite[i].sprite_angle);
-		s->sprite[i].sprite_screen_size_full = CUBE_SIZE / s->sprite[i].distance * s->ConstValue->DistanceProjectionPlan;
+		s->sprite[i].distance = sqrt(pow(s->map->x_pp - s->sprite[i].x, 2) + pow(s->map->y_pp - s->sprite[i].y, 2));
+		s->sprite[i].sprite_screen_size_full = (CUBE_SIZE / (s->sprite[i].distance  * cos(s->map->a_p - s->sprite[i].sprite_angle))) * s->ConstValue->DistanceProjectionPlan;
 		s->sprite[i].sprite_screen_size_coor = s->sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : s->sprite[i].sprite_screen_size_full;
-		s->sprite[i].sprite_width = s->sprite[i].sprite_screen_size_full;
+		s->sprite[i].sprite_width = s->sprite[i].sprite_screen_size_coor;
 		s->sprite[i].sprite_screen_size_half = s->sprite[i].sprite_screen_size_coor / 2;
 		delta = calculating_delta(s->ConstValue->two_pi, s->map->a_p + s->ConstValue->thiry_degrees, s->sprite[i].sprite_angle);
 		s->sprite[i].h_offset =  delta / ( FOV / s->win->x) - s->sprite[i].sprite_screen_size_half;
-		s->sprite[i].position_sprite = floor((s->ConstValue->CenterProjection - s->sprite[i].sprite_screen_size_half));
+		s->sprite[i].position_sprite = ((s->ConstValue->CenterProjection - s->sprite[i].sprite_screen_size_half));
 	}
 
 }
@@ -484,7 +458,7 @@ void	drawing_sprites(t_all *s)
 			if ((s->sprite[k].h_offset + j ) == s->dataWall->index)
 			{
 				s->map->i = s->sprite[k].position_sprite;
-				if (s->sprite[k].distance < s->dataWall->distance_wall[s->dataWall->index])
+				if (s->sprite[k].distance < s->dataWall->distance_wall_not_corr[s->dataWall->index])
 				{	
 					s->map->yyy = -1;
 					while (++s->map->yyy < s->sprite[k].sprite_screen_size_coor)
@@ -539,10 +513,10 @@ int		drawing_screen(t_all *s, t_dataWall *dataWall)
 		drawing_celing(s);
 		drawing_walls(s, dataWall);
 		drawing_floor(s);
-	}
-	dataWall->index = -1;
-	while(++dataWall->index < s->win->x)
 		drawing_sprites(s);
+	}
+	// dataWall->index = -1;
+	// while(++dataWall->index < s->win->x)
 }
 
 void	specifyDirectionWallAndCalculateOffset(t_all *s, char ch, int width, double height)
