@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/25 19:07:40 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_map		*ft_creat_map_s()
+t_map		*initializing_map_structure()
 {
 	t_map	*map;
 
@@ -47,7 +47,7 @@ t_map		*ft_creat_map_s()
 	return (map);
 }
 
-t_err		*ft_creat_err_s()
+t_err		*initializing_err_structure()
 {
 	t_err	*err;
 
@@ -57,7 +57,7 @@ t_err		*ft_creat_err_s()
 	return (err);
 }
 
-t_fd		*ft_creat_fd_s()
+t_fd		*initializing_fd_structure()
 {
 	t_fd	*fd;
 
@@ -71,7 +71,7 @@ t_fd		*ft_creat_fd_s()
 	return (fd);
 }
 
-t_win		*ft_creat_win_s()
+t_win		*initializing_win_structure()
 {
 	t_win	*win;
 
@@ -89,7 +89,7 @@ t_win		*ft_creat_win_s()
 	return (win);
 }
 
-t_ConstValue		*ft_constValue_s()
+t_ConstValue		*initializing_const_values_structure()
 {
 	t_ConstValue	*constValue;
 
@@ -110,7 +110,7 @@ t_ConstValue		*ft_constValue_s()
 	return (constValue);
 }
 
-t_all		*ft_creat_all_s()
+t_all		*initializing_structure_of_structures()
 {
 	t_all	*s;
 
@@ -130,7 +130,7 @@ t_all		*ft_creat_all_s()
 	return (s);
 }
 
-t_nord		*ft_creat_nord_s()
+t_nord		*initializing_nord_wall_structure()
 {
 	t_nord *nord;
 
@@ -146,7 +146,7 @@ t_nord		*ft_creat_nord_s()
 	return(nord);
 }
 
-t_south		*ft_creat_south_s()
+t_south		*initializing_south_wall_structure()
 {
 	t_south *south;
 
@@ -162,7 +162,7 @@ t_south		*ft_creat_south_s()
 	return(south);
 }
 
-t_east		*ft_creat_east_s()
+t_east		*initializing_east_wall_structure()
 {
 	t_east *east;
 
@@ -178,7 +178,7 @@ t_east		*ft_creat_east_s()
 	return(east);
 }
 
-t_west		*ft_creat_west_s()
+t_west		*initializing_west_wall_structure()
 {
 	t_west *west;
 
@@ -221,7 +221,7 @@ t_sprite		*ft_creat_sprite_s()
 	return(sprite);
 }
 
-t_dataWall		*ft_creat_dataWall_s()
+t_dataWall		*initializing_slice_parameters_structure()
 {
 	t_dataWall 	*dataWall;
 	int			index;

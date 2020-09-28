@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/25 20:04:29 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:41:12 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <errno.h>
 
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 
 # define CUBE_SIZE 64
 # define FOV M_PI / 3
-# define SPEED 15
+
 
 
 
@@ -38,6 +40,20 @@
 # define SPACE 49
 # define SHIFT 257
 # define TURN 0.3
+
+
+# define MALLOC_1 "Error : Malloc fail (initializing_structure_of_structures)"
+# define MALLOC_2 "Error : Malloc fail (initializing_map_structure)"
+# define MALLOC_3 "Error : Malloc fail (initializing_err_structure)"
+# define MALLOC_4 "Error : Malloc fail (initializing_fd_structure)"
+# define MALLOC_5 "Error : Malloc fail (initializing_win_structure)"
+# define MALLOC_6 "Error : Malloc fail (initializing_const_values_structure)"
+# define MALLOC_7 "Error : Malloc fail (initializing_nord_wall_structure)"
+# define MALLOC_8 "Error : Malloc fail (initializing_south_wall_structure)"
+# define MALLOC_9 "Error : Malloc fail (initializing_west_wall_structure)"
+# define MALLOC_10 "Error : Malloc fail (initializing_east_wall_structure)"
+# define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
+
 
 /*
 ** file descriptor for reading the map
@@ -249,23 +265,23 @@ typedef struct		s_all
 */
 
 
-void		ft_start(char *cub);
+int		initializing_structures(char *cub);
 
 /*
 ** structure initialization
 */
-t_map			*ft_creat_map_s();
-t_err			*ft_creat_err_s();
-t_fd			*ft_creat_fd_s();
-t_win			*ft_creat_win_s();
-t_ConstValue	*ft_constValue_s();
-t_nord			*ft_creat_nord_s();
-t_south			*ft_creat_south_s();
-t_east			*ft_creat_east_s();
-t_west			*ft_creat_west_s();
-t_dataWall		*ft_creat_dataWall_s();
+t_map			*initializing_map_structure();
+t_err			*initializing_err_structure();
+t_fd			*initializing_fd_structure();
+t_win			*initializing_win_structure();
+t_ConstValue	*initializing_const_values_structure();
+t_nord			*initializing_nord_wall_structure();
+t_south			*initializing_south_wall_structure();
+t_east			*initializing_east_wall_structure();
+t_west			*initializing_west_wall_structure();
+t_dataWall		*initializing_slice_parameters_structure();
 t_sprite		*ft_creat_sprite_s();
-t_all			*ft_creat_all_s();
+t_all			*initializing_structure_of_structures();
 
 
 
@@ -293,6 +309,7 @@ int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_
 int			ft_skip_spaces(char *line, int *i);
 int			ft_strerror(int err);
 int			ft_atoi_mod(const char *nptr, int *i);
+int			ft_errorstr(char *str);
 /*
 ** free memory
 */
