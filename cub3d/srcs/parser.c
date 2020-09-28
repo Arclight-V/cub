@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 10:05:27 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/28 15:02:30 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,6 +381,7 @@ double		calculating_sprite_direction(double TWO_M_PI, double x_player, double y_
 	double	sprite_direction;
 
 	sprite_direction = atan2(y_player - y_sprite, x_sprite - x_player);
+
 	sprite_direction = sprite_direction >= 0 ? sprite_direction : TWO_M_PI + sprite_direction;
 	return (sprite_direction);
 }
@@ -391,9 +392,9 @@ double		calculating_delta(double TWO_M_PI, double fov_start, double sprite_dir)
 
 	delta = fov_start - sprite_dir;
 	if (delta <= -M_PI)
-		delta =  TWO_M_PI  + delta;
+		delta += TWO_M_PI;
 	else if (delta >= M_PI)
-		delta = delta - TWO_M_PI;
+		delta -= TWO_M_PI;
 	return (delta);
 }
 
@@ -406,18 +407,15 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
 	while (++i < s->map->item)
 	{
 		s->sprite[i].sprite_angle = calculating_sprite_direction(s->ConstValue->two_pi,s->map->x_pp, s->map->y_pp, s->sprite[i].x, s->sprite[i].y);
-		s->sprite[i].distance = sqrt(pow(s->map->x_pp - s->sprite[i].x, 2) + pow(s->map->y_pp - s->sprite[i].y, 2));
+		s->sprite[i].distance = sqrt(pow(s->map->x_pp - s->sprite[i].x, 2) + pow(s->map->y_pp - s->sprite[i].y, 2)) * cos(s->map->a_p - s->sprite[i].sprite_angle);
 		s->sprite[i].sprite_screen_size_full = CUBE_SIZE / s->sprite[i].distance * s->ConstValue->DistanceProjectionPlan;
 		s->sprite[i].sprite_screen_size_coor = s->sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : s->sprite[i].sprite_screen_size_full;
 		s->sprite[i].sprite_width = s->sprite[i].sprite_screen_size_full;
 		s->sprite[i].sprite_screen_size_half = s->sprite[i].sprite_screen_size_coor / 2;
 		delta = calculating_delta(s->ConstValue->two_pi, s->map->a_p + s->ConstValue->thiry_degrees, s->sprite[i].sprite_angle);
-		s->sprite[i].h_offset =  s->win->x * delta - s->sprite[i].sprite_screen_size_half;
+		s->sprite[i].h_offset =  delta / ( FOV / s->win->x) - s->sprite[i].sprite_screen_size_half;
 		s->sprite[i].position_sprite = floor((s->ConstValue->CenterProjection - s->sprite[i].sprite_screen_size_half));
-
 	}
-
-
 
 }
 
@@ -452,7 +450,7 @@ int		print_pixel_of_sprite(t_all *s, int j, int i)
 	int		corr_size_sprite;
 	double 	y_sprite;
 
-	offset_x = j * ( s->sprite[i].width / s->sprite[i].sprite_width); 
+	offset_x = floor((double)j * ((double)s->sprite[i].width / s->sprite[i].sprite_width)); 
 	y_sprite = floor(s->map->yyy + ((s->sprite[i].sprite_screen_size_full -  s->sprite[i].sprite_screen_size_coor) / 2));
 
 	color_pixel = get_color_pixel_sprite(s->sprite, offset_x, i, floor(y_sprite * (s->sprite[i].height) / (s->sprite[i].sprite_screen_size_full)));
@@ -788,7 +786,6 @@ void	ft_move_left_right(t_all *s, int i)
 int			ft_key(int keycode, t_all *s)
 {
 	if (keycode == W)
-		// s->map->y_pp +=1;
 		ft_move_forward_back(s, 1);
 	else if (keycode == A)
 		ft_move_left_right(s, -1);
@@ -804,7 +801,6 @@ int			ft_key(int keycode, t_all *s)
 		s->dataWall->PositionWall[s->dataWall->index]--;
 	else if (keycode == ESC)
 		mlx_destroy_window(s->win->mlx, s->win->win);
-	// printf("%i\n", keycode);
 	return (0);
 }
 
@@ -816,12 +812,12 @@ int			ft_ft(t_all *s)
 
 	s->dataWall->index = -1;
 	ft_ray_cast(s, s->dataWall);
-	// calculation_of_parameters_of_sprites(s, s->dataWall);
 	drawing_screen(s, s->dataWall);
 	// draw2DMap(s);
 	// ft_ray_cast_2(s, s->dataWall);
 	// my_mlx_pixel_put(s->win, s->map->x_pp, s->map->y_pp, 0x1456e3);
-	// my_mlx_pixel_put(s->win, s->sprite[0].x, s->sprite[0].y, 0x1456e3);
+	// for (int i = 0; i < s->map->item; i++)
+	// 	my_mlx_pixel_put(s->win, s->sprite[i].x, s->sprite[i].y, 0x1456e3);
 	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
 	return (0);
 }
