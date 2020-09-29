@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 20:48:49 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 11:27:57 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@
 # define MALLOC_10 "Error : Malloc fail (initializing_east_wall_structure)"
 # define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
 # define FD_1 "Error : Couldn't read fd"
-
+# define RESOLUTION_1 "Error : Resolution specified twice"
+# define RESOLUTION_2 "Error : Invalid resolution"
 
 
 /*
@@ -292,7 +293,7 @@ t_all			*initializing_structure_of_structures();
 */
 int			ft_parser(char *cub, t_all *s);
 t_list		*ft_add_space(t_list **head, t_all *s);
-int			ft_forbidden_characters(t_list *head, char *line, t_all *s);
+int			checking_validity_map(t_list *head, char *line, t_all *s);
 t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 void		ft_max_len(t_list **head, t_all *s);
 // int		ft_creat_list(t_list *head, t_all *s, char *line);

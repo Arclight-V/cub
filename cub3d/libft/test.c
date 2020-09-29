@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   len_error.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/20 11:04:14 by anatashi          #+#    #+#             */
-/*   Updated: 2020/08/31 13:10:47 by anatashi         ###   ########.fr       */
+/*   Created: 2020/09/29 11:35:13 by anatashi          #+#    #+#             */
+/*   Updated: 2020/09/29 11:38:22 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
-#include "string.h"
-
-int main ()
+# include "libft.h"
+# include <stdio.h>
+int main()
 {
-	// char *s = "Error : Couldn't read fd\n";
-	// printf("len s is %li\n", strlen(s));
-
-	int i = 0;
-	char *s = "Error : Malloc fail (creating a list from fd)\n";
-	while (s[++i])
-	{
-		printf("s = %c [i] = %i\n", s[i],i);
-	}
-	
+	char *nstr = ft_strtrim("/s/sssp", "xpm");
+	printf("nstr = %s\n", nstr);
 }

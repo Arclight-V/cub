@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 21:07:47 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 11:44:53 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,21 @@ t_list		*ft_add_space(t_list **head, t_all *s)
 
 
 
-int				ft_forbidden_characters(t_list *head, char *line, t_all *s)
+int				checking_validity_map(t_list *head, char *line, t_all *s)
 {
 	int			i;
 
 	i = 0;
 	ft_skip_spaces(line, &i);
 	if (line[i] == '1')
-		if ((s->err->num = ft_forb_char_map(&head, line, s, &i)) == -92)
+		if ((s->err->num = ft_forb_char_map(&head, line, s, &i)) < 0)
 			return (-92);
 	if (line[i] == 'R' && line[i + 1] == ' ')
 		if ((s->err->num = ft_checking_resolution(&head, line, s, &i)) < 0)
 			return (s->err->num);
 	// if (line [i] == 'N' && line[i + 1] == 'O')
 	// 	if ((s->err->num = ft_checking_textures(&head, line, &i, s)) < 0)
-	// 		return(s->err->num);
+			return(s->err->num);
 
 	if (ft_skip_spaces(line, &i) && line[i] != '\0')
 		return (-92);
@@ -115,7 +115,7 @@ t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
 	t_list	*new;
 
 	new = NULL;
-	if ((s->err->num = ft_forbidden_characters(head, line, s)) < 0)
+	if ((s->err->num = checking_validity_map(head, line, s)) < 0)
 		return (NULL);
 	if (s->fd->count_ind == 1)
 	{
@@ -811,7 +811,7 @@ int			ft_parser(char *cub, t_all *s)
 		return (ft_errorstr(FD_1, 0));
 	while ((s->fd->ret = get_next_line(s->fd->fd, &line)) > 0)
 	{
-		if ((head = ft_creat_list(head, s, line)) < 0)
+		if (!(head = ft_creat_list(head, s, line)))
 			return (ft_errorstr(NULL,s->err->num));
 	}
 	if (!(head = ft_creat_list(head, s, line)))

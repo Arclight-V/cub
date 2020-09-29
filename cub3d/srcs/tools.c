@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:38:57 by anatashi          #+#    #+#             */
-/*   Updated: 2020/08/31 13:09:37 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 11:22:31 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,16 @@ int				ft_atoi_mod(const char *nptr, int *i)
 			sign = -1;
 		(*i)++;
 	}
-	while (nptr[*i] >= '0' && nptr[*i] <= '9')
+	while (ft_isdigit(nptr[*i]))
 	{
 		res = res * 10 + (nptr[*i] - '0');
 		(*i)++;
+		if (res > 2560)
+			{
+				while(ft_isdigit(nptr[*i]))
+					(*i)++;
+				return (res * sign);
+			}
 	}
 	return (res * sign);
 }
@@ -75,7 +81,7 @@ int		ft_strerror(int err)
 	(err == -90) ? write(2, "Error : Couldn't parse file (GNL)\n", 34) : 0;
 	(err == -91) ? write(2, "Error : Couldn't read fd\n", 25) : 0;
 	(err == -92) ? write(2, "Error : Invalid line in file\n", 29) : 0;
-	(err == -93) ? write(2, "Error : Resolution specified twice\n", 35) : 0;
-	(err == -94) ? write(2, "Error : Invalid resolution\n", 27) : 0;
+	(err == -93) ? ft_errorstr(RESOLUTION_1, 0) : 0;
+	(err == -94) ? ft_errorstr(RESOLUTION_2, 0) : 0;
 	return (-1);
 }

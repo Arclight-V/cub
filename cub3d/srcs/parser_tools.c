@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 20:49:36 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 10:41:27 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int				ft_checking_resolution(t_list **head, char *line, t_all *s, int *i)
 	if (s->win->x <= 0 || s->win->y <= 0 || line[*i] != '\0')
 		return (-94);
 	s->fd->count_ind++;
-	// ft_free_tmp(line);
 	return (0);
 }
 
