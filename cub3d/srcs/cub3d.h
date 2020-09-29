@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 11:27:57 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:32:18 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@
 # define SHIFT 257
 # define TURN 0.3
 
+# define NORD 0
+# define SOUTH 1
+# define WEST 2
+# define EAST 3
+
 
 # define MALLOC_1 "Error : Malloc fail (initializing_structure_of_structures)"
 # define MALLOC_2 "Error : Malloc fail (initializing_map_structure)"
@@ -56,6 +61,7 @@
 # define FD_1 "Error : Couldn't read fd"
 # define RESOLUTION_1 "Error : Resolution specified twice"
 # define RESOLUTION_2 "Error : Invalid resolution"
+# define TEXTURE_1 "Error : Invalid texture image"
 
 
 /*
@@ -149,7 +155,8 @@ typedef struct	s_win
 ** structure for textures
 */
 
-typedef struct	s_nord
+
+typedef struct	s_wall
 {
 	char			*adr;
 	void			*img;
@@ -159,43 +166,55 @@ typedef struct	s_nord
 	int				size_line;
 	int				endian;
 
-}					t_nord;
+}					t_wall;
 
-typedef struct	s_south
-{
-	char			*adr;
-	void			*img;
-	int				width;
-	int				height;
-	int				bits_per_pixel;
-	int				size_line;
-	int				endian;
+// typedef struct	s_nord
+// {
+// 	char			*adr;
+// 	void			*img;
+// 	int				width;
+// 	int				height;
+// 	int				bits_per_pixel;
+// 	int				size_line;
+// 	int				endian;
 
-}					t_south;
+// }					t_nord;
 
-typedef struct	s_east
-{
-	char			*adr;
-	void			*img;
-	int				width;
-	int				height;
-	int				bits_per_pixel;
-	int				size_line;
-	int				endian;
+// typedef struct	s_south
+// {
+// 	char			*adr;
+// 	void			*img;
+// 	int				width;
+// 	int				height;
+// 	int				bits_per_pixel;
+// 	int				size_line;
+// 	int				endian;
 
-}					t_east;
+// }					t_south;
 
-typedef struct	s_west
-{
-	char			*adr;
-	void			*img;
-	int				width;
-	int				height;
-	int				bits_per_pixel;
-	int				size_line;
-	int				endian;
+// typedef struct	s_east
+// {
+// 	char			*adr;
+// 	void			*img;
+// 	int				width;
+// 	int				height;
+// 	int				bits_per_pixel;
+// 	int				size_line;
+// 	int				endian;
 
-}					t_west;
+// }					t_east;
+
+// typedef struct	s_west
+// {
+// 	char			*adr;
+// 	void			*img;
+// 	int				width;
+// 	int				height;
+// 	int				bits_per_pixel;
+// 	int				size_line;
+// 	int				endian;
+
+// }					t_west;
 
 typedef struct	s_sprite
 {
@@ -254,10 +273,11 @@ typedef struct		s_all
 	t_win			*win;
 	t_ConstValue	*ConstValue;
 	t_dataWall		*dataWall;
-	t_nord			*nord;
-	t_south			*south;
-	t_west			*west;
-	t_east			*east;
+	t_wall			*wall;
+	// t_nord			*nord;
+	// t_south			*south;
+	// t_west			*west;
+	// t_east			*east;
 	t_sprite		*sprite;
 }					t_all;
 
@@ -278,10 +298,11 @@ t_err			*initializing_err_structure();
 t_fd			*initializing_fd_structure();
 t_win			*initializing_win_structure();
 t_ConstValue	*initializing_const_values_structure();
-t_nord			*initializing_nord_wall_structure();
-t_south			*initializing_south_wall_structure();
-t_east			*initializing_east_wall_structure();
-t_west			*initializing_west_wall_structure();
+// t_nord			*initializing_nord_wall_structure();
+// t_south			*initializing_south_wall_structure();
+// t_east			*initializing_east_wall_structure();
+// t_west			*initializing_west_wall_structure();
+t_wall		*initializing_wall_structure(t_wall *wall);
 t_dataWall		*initializing_slice_parameters_structure();
 t_sprite		*ft_creat_sprite_s();
 t_all			*initializing_structure_of_structures();
@@ -302,10 +323,12 @@ void		ft_max_len(t_list **head, t_all *s);
 */
 
 int			ft_forb_char_map(t_list **head, char *line, t_all *s, int *i);
-int			ft_checking_resolution(t_list **head, char *line, t_all *s, int *i);
-int			ft_checking_textures(t_all *s);
+int			ft_checking_resolution(t_all *s, char *line, int *i);
+int			ft_checking_textures_wall(t_all *s, char *line, int *i, int num);
 int			checking_sprites(t_all *s);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
+void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
+// int 			take_texture_parameters(t_all *s, char *line, int *i, int len);
 /*
 **	tools:
 */

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:38:57 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 11:22:31 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 12:17:26 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ int		ft_strerror(int err)
 	(err == -92) ? write(2, "Error : Invalid line in file\n", 29) : 0;
 	(err == -93) ? ft_errorstr(RESOLUTION_1, 0) : 0;
 	(err == -94) ? ft_errorstr(RESOLUTION_2, 0) : 0;
+	(err == -95) ? ft_errorstr(TEXTURE_1, 0) : 0;
+
 	return (-1);
 }

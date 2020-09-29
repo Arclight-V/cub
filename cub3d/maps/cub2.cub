@@ -1,4 +1,9 @@
-R 800 600
+R 10000000 1000000
+
+NO ./textures/WALL_NORD.xpm
+SO ./textures/WALL_SOUTH.xpm
+WE ./textures/WALL_WEST.xpm
+EA ./textures/WALL_EAST.xpm
 
 11111111111111111
 10022222222222001

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 11:44:53 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 17:13:40 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,37 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 
 	i = 0;
 	ft_skip_spaces(line, &i);
-	if (line[i] == '1')
+	if (line[i] == 'R' && line[i + 1] == ' ')
+	{
+		if ((s->err->num = ft_checking_resolution(s, line, &i)) < 0)
+			return (s->err->num);
+	}
+	else if (line [i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
+	{
+		if ((s->err->num = ft_checking_textures_wall(s, line, &i, NORD) < 0))
+			return(s->err->num);
+	}
+	else if (line [i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
+	{
+		if ((s->err->num = ft_checking_textures_wall(s, line, &i, SOUTH) < 0))
+			return(s->err->num);
+	}
+	else if (line [i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
+	{
+		if ((s->err->num = ft_checking_textures_wall(s, line, &i, WEST) < 0))
+			return(s->err->num);
+	}
+	else if (line [i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
+	{
+		if ((s->err->num = ft_checking_textures_wall(s, line, &i, EAST) < 0))
+			return(s->err->num);
+	}
+	else if (line[i] == '1')
+	{
 		if ((s->err->num = ft_forb_char_map(&head, line, s, &i)) < 0)
 			return (-92);
-	if (line[i] == 'R' && line[i + 1] == ' ')
-		if ((s->err->num = ft_checking_resolution(&head, line, s, &i)) < 0)
-			return (s->err->num);
-	// if (line [i] == 'N' && line[i + 1] == 'O')
-	// 	if ((s->err->num = ft_checking_textures(&head, line, &i, s)) < 0)
-			return(s->err->num);
-
-	if (ft_skip_spaces(line, &i) && line[i] != '\0')
+	}
+	else if (ft_skip_spaces(line, &i) && line[i] != '\0')
 		return (-92);
 
 	return (1);
@@ -453,23 +473,23 @@ void	drawing_walls(t_all *s, t_dataWall *dataWall)
 	{
 		if (dataWall->CardinalDirections[dataWall->index] == 'N')
 		{
-			search_y_texture(s, calc_y(s), s->nord->height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
-			printSliceWall(s, s->nord->adr, s->nord->size_line, s->nord->bits_per_pixel);
+			search_y_texture(s, calc_y(s), s->wall[NORD].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			printSliceWall(s, s->wall[NORD].adr, s->wall[NORD].size_line, s->wall[NORD].bits_per_pixel);
 		}
 		else if (dataWall->CardinalDirections[dataWall->index] == 'E')
 		{
-			search_y_texture(s, calc_y(s), s->east->height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
-			printSliceWall(s, s->east->adr, s->east->size_line, s->east->bits_per_pixel);
+			search_y_texture(s, calc_y(s), s->wall[EAST].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			printSliceWall(s, s->wall[EAST].adr, s->wall[EAST].size_line, s->wall[EAST].bits_per_pixel);
 		}
 		else if (dataWall->CardinalDirections[dataWall->index] == 'W')
 		{
-			search_y_texture(s, calc_y(s), s->west->height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
-			printSliceWall(s, s->west->adr, s->west->size_line, s->west->bits_per_pixel);		
+			search_y_texture(s, calc_y(s), s->wall[WEST].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			printSliceWall(s, s->wall[WEST].adr, s->wall[WEST].size_line, s->wall[WEST].bits_per_pixel);		
 		}
 		else if (dataWall->CardinalDirections[dataWall->index] == 'S')
 		{
-			search_y_texture(s, calc_y(s), s->south->height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
-			printSliceWall(s, s->south->adr, s->south->size_line, s->south->bits_per_pixel);
+			search_y_texture(s, calc_y(s), s->wall[SOUTH].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			printSliceWall(s, s->wall[SOUTH].adr, s->wall[SOUTH].size_line, s->wall[SOUTH].bits_per_pixel);
 		}		
 	}
 }
@@ -521,20 +541,20 @@ void	calculatingWallLengthInOnePixel(t_all *s, t_dataWall *dataWall)
 	if (s->map->angle_start > 0 && s->map->angle_start < M_PI)
 	{
 		if (s->map->flagPDPE == 1)
-			specifyDirectionWallAndCalculateOffset(s, 'N', s->nord->width, s->nord->height);
+			specifyDirectionWallAndCalculateOffset(s, 'N', s->wall[NORD].width, s->wall[NORD].height);
 		else if (s->map->angle_start < M_PI_2 && s->map->flagPDPE == 0)
-			specifyDirectionWallAndCalculateOffset(s, 'E', s->east->width, s->east->height);	
+			specifyDirectionWallAndCalculateOffset(s, 'E', s->wall[EAST].width, s->wall[EAST].height);	
 		else
-			specifyDirectionWallAndCalculateOffset(s, 'W', s->west->width, s->west->height);
+			specifyDirectionWallAndCalculateOffset(s, 'W', s->wall[WEST].width, s->wall[WEST].height);
 	}
 	else
 	{
 		if (s->map->flagPDPE == 1)
-			specifyDirectionWallAndCalculateOffset(s, 'S', s->south->width, s->south->height);
+			specifyDirectionWallAndCalculateOffset(s, 'S', s->wall[SOUTH].width, s->wall[SOUTH].height);
 		else if (s->map->angle_start >  s->ConstValue->tree_pi_by_two && s->map->flagPDPE == 0)
-			specifyDirectionWallAndCalculateOffset(s, 'E', s->east->width, s->east->height);
+			specifyDirectionWallAndCalculateOffset(s, 'E', s->wall[EAST].width, s->wall[EAST].height);
 		else
-			specifyDirectionWallAndCalculateOffset(s, 'W', s->west->width, s->west->height);
+			specifyDirectionWallAndCalculateOffset(s, 'W', s->wall[WEST].width, s->wall[WEST].height);
 	}	
 }
 
@@ -773,10 +793,10 @@ void		calculation_constant_values(t_all *s)
 	s->ConstValue->DistanceProjectionPlan = floor((float)s->win->x / 2) / tan(FOV / 2);
 	s->ConstValue->CenterProjection = floor((float)s->win->y / 2);
 	s->ConstValue->delta_ray = FOV / s->win->x;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_NORD = s->nord->width / CUBE_SIZE;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_South = s->south->width / CUBE_SIZE;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_WEST = s->west->width / CUBE_SIZE;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_EAST = s->east->width / CUBE_SIZE;
+	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_NORD = s->wall[NORD].width / CUBE_SIZE;
+	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_South = s->wall[SOUTH].width / CUBE_SIZE;
+	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_WEST = s->wall[WEST].width / CUBE_SIZE;
+	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_EAST = s->wall[EAST].width / CUBE_SIZE;
 	s->ConstValue->xMapMax = s->fd->max_len * CUBE_SIZE - 1;
 	s->ConstValue->yMapMax = s->map->size * CUBE_SIZE - 1;
 }
@@ -789,7 +809,7 @@ int			make_windows(t_all *s, t_win *win)
     s->win->win = mlx_new_window(s->win->mlx, s->win->x, s->win->y, "Cub3D");
 	s->win->img = mlx_new_image(s->win->mlx, s->win->x, s->win->y);
 	s->win->addr = mlx_get_data_addr(s->win->img, &win->bits_per_pixel, &win->line_lenght, &win->endian);
-	ft_checking_textures(s);
+	// ft_checking_textures_wall(s);
 	s->err->num = checking_sprites(s);
 	search_player_and_sprites(s);
 	calculation_constant_values(s);

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/28 20:48:37 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/29 16:55:00 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ int				initializing_structures(char *cub)
 		return (ft_errorstr(MALLOC_5, 0));
 	if (!(s->ConstValue = initializing_const_values_structure()))
 		return (ft_errorstr(MALLOC_6, 0));
-	if (!(s->nord = initializing_nord_wall_structure()))
+	// if (!(s->nord = initializing_nord_wall_structure()))
+	// 	return(ft_errorstr(MALLOC_7, 0));
+	if (!(s->wall = initializing_wall_structure(s->wall)))
 		return(ft_errorstr(MALLOC_7, 0));
-	if (!(s->south = initializing_south_wall_structure()))
-		return(ft_errorstr(MALLOC_8, 0));
-	if (!(s->west = initializing_west_wall_structure()))
-		return(ft_errorstr(MALLOC_9, 0));
-	if (!(s->east = initializing_east_wall_structure()))
-		return(ft_errorstr(MALLOC_10, 0));
+	// if (!(s->south = initializing_south_wall_structure()))
+	// 	return(ft_errorstr(MALLOC_8, 0));
+	// if (!(s->west = initializing_west_wall_structure()))
+	// 	return(ft_errorstr(MALLOC_9, 0));
+	// if (!(s->east = initializing_east_wall_structure()))
+		// return(ft_errorstr(MALLOC_10, 0));
 	if (!(s->dataWall = initializing_slice_parameters_structure()))
 		return(ft_errorstr(MALLOC_11, 0));	
 	ft_parser(cub, s);
