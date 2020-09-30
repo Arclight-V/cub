@@ -6,11 +6,31 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:38:57 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 12:17:26 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:30:31 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int		ft_strnstrindex(char *big, char *little)
+{
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	while (big[++i])
+	{
+		if (big[i] == little[0])
+		{
+			j = 1;
+			while (little[j] && big[i + j] == little[j])
+				j++;
+			if (little[j] == '\0')
+				return (i + j - 1);
+		}
+	}
+	return (0);
+}
 
 int		ft_skip_spaces(char *line, int *i)
 {
@@ -60,12 +80,12 @@ int		ft_strerror(int err)
 	(err == -14) ? write(2, "Error : Malloc fail (ft_make_map)\n", 34) : 0;
 	(err == -15) ? write(2, "Error : Malloc fail (creating a list from fd)\n", 45) : 0;
 
-	(err == -3) ? write(2, "Error : Malloc fail (creating a two-dimensional array of pointers)\n", 35) : 0;
+	// (err == -3) ? write(2, "Error : Malloc fail (creating a two-dimensional array of pointers)\n", 35) : 0;
 	
 	
-	(err == -5) ? write(2, "Error : Floor/ceiling specified twice\n", 38) : 0;
-	(err == -6) ? write(2, "Error : Invalid floor/ceiling line\n", 35) : 0;
-	(err == -7) ? write(2, "Error : Texture path specified twice\n", 37) : 0;
+	// (err == -5) ? write(2, "Error : Floor/ceiling specified twice\n", 38) : 0;
+	// (err == -6) ? write(2, "Error : Invalid floor/ceiling line\n", 35) : 0;
+	// (err == -7) ? write(2, "Error : Texture path specified twice\n", 37) : 0;
 	(err == -8) ? write(2, "Error : Malloc fail (texture path)\n", 35) : 0;
 	(err == -9) ? write(2, "Error : Invalid texture image\n", 30) : 0;
 	(err == -11) ? write(2, "Error : Malloc fail (map table)\n", 32) : 0;
@@ -81,9 +101,14 @@ int		ft_strerror(int err)
 	(err == -90) ? write(2, "Error : Couldn't parse file (GNL)\n", 34) : 0;
 	(err == -91) ? write(2, "Error : Couldn't read fd\n", 25) : 0;
 	(err == -92) ? write(2, "Error : Invalid line in file\n", 29) : 0;
-	(err == -93) ? ft_errorstr(RESOLUTION_1, 0) : 0;
-	(err == -94) ? ft_errorstr(RESOLUTION_2, 0) : 0;
-	(err == -95) ? ft_errorstr(TEXTURE_1, 0) : 0;
+	(err == -1) ? ft_errorstr(RESOLUTION_1, 0) : 0;
+	(err == -2) ? ft_errorstr(RESOLUTION_2, 0) : 0;
+	(err == -3) ? ft_errorstr(TEXTURE_1, 0) : 0;
+	(err == -4) ? ft_errorstr(TEXTURE_2, 0) : 0;
+	(err == -5) ? ft_errorstr(MALLOC_12, 0) : 0;
+	(err == -6) ? ft_errorstr(FD_2, 0) : 0;
+	(err == -7) ? ft_errorstr(TEXTURE_3, 0) : 0;
+
 
 	return (-1);
 }

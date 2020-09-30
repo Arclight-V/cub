@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 18:32:18 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:31:52 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,15 @@
 # define MALLOC_9 "Error : Malloc fail (initializing_west_wall_structure)"
 # define MALLOC_10 "Error : Malloc fail (initializing_east_wall_structure)"
 # define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
-# define FD_1 "Error : Couldn't read fd"
+# define MALLOC_12 "Error : Malloc fail (checking_textures_wall)"
+# define FD_1 "Error : Couldn't read fd (CUB)"
+# define FD_2 "Error : Couldn't read fd (Texture of the wall)"
 # define RESOLUTION_1 "Error : Resolution specified twice"
 # define RESOLUTION_2 "Error : Invalid resolution"
-# define TEXTURE_1 "Error : Invalid texture image"
+# define TEXTURE_1 "Error : Texture image twice"
+# define TEXTURE_2 "Error : Texture information contains invalid characters"
+# define TEXTURE_3 "Error : Not available image format"
+
 
 
 /*
@@ -323,8 +328,8 @@ void		ft_max_len(t_list **head, t_all *s);
 */
 
 int			ft_forb_char_map(t_list **head, char *line, t_all *s, int *i);
-int			ft_checking_resolution(t_all *s, char *line, int *i);
-int			ft_checking_textures_wall(t_all *s, char *line, int *i, int num);
+int			checking_resolution(t_all *s, char *line, int *i);
+int			checking_textures_wall(t_all *s, char *line, int *i, int num);
 int			checking_sprites(t_all *s);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
 void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
@@ -336,6 +341,8 @@ int			ft_skip_spaces(char *line, int *i);
 int			ft_strerror(int err);
 int			ft_atoi_mod(const char *nptr, int *i);
 int			ft_errorstr(char *str, int num);
+int			ft_strnstrindex(char *big, char *little);
+
 /*
 ** free memory
 */

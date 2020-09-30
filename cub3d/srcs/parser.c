@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 17:13:40 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 12:28:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,27 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 	ft_skip_spaces(line, &i);
 	if (line[i] == 'R' && line[i + 1] == ' ')
 	{
-		if ((s->err->num = ft_checking_resolution(s, line, &i)) < 0)
+		if ((s->err->num = checking_resolution(s, line, &i)) < 0)
 			return (s->err->num);
 	}
 	else if (line [i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
 	{
-		if ((s->err->num = ft_checking_textures_wall(s, line, &i, NORD) < 0))
+		if ((s->err->num = checking_textures_wall(s, line, &i, NORD)) < 0)
 			return(s->err->num);
 	}
 	else if (line [i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
 	{
-		if ((s->err->num = ft_checking_textures_wall(s, line, &i, SOUTH) < 0))
+		if ((s->err->num = checking_textures_wall(s, line, &i, SOUTH)) < 0)
 			return(s->err->num);
 	}
 	else if (line [i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
 	{
-		if ((s->err->num = ft_checking_textures_wall(s, line, &i, WEST) < 0))
+		if ((s->err->num = checking_textures_wall(s, line, &i, WEST)) < 0)
 			return(s->err->num);
 	}
 	else if (line [i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
 	{
-		if ((s->err->num = ft_checking_textures_wall(s, line, &i, EAST) < 0))
+		if ((s->err->num = checking_textures_wall(s, line, &i, EAST)) < 0)
 			return(s->err->num);
 	}
 	else if (line[i] == '1')
@@ -162,7 +162,6 @@ void			ft_search_view(t_all *s, int ch)
 {
 	s->map->x_p = s->map->x;
 	s->map->y_p = s->map->y;
-	// printf("s->map->x_p = %i\ns->map->y_p = %i\n", s->map->x_p, s->map->y_p);
 	if (ch == 'N')
 		s->map->a_p = M_PI_2;
 	else if (ch == 'S')
@@ -171,8 +170,6 @@ void			ft_search_view(t_all *s, int ch)
 		s->map->a_p = M_PI;
 	else if (ch == 'W')
 		s->map->a_p = s->ConstValue->two_pi;
-	// s->map->x += CUBE_SIZE;
-	// s->map->y += CUBE_SIZE;
 	
 }
 
@@ -507,8 +504,6 @@ int		drawing_screen(t_all *s, t_dataWall *dataWall)
 		drawing_floor(s);
 		drawing_sprites(s);
 	}
-	// dataWall->index = -1;
-	// while(++dataWall->index < s->win->x)
 }
 
 void	specifyDirectionWallAndCalculateOffset(t_all *s, char ch, int width, double height)
@@ -809,7 +804,6 @@ int			make_windows(t_all *s, t_win *win)
     s->win->win = mlx_new_window(s->win->mlx, s->win->x, s->win->y, "Cub3D");
 	s->win->img = mlx_new_image(s->win->mlx, s->win->x, s->win->y);
 	s->win->addr = mlx_get_data_addr(s->win->img, &win->bits_per_pixel, &win->line_lenght, &win->endian);
-	// ft_checking_textures_wall(s);
 	s->err->num = checking_sprites(s);
 	search_player_and_sprites(s);
 	calculation_constant_values(s);
@@ -831,7 +825,7 @@ int			ft_parser(char *cub, t_all *s)
 		return (ft_errorstr(FD_1, 0));
 	while ((s->fd->ret = get_next_line(s->fd->fd, &line)) > 0)
 	{
-		if (!(head = ft_creat_list(head, s, line)))
+		if (!(head = ft_creat_list(head, s, line)) || s->err->num < 0)
 			return (ft_errorstr(NULL,s->err->num));
 	}
 	if (!(head = ft_creat_list(head, s, line)))
