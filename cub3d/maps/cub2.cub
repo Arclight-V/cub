@@ -5,7 +5,7 @@ SO ./textures/WALL_SOUTH.xpm
 WE ./textures/WALL_WEST.xpm
 EA ./textures/WALL_EAST.xpm
 
-
+S ./textures/SPRITE.xpm
 
 11111111111111111
 10022222222222001

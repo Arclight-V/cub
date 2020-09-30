@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:38:57 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 12:30:31 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 14:50:22 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int		ft_strerror(int err)
 	// (err == -5) ? write(2, "Error : Floor/ceiling specified twice\n", 38) : 0;
 	// (err == -6) ? write(2, "Error : Invalid floor/ceiling line\n", 35) : 0;
 	// (err == -7) ? write(2, "Error : Texture path specified twice\n", 37) : 0;
-	(err == -8) ? write(2, "Error : Malloc fail (texture path)\n", 35) : 0;
-	(err == -9) ? write(2, "Error : Invalid texture image\n", 30) : 0;
-	(err == -11) ? write(2, "Error : Malloc fail (map table)\n", 32) : 0;
-	(err == -12) ? write(2, "Error : Invalid map\n", 20) : 0;
+	// (err == -8) ? write(2, "Error : Malloc fail (texture path)\n", 35) : 0;
+	// (err == -9) ? write(2, "Error : Invalid texture image\n", 30) : 0;
+	// (err == -11) ? write(2, "Error : Malloc fail (map table)\n", 32) : 0;
+	// (err == -12) ? write(2, "Error : Invalid map\n", 20) : 0;
 	(err == -13) ? write(2, "Error : Map isn't a rectangle\n", 30) : 0;
 	(err == -14) ? write(2, "Error : No resolution specified\n", 32) : 0;
 	(err == -15) ? write(2, "Error : Missing texture\n", 24) : 0;
@@ -108,6 +108,11 @@ int		ft_strerror(int err)
 	(err == -5) ? ft_errorstr(MALLOC_12, 0) : 0;
 	(err == -6) ? ft_errorstr(FD_2, 0) : 0;
 	(err == -7) ? ft_errorstr(TEXTURE_3, 0) : 0;
+	(err == -8) ? ft_errorstr(TEXTURE_4, 0) : 0;
+	(err == -9) ? ft_errorstr(TEXTURE_5, 0) : 0;
+	(err == -10) ? ft_errorstr(MALLOC_13, 0) : 0;
+	(err == -11) ? ft_errorstr(FD_3, 0) : 0;
+	(err == -12) ? ft_errorstr(TEXTURE_6, 0) : 0;
 
 
 	return (-1);

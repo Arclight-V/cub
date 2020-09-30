@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/29 16:46:23 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 19:07:28 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ t_fd		*initializing_fd_structure()
 	fd->max_len = 0;
 	fd->flag = 0;
 	fd->count_ind = 0;
+	fd->filename = NULL;
+	fd->flag_sprite = 0;
 	return (fd);
 }
 
@@ -110,9 +112,8 @@ t_ConstValue		*initializing_const_values_structure()
 	return (constValue);
 }
 
-t_all		*initializing_structure_of_structures()
+t_all		*initializing_structure_of_structures(t_all	*s)
 {
-	t_all	*s;
 
 	if (!(s = (t_all *)malloc(sizeof(t_all))))
 		return (NULL);
@@ -121,10 +122,6 @@ t_all		*initializing_structure_of_structures()
 	s->fd = NULL;
 	s->win = NULL;
 	s->ConstValue = NULL;
-	// s->nord = NULL;
-	// s->south = NULL;
-	// s->east = NULL;
-	// s->west = NULL;
 	s->dataWall = NULL;
 	s->sprite = NULL; 
 	s->wall = NULL;
@@ -132,7 +129,6 @@ t_all		*initializing_structure_of_structures()
 }
 t_wall		*initializing_wall_structure(t_wall *wall)
 {
-	// t_wall 	*wall;
 	int		i;
 
 	i = -1;
@@ -150,70 +146,6 @@ t_wall		*initializing_wall_structure(t_wall *wall)
 	}
 	return(wall);
 }
-
-// t_nord		*initializing_nord_wall_structure()
-// {
-// 	t_nord *nord;
-
-// 	if(!(nord = (t_nord *)malloc(sizeof(t_nord))))
-// 		return(NULL);
-// 	nord->adr = NULL;
-// 	nord->bits_per_pixel = 0;
-// 	nord->endian = 0;
-// 	nord->height = 0;
-// 	nord->img = 0;
-// 	nord->size_line = 0;
-// 	nord->width = 0;
-// 	return(nord);
-// }
-
-// t_south		*initializing_south_wall_structure()
-// {
-// 	t_south *south;
-
-// 	if(!(south = (t_south *)malloc(sizeof(t_south))))
-// 		return(NULL);
-// 	south->adr = NULL;
-// 	south->bits_per_pixel = 0;
-// 	south->endian = 0;
-// 	south->height = 0;
-// 	south->img = 0;
-// 	south->size_line = 0;
-// 	south->width = 0;
-// 	return(south);
-// }
-
-// t_east		*initializing_east_wall_structure()
-// {
-// 	t_east *east;
-
-// 	if(!(east = (t_east *)malloc(sizeof(t_east))))
-// 		return(NULL);
-// 	east->adr = NULL;
-// 	east->bits_per_pixel = 0;
-// 	east->endian = 0;
-// 	east->height = 0;
-// 	east->img = 0;
-// 	east->size_line = 0;
-// 	east->width = 0;
-// 	return(east);
-// }
-
-// t_west		*initializing_west_wall_structure()
-// {
-// 	t_west *west;
-
-// 	if(!(west = (t_west *)malloc(sizeof(t_west))))
-// 		return(NULL);
-// 	west->adr = NULL;
-// 	west->bits_per_pixel = 0;
-// 	west->endian = 0;
-// 	west->height = 0;
-// 	west->img = 0;
-// 	west->size_line = 0;
-// 	west->width = 0;
-// 	return(west);
-// }
 
 t_sprite		*ft_creat_sprite_s()
 {

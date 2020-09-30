@@ -1,39 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   big.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 12:28:07 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 18:45:17 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
-
-
-
-char		**make_map(t_list **head, int size, t_all *s)
-{
-	s->map->level = ft_calloc(size + 1, sizeof(char *));
-	int		i = -1;
-	size_t	j = -1;
-	t_list	*tmp = *head;
-
-	while (tmp)
-	{
-		s->map->level[++i] = tmp->content;
-		tmp = tmp->next;
-	}
-	while (s->map->level[++j])
-		ft_putendl(s->map->level[j]);
-	// ft_freearrmap(map);
-	// ft_lstclear(head,lstdelone_f);
-	return (s->map->level);
-}
 
 void		ft_max_len(t_list **head, t_all *s)
 {
@@ -117,6 +94,11 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 	else if (line [i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
 	{
 		if ((s->err->num = checking_textures_wall(s, line, &i, EAST)) < 0)
+			return(s->err->num);
+	}
+	else if (line [i] == 'S' && line[i + 1] == ' ')
+	{
+		if ((s->err->num = checking_textures_sprite(s, line, &i)) < 0)
 			return(s->err->num);
 	}
 	else if (line[i] == '1')
@@ -217,48 +199,7 @@ int			search_player_and_sprites(t_all *s)
 }
 
 
-void	calculatingDeltaForHorizontalIntersection(t_all *s, float a_p)
-{	
-	double tang;
 
-	tang = tan(a_p);
-	if (a_p > 0 && a_p < M_PI )
-	{
-		s->map->X_a_h = CUBE_SIZE /tang;
-		s->map->y_horizont = (int)(s->map->y_pp / CUBE_SIZE) * CUBE_SIZE - 0.0001;
-		s->map->x_horizont = s->map->x_pp + (s->map->y_pp - s->map->y_horizont) / tang;
-		s->map->Y_a_h = -CUBE_SIZE;
-	}
-	else if (a_p > M_PI && a_p < s->ConstValue->two_pi)
-	{
-		s->map->X_a_h = -(CUBE_SIZE /tang);
-		s->map->y_horizont = (int)(s->map->y_pp / CUBE_SIZE) * CUBE_SIZE + CUBE_SIZE;
-		s->map->x_horizont = s->map->x_pp + (s->map->y_pp - s->map->y_horizont) / tang;
-		s->map->Y_a_h = CUBE_SIZE;
-	}
-}
-
-void	calculatingDeltaForVerticallIntersection(t_all *s, float a_p)
-{
-	double	tang;
-
-	tang = tan(a_p);
-
-	if (a_p < M_PI_2 || a_p > s->ConstValue->tree_pi_by_two)
-	{
-		s->map->Y_a_v = -(CUBE_SIZE * tang);
-		s->map->x_vertical = (int)(s->map->x_pp / CUBE_SIZE) * CUBE_SIZE + CUBE_SIZE;
-		s->map->y_vertical = s->map->y_pp + ((s->map->x_pp - s->map->x_vertical) * tang);
-		s->map->X_a_v = CUBE_SIZE;
-	}
-	else if (a_p > M_PI_2 || a_p < s->ConstValue->tree_pi_by_two)
-	{
-		s->map->Y_a_v = CUBE_SIZE * tang;
-		s->map->x_vertical = (int)(s->map->x_pp / CUBE_SIZE) * CUBE_SIZE - 0.0001;
-		s->map->y_vertical = (s->map->y_pp + (s->map->x_pp - s->map->x_vertical) * tang);
-		s->map->X_a_v = -CUBE_SIZE;
-	}
-}
 
 
 int		draw_square(t_all *s, int x, int y)
@@ -277,33 +218,7 @@ int		draw_square(t_all *s, int x, int y)
 	}
 }
 
-void		checking_coordinates_h(t_all *s)
-{
-	if ((s->map->x_horizont > 0 && s->map->x_horizont < s->ConstValue->xMapMax) 
-		&& (s->map->y_horizont > 0 && s->map->y_horizont < s->ConstValue->yMapMax))
-	{
-		if (s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '1')
-			{
-				s->map->y_horizont += s->map->Y_a_h;
-				s->map->x_horizont += s->map->X_a_h;
-				checking_coordinates_h(s);
-			}
-	}
-}
 
-void		checking_coordinates_v(t_all *s)
-{
-	if ((s->map->x_vertical > 0 && s->map->x_vertical < s->ConstValue->xMapMax )
-		&& (s->map->y_vertical > 0 && s->map->y_vertical < s->ConstValue->yMapMax))
-	{
-		if (s->map->level[(int)s->map->y_vertical/CUBE_SIZE][(int)s->map->x_vertical/CUBE_SIZE] != '1')
-			{
-				s->map->y_vertical += s->map->Y_a_v;
-				s->map->x_vertical += s->map->X_a_v;
-				checking_coordinates_v(s);
-			}
-	}
-}
 
 int			get_color_pixel(t_all *s, char *adr, int size_line, int bits_per_pixel)
 {
@@ -493,18 +408,7 @@ void	drawing_walls(t_all *s, t_dataWall *dataWall)
 
 
 
-int		drawing_screen(t_all *s, t_dataWall *dataWall)
-{
-	dataWall->index = -1;
-	while(++dataWall->index < s->win->x)
-	{
-		s->map->i = dataWall->PositionWall[dataWall->index];
-		drawing_celing(s);
-		drawing_walls(s, dataWall);
-		drawing_floor(s);
-		drawing_sprites(s);
-	}
-}
+
 
 void	specifyDirectionWallAndCalculateOffset(t_all *s, char ch, int width, double height)
 {
@@ -528,7 +432,7 @@ void	specifyDirectionWallAndCalculateOffset(t_all *s, char ch, int width, double
 	}
 }
 
-void	calculatingWallLengthInOnePixel(t_all *s, t_dataWall *dataWall)
+void	calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall)
 {
 	s->dataWall->ProjectedSliceHeightNotCorr[dataWall->index] = CUBE_SIZE / s->dataWall->distance_wall[s->dataWall->index] * s->ConstValue->DistanceProjectionPlan;
 	dataWall->ProjectedSliceHeight[dataWall->index] = s->dataWall->ProjectedSliceHeightNotCorr[dataWall->index] > s->win->y ? s->win->y : s->dataWall->ProjectedSliceHeightNotCorr[dataWall->index];
@@ -579,46 +483,7 @@ int			drawRayToWall(t_all *s, int xPlayer, int yPlayer, int xWall, int yWall)
 	}
 }	
 
-int		ray(t_all *s, t_dataWall *dataWall)
-{
-	if (s->map->angle_start > s->ConstValue->two_pi)
-		s->map->angle_start -= s->ConstValue->two_pi ;
-	else if (s->map->angle_start < 0)
-		s->map->angle_start += s->ConstValue->two_pi;
-	calculatingDeltaForHorizontalIntersection(s, s->map->angle_start);
-	calculatingDeltaForVerticallIntersection(s, s->map->angle_start);
-	checking_coordinates_h(s);
-	checking_coordinates_v(s);
-	s->map->PD = sqrt(pow((s->map->x_pp - s->map->x_horizont), 2) + pow((s->map->y_pp - s->map->y_horizont), 2));
-	s->map->PE = sqrt(pow((s->map->x_pp - s->map->x_vertical), 2) + pow((s->map->y_pp - s->map->y_vertical), 2));
-	if (s->map->PD < s->map->PE)
-	{
-		s->dataWall->distance_wall_not_corr[s->dataWall->index] = s->map->PD;
-		s->dataWall->distance_wall[s->dataWall->index] = s->map->PD * cos(s->map->a_p - s->map->angle_start);
-		s->map->flagPDPE = 1;
-	}
-	else
-	{
-		s->dataWall->distance_wall_not_corr[s->dataWall->index] = s->map->PE;
-		s->dataWall->distance_wall[s->dataWall->index] = s->map->PE * cos(s->map->a_p - s->map->angle_start);
-		s->map->flagPDPE = 0;
-	}
-	calculatingWallLengthInOnePixel(s, dataWall);
-	return (0);
-	
-}
 
-
-int ft_ray_cast(t_all *s, t_dataWall *dataWall)
-{
-
-	s->map->angle_start = s->map->a_p + s->ConstValue->thiry_degrees;
-	while (++dataWall->index < s->win->x)
-	{
-		ray(s, dataWall);
-		s->map->angle_start -= s->ConstValue->delta_ray;
-	}
-}
 
 
 int		ray_2(t_all *s,  t_dataWall *dataWall)
@@ -723,65 +588,6 @@ void 		draw2DMap(t_all *s)
 }
 
 
-void	ft_move_forward_back(t_all *s, int i)
-{
-	s->map->x_pp += i * cos(s->map->a_p) * 10;
-	s->map->y_pp -= i * sin(s->map->a_p) * 10;
-}
-
-void			ft_rotate(t_all *s, int i)
-{
-	s->map->a_p = s->map->a_p + i * 0.04;
-	if (s->map->a_p > s->ConstValue->two_pi)
-		s->map->a_p -= s->ConstValue->two_pi;
-	else if (s->map->a_p < 0)
-		s->map->a_p += s->ConstValue->two_pi;
-}
-
-void	ft_move_left_right(t_all *s, int i)
-{
-	s->map->x_pp += i * sin(s->map->a_p) * 10;	
-	s->map->y_pp += i * cos(s->map->a_p) * 10;
-}
-
-int			ft_key(int keycode, t_all *s)
-{
-	if (keycode == W)
-		ft_move_forward_back(s, 1);
-	else if (keycode == A)
-		ft_move_left_right(s, -1);
-	else if (keycode == S)
-		ft_move_forward_back(s, -1);
-	else if (keycode == D)
-		ft_move_left_right(s, 1);
-	else if (keycode == RIGHT)
-		ft_rotate(s, -1);
-	else if (keycode == LEFT)
-		ft_rotate(s, 1);
-	else if (keycode == UP)
-		s->dataWall->PositionWall[s->dataWall->index]--;
-	else if (keycode == ESC)
-		mlx_destroy_window(s->win->mlx, s->win->win);
-	return (0);
-}
-
-
-
-
-int			ft_ft(t_all *s)
-{
-
-	s->dataWall->index = -1;
-	ft_ray_cast(s, s->dataWall);
-	drawing_screen(s, s->dataWall);
-	// draw2DMap(s);
-	// ft_ray_cast_2(s, s->dataWall);
-	// my_mlx_pixel_put(s->win, s->map->x_pp, s->map->y_pp, 0x1456e3);
-	// for (int i = 0; i < s->map->item; i++)
-	// 	my_mlx_pixel_put(s->win, s->sprite[i].x, s->sprite[i].y, 0x1456e3);
-	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
-	return (0);
-}
 
 void		calculation_constant_values(t_all *s)
 {
@@ -796,43 +602,18 @@ void		calculation_constant_values(t_all *s)
 	s->ConstValue->yMapMax = s->map->size * CUBE_SIZE - 1;
 }
 
-int			make_windows(t_all *s, t_win *win)
-{	
-	t_sprite	*sprite;
-
-    s->win->mlx = mlx_init();
-    s->win->win = mlx_new_window(s->win->mlx, s->win->x, s->win->y, "Cub3D");
-	s->win->img = mlx_new_image(s->win->mlx, s->win->x, s->win->y);
-	s->win->addr = mlx_get_data_addr(s->win->img, &win->bits_per_pixel, &win->line_lenght, &win->endian);
-	s->err->num = checking_sprites(s);
-	search_player_and_sprites(s);
-	calculation_constant_values(s);
-	mlx_hook(s->win->win, 2, 1L<<0, ft_key, s);
-	mlx_loop_hook(s->win->mlx, ft_ft, s);
-    mlx_loop(s->win->mlx);
+int	take_texture_parameters_sprite(t_all *s, int item, char *filename)
+{
+	int i;
+	
+	i = -1;
+	if (!(s->sprite = (t_sprite *)malloc(item * (sizeof(t_sprite)))))
+		return (-1);
+	while (++i < item)
+	{
+		s->sprite[i].img = mlx_xpm_file_to_image(s->win->mlx, filename, &s->sprite[i].width, &s->sprite[i].height);
+		s->sprite[i].adr = mlx_get_data_addr(s->sprite[i].img, &s->sprite[i].bits_per_pixel, &s->sprite[i].size_line, &s->sprite[i].endian);
+	}
 	return (1);
 }
 
-
-int			ft_parser(char *cub, t_all *s)
-{
-	t_list	*head;
-	char	*line;
-
-	head = NULL;
-	line = NULL;
-	if ((s->fd->fd = open(cub, O_RDONLY)) < 0)
-		return (ft_errorstr(FD_1, 0));
-	while ((s->fd->ret = get_next_line(s->fd->fd, &line)) > 0)
-	{
-		if (!(head = ft_creat_list(head, s, line)) || s->err->num < 0)
-			return (ft_errorstr(NULL,s->err->num));
-	}
-	if (!(head = ft_creat_list(head, s, line)))
-		return (ft_strerror(-15));
-	if (!(head = ft_add_space(&head, s)))
-		return (ft_strerror(-15));
-	make_map(&head, s->map->size = ft_lstsize(head), s);
-	make_windows(s, s->win);
-	return (0);
-}

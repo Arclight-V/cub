@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 12:31:52 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 19:31:56 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,19 @@
 # define MALLOC_10 "Error : Malloc fail (initializing_east_wall_structure)"
 # define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
 # define MALLOC_12 "Error : Malloc fail (checking_textures_wall)"
+# define MALLOC_13 "Error : Malloc fail (checking_textures_sprite)"
 # define FD_1 "Error : Couldn't read fd (CUB)"
 # define FD_2 "Error : Couldn't read fd (Texture of the wall)"
+# define FD_3 "Error : Couldn't read fd (checking_textures_sprite)"
 # define RESOLUTION_1 "Error : Resolution specified twice"
 # define RESOLUTION_2 "Error : Invalid resolution"
-# define TEXTURE_1 "Error : Texture image twice"
-# define TEXTURE_2 "Error : Texture information contains invalid characters"
-# define TEXTURE_3 "Error : Not available image format"
+# define TEXTURE_1 "Error : Texture of the wall image twice"
+# define TEXTURE_2 "Error : Texture of the wall information contains invalid characters"
+# define TEXTURE_3 "Error : Not available image format of the wall"
 
+# define TEXTURE_4 "Error : Texture of the sprite image twice"
+# define TEXTURE_5 "Error : Texture of the sprite information contains invalid characters"
+# define TEXTURE_6 "Error : Not available image format of the sprite"
 
 
 /*
@@ -79,6 +84,8 @@ typedef struct		s_fd
 	size_t			max_len;
 	int				flag;
 	int				count_ind;
+	int				flag_sprite;
+	char			*filename;
 }					t_fd;
 
 
@@ -173,53 +180,6 @@ typedef struct	s_wall
 
 }					t_wall;
 
-// typedef struct	s_nord
-// {
-// 	char			*adr;
-// 	void			*img;
-// 	int				width;
-// 	int				height;
-// 	int				bits_per_pixel;
-// 	int				size_line;
-// 	int				endian;
-
-// }					t_nord;
-
-// typedef struct	s_south
-// {
-// 	char			*adr;
-// 	void			*img;
-// 	int				width;
-// 	int				height;
-// 	int				bits_per_pixel;
-// 	int				size_line;
-// 	int				endian;
-
-// }					t_south;
-
-// typedef struct	s_east
-// {
-// 	char			*adr;
-// 	void			*img;
-// 	int				width;
-// 	int				height;
-// 	int				bits_per_pixel;
-// 	int				size_line;
-// 	int				endian;
-
-// }					t_east;
-
-// typedef struct	s_west
-// {
-// 	char			*adr;
-// 	void			*img;
-// 	int				width;
-// 	int				height;
-// 	int				bits_per_pixel;
-// 	int				size_line;
-// 	int				endian;
-
-// }					t_west;
 
 typedef struct	s_sprite
 {
@@ -279,10 +239,6 @@ typedef struct		s_all
 	t_ConstValue	*ConstValue;
 	t_dataWall		*dataWall;
 	t_wall			*wall;
-	// t_nord			*nord;
-	// t_south			*south;
-	// t_west			*west;
-	// t_east			*east;
 	t_sprite		*sprite;
 }					t_all;
 
@@ -293,7 +249,7 @@ typedef struct		s_all
 */
 
 
-int		initializing_structures(char *cub);
+t_all		*initializing_structures(t_all *s);
 
 /*
 ** structure initialization
@@ -303,21 +259,17 @@ t_err			*initializing_err_structure();
 t_fd			*initializing_fd_structure();
 t_win			*initializing_win_structure();
 t_ConstValue	*initializing_const_values_structure();
-// t_nord			*initializing_nord_wall_structure();
-// t_south			*initializing_south_wall_structure();
-// t_east			*initializing_east_wall_structure();
-// t_west			*initializing_west_wall_structure();
-t_wall		*initializing_wall_structure(t_wall *wall);
+t_wall			*initializing_wall_structure(t_wall *wall);
 t_dataWall		*initializing_slice_parameters_structure();
 t_sprite		*ft_creat_sprite_s();
-t_all			*initializing_structure_of_structures();
+t_all			*initializing_structure_of_structures(t_all *s);
 
 
 
 /*
 **	parser
 */
-int			ft_parser(char *cub, t_all *s);
+t_list		*parser_of_scene(char *cub, t_all *s, t_list *head);
 t_list		*ft_add_space(t_list **head, t_all *s);
 int			checking_validity_map(t_list *head, char *line, t_all *s);
 t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
@@ -330,10 +282,10 @@ void		ft_max_len(t_list **head, t_all *s);
 int			ft_forb_char_map(t_list **head, char *line, t_all *s, int *i);
 int			checking_resolution(t_all *s, char *line, int *i);
 int			checking_textures_wall(t_all *s, char *line, int *i, int num);
-int			checking_sprites(t_all *s);
+int			checking_textures_sprite(t_all *s, char *line, int *i);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
 void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
-// int 			take_texture_parameters(t_all *s, char *line, int *i, int len);
+
 /*
 **	tools:
 */
@@ -342,7 +294,36 @@ int			ft_strerror(int err);
 int			ft_atoi_mod(const char *nptr, int *i);
 int			ft_errorstr(char *str, int num);
 int			ft_strnstrindex(char *big, char *little);
+char		**make_map(t_list **head, int size, t_all *s);
 
+
+/*
+**	functions for drawing the screen
+*/
+
+int			make_windows(t_all *s, t_win *win);
+int			render_next_frame(t_all *s);
+void 		raycasting(t_all *s, t_dataWall *dataWall);
+int			drawing_screen(t_all *s, t_dataWall *dataWall);
+void		calculatingDeltaForHorizontalIntersection(t_all *s, float a_p);
+void		calculatingDeltaForVerticallIntersection(t_all *s, float a_p);
+void		checking_coordinates_h(t_all *s);
+void		checking_coordinates_v(t_all *s);
+void		calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall);
+int			loop_hook(t_all *s, void *mlx, void *win);
+void		drawing_celing(t_all *s);
+void		drawing_walls(t_all *s, t_dataWall *dataWall);
+void		drawing_floor(t_all *s);
+void		drawing_sprites(t_all *s);
+int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
+int			search_player_and_sprites(t_all *s);
+void		calculation_constant_values(t_all *s);
+
+
+int			ft_key(int keycode, t_all *s);
+void		ft_move_forward_back(t_all *s, int i);
+void		ft_rotate(t_all *s, int i);
+void		ft_move_left_right(t_all *s, int i);
 /*
 ** free memory
 */

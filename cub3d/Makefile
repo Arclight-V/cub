@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/09/28 20:07:03 by anatashi         ###   ########.fr        #
+#    Updated: 2020/09/30 17:27:02 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,21 @@ FLAGS = -Wall -Wextra -Werror
 
 SRCS_DIR = ./srcs
 SRCS = 	$(SRCS_DIR)/cub3d.c \
-		$(SRCS_DIR)/parser.c \
+		$(SRCS_DIR)/parser_of_scene.c \
 		$(SRCS_DIR)/tools.c \
 		$(SRCS_DIR)/structure_initialization_one.c\
 		$(SRCS_DIR)/free_memory.c \
-		$(SRCS_DIR)/parser_tools.c \
+		$(SRCS_DIR)/checking_indentifiers.c \
 		$(SRCS_DIR)/sorting_of_distances_of_sprites.c\
-		$(SRCS_DIR)/error_output.c
+		$(SRCS_DIR)/error_output.c \
+		$(SRCS_DIR)/checking_map.c \
+		$(SRCS_DIR)/big.c \
+		$(SRCS_DIR)/make_map.c \
+		$(SRCS_DIR)/make_windows.c \
+		$(SRCS_DIR)/movement_of_player.c\
+		$(SRCS_DIR)/calculation_of_parameters_for_horizontal_and_vertical_lines.c \
+		$(SRCS_DIR)/loop_hook.c
+
 
 
 # SRCS = 	$(SRCS_DIR)/put_test.c \

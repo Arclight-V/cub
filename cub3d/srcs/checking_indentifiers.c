@@ -1,42 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_tools.c                                     :+:      :+:    :+:   */
+/*   checking_indentifiers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 12:31:06 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/09/30 18:48:08 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-
-int				ft_forb_char_map(t_list **head, char *line, t_all *s, int *i)
-{
-	while (line[*i])
-	{
-		if ((line[*i] == '0' || line[*i] == '1' || line[*i] == 'N')
-			|| (line[*i] == 'S' || line[*i] == 'E' || line[*i] == 'W')
-			|| line[*i] == ' ')
-			;
-		else if (line[*i] == '2')
-		{
-			s->map->item++;
-		}
-		else if (line[*i] != '\0')
-		{
-			ft_free_tmp(line);
-			ft_lstclear(head,lstdelone_f);
-			return (-92);
-		}
-		(*i)++;
-	}
-	s->err->num = 0;
-	return (1);
-}
 
 int				checking_resolution(t_all *s, char *line, int *i)
 {
@@ -86,31 +61,37 @@ int				checking_textures_wall(t_all *s, char *line, int *i, int num)
 		if (open(filename, O_RDONLY) < 0)
 			return (-6);
 		take_texture_parameters(s->win, s->wall, num, filename);
+		ft_free_tmp(filename);
 		return (0);		
 	}
 	else
 		return (-7);
-	
-	
 }
 
 
-int			checking_sprites(t_all *s)
+int			checking_textures_sprite(t_all *s, char *line, int *i)
 {
-	int		fd;
-	int		i;
-	char	*file_name_SPRITE = "./textures/SPRITE.xpm";
 
-	i = -1;
-	// free(s->sprite);
-	if ((fd = open(file_name_SPRITE, O_RDONLY)) < 0)
-		return (-1);
-	if (!(s->sprite = (t_sprite *)malloc(s->map->item * (sizeof(t_sprite)))))
-		return (-1);
-	while (++i < s->map->item)
+	int			xpm;
+	int			j;
+
+	if (s->fd->flag_sprite != 0)
+		return (-8);
+	(*i)++;
+	ft_skip_spaces(line, i);
+	if ((xpm = ft_strnstrindex(line, ".xpm")))
 	{
-		s->sprite[i].img = mlx_xpm_file_to_image(s->win->mlx, file_name_SPRITE, &s->sprite[i].width, &s->sprite[i].height);
-		s->sprite[i].adr = mlx_get_data_addr(s->sprite[i].img, &s->sprite[i].bits_per_pixel, &s->sprite[i].size_line, &s->sprite[i].endian);
+		j = xpm + 1;
+		ft_skip_spaces(line, &j);
+		if (line[j] != '\0')
+			return (-9);
+		if (!(s->fd->filename = ft_substr(line, (*i), xpm - (*i) + 1)))
+			return (-10);
+		if (open(s->fd->filename, O_RDONLY) < 0)
+			return (-11);
+		s->fd->flag_sprite = 1;
+		return (0);
 	}
-	return (1);
+	else
+		return (-12);
 }
