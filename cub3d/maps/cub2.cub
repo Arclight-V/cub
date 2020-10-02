@@ -1,11 +1,13 @@
-R 800 600
+R 1980 1040
 
-NO ./textures/WALL_NORD.xpm       
+NO ./textures/WALL_NORD.xpm
 SO ./textures/WALL_SOUTH.xpm
 WE ./textures/WALL_WEST.xpm
 EA ./textures/WALL_EAST.xpm
-
 S ./textures/SPRITE.xpm
+
+F 133,99,99
+C 55,92,44
 
 11111111111111111
 10022222222222001

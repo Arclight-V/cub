@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 19:31:56 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/02 14:20:24 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@
 # define TEXTURE_4 "Error : Texture of the sprite image twice"
 # define TEXTURE_5 "Error : Texture of the sprite information contains invalid characters"
 # define TEXTURE_6 "Error : Not available image format of the sprite"
-
+# define FLOOR_1 "Error : Floor/ceiling specified twice"
+# define FLOOR_2 "Error : Invalid floor/celing line"
 
 /*
 ** file descriptor for reading the map
@@ -128,6 +129,8 @@ typedef struct		s_map
 	int				flagPDPE;
 	int				i;
 	int				yyy;
+	int	floor;
+	int	ceil;
 }					t_map;
 
 
@@ -275,6 +278,7 @@ int			checking_validity_map(t_list *head, char *line, t_all *s);
 t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 void		ft_max_len(t_list **head, t_all *s);
 // int		ft_creat_list(t_list *head, t_all *s, char *line);
+
 /*
 **	parser tools:
 */
@@ -283,6 +287,7 @@ int			ft_forb_char_map(t_list **head, char *line, t_all *s, int *i);
 int			checking_resolution(t_all *s, char *line, int *i);
 int			checking_textures_wall(t_all *s, char *line, int *i, int num);
 int			checking_textures_sprite(t_all *s, char *line, int *i);
+int			checking_color(int *color, char *line, int *i);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
 void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
 
@@ -295,7 +300,7 @@ int			ft_atoi_mod(const char *nptr, int *i);
 int			ft_errorstr(char *str, int num);
 int			ft_strnstrindex(char *big, char *little);
 char		**make_map(t_list **head, int size, t_all *s);
-
+int			create_trgb(int t, int r, int g, int b);
 
 /*
 **	functions for drawing the screen

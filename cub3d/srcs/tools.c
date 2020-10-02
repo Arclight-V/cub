@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:38:57 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 14:50:22 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/02 12:03:42 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ int		ft_strerror(int err)
 	(err == -10) ? ft_errorstr(MALLOC_13, 0) : 0;
 	(err == -11) ? ft_errorstr(FD_3, 0) : 0;
 	(err == -12) ? ft_errorstr(TEXTURE_6, 0) : 0;
+	
+	(err == -13) ? ft_errorstr(FLOOR_1, 0) : 0;
+	(err == -14) ? ft_errorstr(FLOOR_2, 0) : 0;
 
 
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 19:32:51 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/02 10:35:36 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			run_game(char *cub)
 	t_all 	*s;
 	t_list	*head;
 
-	// head = NULL;
+	head = NULL;
 	s = initializing_structures(s);
 	head = parser_of_scene(cub, s, head);
 	make_map(&head, s->map->size = ft_lstsize(head), s);

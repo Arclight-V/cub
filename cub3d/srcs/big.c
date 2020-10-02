@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 18:45:17 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/02 14:14:25 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,43 +72,25 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 	i = 0;
 	ft_skip_spaces(line, &i);
 	if (line[i] == 'R' && line[i + 1] == ' ')
-	{
-		if ((s->err->num = checking_resolution(s, line, &i)) < 0)
-			return (s->err->num);
-	}
-	else if (line [i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
-	{
-		if ((s->err->num = checking_textures_wall(s, line, &i, NORD)) < 0)
-			return(s->err->num);
-	}
-	else if (line [i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
-	{
-		if ((s->err->num = checking_textures_wall(s, line, &i, SOUTH)) < 0)
-			return(s->err->num);
-	}
-	else if (line [i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
-	{
-		if ((s->err->num = checking_textures_wall(s, line, &i, WEST)) < 0)
-			return(s->err->num);
-	}
-	else if (line [i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
-	{
-		if ((s->err->num = checking_textures_wall(s, line, &i, EAST)) < 0)
-			return(s->err->num);
-	}
-	else if (line [i] == 'S' && line[i + 1] == ' ')
-	{
-		if ((s->err->num = checking_textures_sprite(s, line, &i)) < 0)
-			return(s->err->num);
-	}
+		return (s->err->num = checking_resolution(s, line, &i));
+	else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
+		return (s->err->num = checking_textures_wall(s, line, &i, NORD));
+	else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
+		return (s->err->num = checking_textures_wall(s, line, &i, SOUTH));
+	else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
+		return (s->err->num = checking_textures_wall(s, line, &i, WEST));
+	else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
+		return (s->err->num = checking_textures_wall(s, line, &i, EAST));
+	else if (line[i] == 'S' && line[i + 1] == ' ')
+		return (s->err->num = checking_textures_sprite(s, line, &i));
+	else if (line[i] == 'F')
+		return (s->err->num = checking_color(&s->map->floor, line, &i));
+	else if (line[i] == 'C')
+		return (s->err->num = checking_color(&s->map->ceil, line, &i));	
 	else if (line[i] == '1')
-	{
-		if ((s->err->num = ft_forb_char_map(&head, line, s, &i)) < 0)
-			return (-92);
-	}
+		if (s->err->num = ft_forb_char_map(&head, line, s, &i));
 	else if (ft_skip_spaces(line, &i) && line[i] != '\0')
 		return (-92);
-
 	return (1);
 }
 
@@ -300,15 +282,16 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
 
 void	drawing_floor(t_all *s)
 {
+
 	while (s->map->i < s->win->y - 1)
-		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, 0x07ddf5);
+		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, s->map->floor);
 }
 
 void	drawing_celing(t_all *s)
 {
-		s->map->yyy = -1;
+	s->map->yyy = -1;
 	while (++s->map->yyy < s->dataWall->PositionWall[s->dataWall->index])
-		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->yyy, 0x5b207);
+		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->yyy, s->map->ceil);
 }
 
 int		get_color_pixel_sprite(t_sprite *sprite, int ofset_x, int i, int y)

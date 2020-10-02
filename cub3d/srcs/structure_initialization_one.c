@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 19:07:28 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/02 12:10:08 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_map		*initializing_map_structure()
 	map->flagPDPE = 0;
 	map->i = 0;
 	map->y = 0;
+	map->floor = -1;
+	map->ceil = -1;
 	return (map);
 }
 

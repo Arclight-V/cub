@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 18:48:08 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/02 14:20:12 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				checking_textures_wall(t_all *s, char *line, int *i, int num)
 			return (-6);
 		take_texture_parameters(s->win, s->wall, num, filename);
 		ft_free_tmp(filename);
-		return (0);		
+		return (0);
 	}
 	else
 		return (-7);
@@ -94,4 +94,31 @@ int			checking_textures_sprite(t_all *s, char *line, int *i)
 	}
 	else
 		return (-12);
+}
+
+int		create_trgb(int t, int r, int g, int b)
+{
+	return(t << 24 | r << 16 | g << 8 | b);
+}
+
+int		checking_color(int *color, char *line, int *i)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	if (*color >= 0)
+		return (-13);
+	(*i)++;
+	r = ft_atoi_mod(line, i);
+	(*i)++;
+	g = ft_atoi_mod(line, i);
+	(*i)++;
+	b = ft_atoi_mod(line, i);
+	ft_skip_spaces(line, i);
+	if (line[*i] != '\0' || r > 255 || g > 255 || b > 255)
+		return (-14);
+	*color = create_trgb(0, r, g, b);
+	return (0);
+
 }
