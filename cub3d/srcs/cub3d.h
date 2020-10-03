@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/02 14:20:24 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:48:16 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,11 @@
 
 # define MALLOC_1 "Error : Malloc fail (initializing_structure_of_structures)"
 # define MALLOC_2 "Error : Malloc fail (initializing_map_structure)"
-# define MALLOC_3 "Error : Malloc fail (initializing_err_structure)"
+
 # define MALLOC_4 "Error : Malloc fail (initializing_fd_structure)"
 # define MALLOC_5 "Error : Malloc fail (initializing_win_structure)"
 # define MALLOC_6 "Error : Malloc fail (initializing_const_values_structure)"
-# define MALLOC_7 "Error : Malloc fail (initializing_nord_wall_structure)"
-# define MALLOC_8 "Error : Malloc fail (initializing_south_wall_structure)"
-# define MALLOC_9 "Error : Malloc fail (initializing_west_wall_structure)"
-# define MALLOC_10 "Error : Malloc fail (initializing_east_wall_structure)"
+
 # define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
 # define MALLOC_12 "Error : Malloc fail (checking_textures_wall)"
 # define MALLOC_13 "Error : Malloc fail (checking_textures_sprite)"
@@ -74,36 +71,27 @@
 # define TEXTURE_6 "Error : Not available image format of the sprite"
 # define FLOOR_1 "Error : Floor/ceiling specified twice"
 # define FLOOR_2 "Error : Invalid floor/celing line"
+# define MAP_1 "Error : The map content is not the last element"
 
 /*
 ** file descriptor for reading the map
 */
 typedef struct		s_fd
 {
-	int				fd;
-	int				ret;
 	size_t			max_len;
 	int				flag;
 	int				count_ind;
 	int				flag_sprite;
 	char			*filename;
+	int				err;
 }					t_fd;
-
-
-/*
-** error counter
-*/
-typedef struct		s_err 
-{
-	int				num;
-}					t_err;
 
 /*
 ** level map
 */
 typedef struct		s_map 
 {
-	char			**level;
+	char			**map;
 	int				x;
 	int				y;
 	int				item;
@@ -236,7 +224,6 @@ typedef struct	s_tre
 typedef struct		s_all 
 {	
 	t_map			*map;
-	t_err			*err;
 	t_fd			*fd;
 	t_win			*win;
 	t_ConstValue	*ConstValue;
@@ -252,13 +239,12 @@ typedef struct		s_all
 */
 
 
-t_all		*initializing_structures(t_all *s);
+t_all		*initializing_structures(t_all *s, int *error);
 
 /*
 ** structure initialization
 */
 t_map			*initializing_map_structure();
-t_err			*initializing_err_structure();
 t_fd			*initializing_fd_structure();
 t_win			*initializing_win_structure();
 t_ConstValue	*initializing_const_values_structure();
@@ -287,7 +273,7 @@ int			ft_forb_char_map(t_list **head, char *line, t_all *s, int *i);
 int			checking_resolution(t_all *s, char *line, int *i);
 int			checking_textures_wall(t_all *s, char *line, int *i, int num);
 int			checking_textures_sprite(t_all *s, char *line, int *i);
-int			checking_color(int *color, char *line, int *i);
+int			checking_color(int *color, char *line, int *i, int *count_ind);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
 void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
 
@@ -297,7 +283,7 @@ void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
 int			ft_skip_spaces(char *line, int *i);
 int			ft_strerror(int err);
 int			ft_atoi_mod(const char *nptr, int *i);
-int			ft_errorstr(char *str, int num);
+int			ft_errorstr(char *str);
 int			ft_strnstrindex(char *big, char *little);
 char		**make_map(t_list **head, int size, t_all *s);
 int			create_trgb(int t, int r, int g, int b);
@@ -334,6 +320,7 @@ void		ft_move_left_right(t_all *s, int i);
 */
 void 	ft_freearrmap(char **map);
 void	lstdelone_f(void *d);
+void	free_memory_from_list(t_list *head);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/02 14:14:25 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:57:58 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,23 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 	i = 0;
 	ft_skip_spaces(line, &i);
 	if (line[i] == 'R' && line[i + 1] == ' ')
-		return (s->err->num = checking_resolution(s, line, &i));
+		return (s->fd->err = checking_resolution(s, line, &i));
 	else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		return (s->err->num = checking_textures_wall(s, line, &i, NORD));
+		return (s->fd->err = checking_textures_wall(s, line, &i, NORD));
 	else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		return (s->err->num = checking_textures_wall(s, line, &i, SOUTH));
+		return (s->fd->err = checking_textures_wall(s, line, &i, SOUTH));
 	else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
-		return (s->err->num = checking_textures_wall(s, line, &i, WEST));
+		return (s->fd->err = checking_textures_wall(s, line, &i, WEST));
 	else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
-		return (s->err->num = checking_textures_wall(s, line, &i, EAST));
+		return (s->fd->err = checking_textures_wall(s, line, &i, EAST));
 	else if (line[i] == 'S' && line[i + 1] == ' ')
-		return (s->err->num = checking_textures_sprite(s, line, &i));
+		return (s->fd->err = checking_textures_sprite(s, line, &i));
 	else if (line[i] == 'F')
-		return (s->err->num = checking_color(&s->map->floor, line, &i));
+		return (s->fd->err = checking_color(&s->map->floor, line, &i, &s->fd->count_ind));
 	else if (line[i] == 'C')
-		return (s->err->num = checking_color(&s->map->ceil, line, &i));	
+		return (s->fd->err = checking_color(&s->map->ceil, line, &i, &s->fd->count_ind));	
 	else if (line[i] == '1')
-		if (s->err->num = ft_forb_char_map(&head, line, s, &i));
+		return (s->fd->err = ft_forb_char_map(&head, line, s, &i));
 	else if (ft_skip_spaces(line, &i) && line[i] != '\0')
 		return (-92);
 	return (1);
@@ -99,14 +99,14 @@ t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
 	t_list	*new;
 
 	new = NULL;
-	if ((s->err->num = checking_validity_map(head, line, s)) < 0)
+	if ((s->fd->err = checking_validity_map(head, line, s)) < 0)
 		return (NULL);
-	if (s->fd->count_ind == 1)
+	if (s->fd->count_ind > 8)
 	{
 		if (!(new = ft_lstnew(line)))
 		{	
 			ft_lstclear(&head,lstdelone_f);
-			s->err->num = -15;
+			s->fd->err = -15;
 			return (NULL);
 		}
 		ft_lstadd_back(&head, new);
@@ -158,7 +158,7 @@ int			search_player_and_sprites(t_all *s)
 	while (++i < s->map->size)
 	{
 		j = -1;
-		while (s->map->level[i][++j])
+		while (s->map->map[i][++j])
 		{
 				s->map->y = i * CUBE_SIZE + 1;
 				s->map->x = j * CUBE_SIZE;
@@ -166,10 +166,10 @@ int			search_player_and_sprites(t_all *s)
 				while (s->map->y++ < ( (i + 1) * CUBE_SIZE))
 				{
 					while (s->map->x++ < k - 1)
-						if (s->map->level[i][j] == 'N' || s->map->level[i][j] == 'S'
-							|| s->map->level[i][j] == 'E' || s->map->level[i][j] == 'W')
-							ft_search_view(s, s->map->level[i][j]);
-						else if (s->map->level[i][j] == '2')
+						if (s->map->map[i][j] == 'N' || s->map->map[i][j] == 'S'
+							|| s->map->map[i][j] == 'E' || s->map->map[i][j] == 'W')
+							ft_search_view(s, s->map->map[i][j]);
+						else if (s->map->map[i][j] == '2')
 							record_coordinates_of_sprite(s, ++count_sprites);
 					s->map->x = j * CUBE_SIZE;
 				}
@@ -526,11 +526,11 @@ void 		draw2DMap(t_all *s)
 			{
 				x = -1;
 				j = 0;
-				while (s->map->level[i][j])
+				while (s->map->map[i][j])
 				{
 					while (++x < (j + 1) * CUBE_SIZE)
 					{
-						if (s->map->level[i][j] == '1')
+						if (s->map->map[i][j] == '1')
 						{
 							if ((x + 1) == ((j + 1) * CUBE_SIZE))
 							{
@@ -540,9 +540,9 @@ void 		draw2DMap(t_all *s)
 							else
 								my_mlx_pixel_put(s->win, x, y, 0x878794);
 						}
-						else if (s->map->level[i][j] == '0' || s->map->level[i][j] == 'N' ||
-								s->map->level[i][j] == '2' || s->map->level[i][j] == 'W' ||
-								s->map->level[i][j] == 'U' || s->map->level[i][j] == 'S')
+						else if (s->map->map[i][j] == '0' || s->map->map[i][j] == 'N' ||
+								s->map->map[i][j] == '2' || s->map->map[i][j] == 'W' ||
+								s->map->map[i][j] == 'U' || s->map->map[i][j] == 'S')
 						{	
 							if ((x + 1) == ((j + 1) * CUBE_SIZE))
 							{
@@ -591,12 +591,15 @@ int	take_texture_parameters_sprite(t_all *s, int item, char *filename)
 	
 	i = -1;
 	if (!(s->sprite = (t_sprite *)malloc(item * (sizeof(t_sprite)))))
+	{
+		s->fd->err = -1;
 		return (-1);
+	}
 	while (++i < item)
 	{
 		s->sprite[i].img = mlx_xpm_file_to_image(s->win->mlx, filename, &s->sprite[i].width, &s->sprite[i].height);
 		s->sprite[i].adr = mlx_get_data_addr(s->sprite[i].img, &s->sprite[i].bits_per_pixel, &s->sprite[i].size_line, &s->sprite[i].endian);
 	}
-	return (1);
+	return (0);
 }
 

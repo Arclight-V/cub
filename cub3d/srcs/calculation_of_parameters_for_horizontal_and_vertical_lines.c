@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 16:53:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 17:29:29 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:47:49 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		checking_coordinates_h(t_all *s)
 	if ((s->map->x_horizont > 0 && s->map->x_horizont < s->ConstValue->xMapMax) 
 		&& (s->map->y_horizont > 0 && s->map->y_horizont < s->ConstValue->yMapMax))
 	{
-		if (s->map->level[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '1')
+		if (s->map->map[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '1')
 			{
 				s->map->y_horizont += s->map->Y_a_h;
 				s->map->x_horizont += s->map->X_a_h;
@@ -31,7 +31,7 @@ void		checking_coordinates_v(t_all *s)
 	if ((s->map->x_vertical > 0 && s->map->x_vertical < s->ConstValue->xMapMax )
 		&& (s->map->y_vertical > 0 && s->map->y_vertical < s->ConstValue->yMapMax))
 	{
-		if (s->map->level[(int)s->map->y_vertical/CUBE_SIZE][(int)s->map->x_vertical/CUBE_SIZE] != '1')
+		if (s->map->map[(int)s->map->y_vertical/CUBE_SIZE][(int)s->map->x_vertical/CUBE_SIZE] != '1')
 			{
 				s->map->y_vertical += s->map->Y_a_v;
 				s->map->x_vertical += s->map->X_a_v;

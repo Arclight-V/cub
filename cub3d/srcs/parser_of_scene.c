@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:17:10 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 19:32:08 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 13:05:26 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,23 @@
 t_list			*parser_of_scene(char *cub, t_all *s, t_list *head)
 {	
 	char	*line;
+	int		fd;
+	int		ret;
 
 	line = NULL;
-	if ((s->fd->fd = open(cub, O_RDONLY)) < 0)
-		return (ft_errorstr(FD_1, 0));
-	while ((s->fd->ret = get_next_line(s->fd->fd, &line)) > 0)
-	{
-		if (!(head = ft_creat_list(head, s, line)) || s->err->num < 0)
-			return (ft_errorstr(NULL,s->err->num));
+	if ((fd = open(cub, O_RDONLY)) < 0)
+	{	
+		s->fd->err = -1;
+		return (NULL);
 	}
-	if (!(head = ft_creat_list(head, s, line)))
-		return (ft_strerror(-15));
+	while ((ret = get_next_line(fd, &line)) > 0)
+	{
+		if (!(head = ft_creat_list(head, s, line)) && s->fd->err < 0)
+			return (NULL);
+	}
+	if (!(head = ft_creat_list(head, s, line)) && s->fd->err < 0)
+		return (NULL);
 	if (!(head = ft_add_space(&head, s)))
-		return (ft_strerror(-15));
+		return (NULL);
 	return (head);
 }

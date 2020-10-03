@@ -6,46 +6,106 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/02 10:35:36 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 13:10:19 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_all		*initializing_structures(t_all *s)
+t_all		*initializing_structures(t_all *s, int *error)
 {
 
 	if (!(s = initializing_structure_of_structures(s)))
-		return (ft_errorstr(MALLOC_1, 0));
+		*error = -1;
 	if (!(s->map = initializing_map_structure()))
-		return (ft_errorstr(MALLOC_2, 0));
-	if (!(s->err = initializing_err_structure()))
-		return( ft_errorstr(MALLOC_3, 0));
+		*error = -2;
 	if (!(s->fd = initializing_fd_structure()))
-		return (ft_errorstr(MALLOC_4, 0));
+		*error = -4;
 	if (!(s->win = initializing_win_structure()))
-		return (ft_errorstr(MALLOC_5, 0));
+		*error = -5;
 	if (!(s->ConstValue = initializing_const_values_structure()))
-		return (ft_errorstr(MALLOC_6, 0));
+		*error = -6;
 	if (!(s->wall = initializing_wall_structure(s->wall)))
-		return(ft_errorstr(MALLOC_7, 0));
+		*error = -7;
 	if (!(s->dataWall = initializing_slice_parameters_structure()))
-		return(ft_errorstr(MALLOC_11, 0));	
+		*error = -8;
+	*error = 0;
 	return (s);
 }
 
+
+int		checking_borders(char **map, int size)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (++i <= size)
+	{	
+		j = -1;
+		if (i == 0 || i == size)
+		{
+			while (map[i][++j])
+			{
+				if (map[i][j] != '1' || map[i][j] != ' ')
+					return (-1);
+			}
+		}
+		while (map[i][++j])
+			;
+		if (map[i][0] != '1' || map[0][i] != ' ')
+			return(-1);
+		if (map[i][j - 1] != '1' || map[i][j - 1] != '0')
+			return (-1);
+	}
+	return (1);
+}
+
+int 	checking_space(char **m, int size, int i, int j)
+{
+}
+
+int		checking_map(char **map, int size, int len)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	if (checking_borders(map, size) < 0)
+		return (-4444444);
+	while (++i < size)
+	{
+		j = 1;
+		while (map[i][j++] && j < len - 1)
+		{
+			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' || \ 
+				map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
+			{
+				if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ' || \
+					map[i - 1][j] == ' ' || map[i - 1][j] == ' ')
+					return (-1);
+			}
+		}
+	}
+}
 
 int			run_game(char *cub)
 {
 	t_all 	*s;
 	t_list	*head;
+	int		error;
 
 	head = NULL;
-	s = initializing_structures(s);
-	head = parser_of_scene(cub, s, head);
-	make_map(&head, s->map->size = ft_lstsize(head), s);
+	if (!(s = initializing_structures(s, &error)))
+		return (ft_strerror(error));
+	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
+		return (ft_strerror(s->fd->err));
+	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
+		return (ft_strerror(s->fd->err));
+	error = checking_map(s->map->map, s->map->size, ft_strlen(head->content));
 	make_windows(s, s->win);
-	take_texture_parameters_sprite(s, s->map->item, s->fd->filename);
+	if ((take_texture_parameters_sprite(s, s->map->item, s->fd->filename) < 0))
+		return (ft_strerror(s->fd->err));
 	search_player_and_sprites(s);
 	calculation_constant_values(s);
 	loop_hook(s, s->win->mlx, s->win->win);

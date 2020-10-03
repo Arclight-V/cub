@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/02 14:20:12 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:00:57 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int				checking_textures_wall(t_all *s, char *line, int *i, int num)
 			return (-6);
 		take_texture_parameters(s->win, s->wall, num, filename);
 		ft_free_tmp(filename);
+		s->fd->count_ind++;
 		return (0);
 	}
 	else
@@ -90,6 +91,7 @@ int			checking_textures_sprite(t_all *s, char *line, int *i)
 		if (open(s->fd->filename, O_RDONLY) < 0)
 			return (-11);
 		s->fd->flag_sprite = 1;
+		s->fd->count_ind++;
 		return (0);
 	}
 	else
@@ -101,7 +103,7 @@ int		create_trgb(int t, int r, int g, int b)
 	return(t << 24 | r << 16 | g << 8 | b);
 }
 
-int		checking_color(int *color, char *line, int *i)
+int		checking_color(int *color, char *line, int *i, int *count_ind)
 {
 	int	r;
 	int	g;
@@ -119,6 +121,7 @@ int		checking_color(int *color, char *line, int *i)
 	if (line[*i] != '\0' || r > 255 || g > 255 || b > 255)
 		return (-14);
 	*color = create_trgb(0, r, g, b);
+	(*count_ind)++;
 	return (0);
 
 }

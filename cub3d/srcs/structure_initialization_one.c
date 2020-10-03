@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/02 12:10:08 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:49:10 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_map		*initializing_map_structure()
 
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
-	map->level = NULL;
+	map->map = NULL;
 	map->x = 0;
 	map->y = 0;
 	map->item = 0;
@@ -49,29 +49,18 @@ t_map		*initializing_map_structure()
 	return (map);
 }
 
-t_err		*initializing_err_structure()
-{
-	t_err	*err;
-
-	if (!(err = (t_err *)malloc(sizeof(t_err))))
-		return (NULL);
-	err->num = 0;
-	return (err);
-}
-
 t_fd		*initializing_fd_structure()
 {
 	t_fd	*fd;
 
 	if (!(fd = (t_fd *)malloc(sizeof(t_fd))))
 		return (NULL);
-	fd->fd = 0;
-	fd->ret = 1;
 	fd->max_len = 0;
 	fd->flag = 0;
 	fd->count_ind = 0;
 	fd->filename = NULL;
 	fd->flag_sprite = 0;
+	fd->err = 0;
 	return (fd);
 }
 
@@ -120,7 +109,6 @@ t_all		*initializing_structure_of_structures(t_all	*s)
 	if (!(s = (t_all *)malloc(sizeof(t_all))))
 		return (NULL);
 	s->map = NULL;
-	s->err = NULL;
 	s->fd = NULL;
 	s->win = NULL;
 	s->ConstValue = NULL;

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:13:33 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 18:48:11 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 13:06:32 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 
 int				ft_forb_char_map(t_list **head, char *line, t_all *s, int *i)
 {
-	while (line[*i])
+	if (s->fd->count_ind >= 8)
 	{
-		if ((line[*i] == '0' || line[*i] == '1' || line[*i] == 'N')
-			|| (line[*i] == 'S' || line[*i] == 'E' || line[*i] == 'W')
-			|| line[*i] == ' ')
-			;
-		else if (line[*i] == '2')
+		while (line[*i])
 		{
-			s->map->item++;
+			if ((line[*i] == '0' || line[*i] == '1' || line[*i] == 'N') || \
+				(line[*i] == 'S' || line[*i] == 'E' || line[*i] == 'W') || \
+				line[*i] == ' ')
+				(*i)++;
+			else if (line[*i] == '2')
+			{
+				s->map->item++;
+				(*i)++;
+			}
+			else if (line[*i] != '\0')
+			{
+				// ft_free_tmp(line);
+				// ft_lstclear(head,lstdelone_f);
+				return (-92);
+			}
+			s->fd->count_ind++;
 		}
-		else if (line[*i] != '\0')
-		{
-			ft_free_tmp(line);
-			ft_lstclear(head,lstdelone_f);
-			return (-92);
-		}
-		(*i)++;
+		return (0);
 	}
-	s->err->num = 0;
-	return (1);
+	return (-99999);
 }

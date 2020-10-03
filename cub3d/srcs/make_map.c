@@ -6,25 +6,29 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:45:13 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/30 17:29:39 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/03 12:48:25 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char		**make_map(t_list **head, int size, t_all *s)
+char	**make_map(t_list **head, int size, t_all *s)
 {
-	s->map->level = ft_calloc(size + 1, sizeof(char *));
-	int		i = -1;
-	size_t	j = -1;
-	t_list	*tmp = *head;
+	t_list	*tmp;
+	int	i;
+	int	j;
 
+	tmp = *head;
+	i = -1;
+	j = -1;
+	if (!(s->map->map = ft_calloc(size + 1, sizeof(char *))))
+		return (NULL);
 	while (tmp)
 	{
-		s->map->level[++i] = tmp->content;
+		s->map->map[++i] = tmp->content;
 		tmp = tmp->next;
 	}
-	while (s->map->level[++j])
-		ft_putendl(s->map->level[j]);
-	return (s->map->level);
+	while (s->map->map[++j])
+		ft_putendl(s->map->map[j]);
+	return (s->map->map);
 }
