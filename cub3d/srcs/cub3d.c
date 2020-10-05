@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 13:10:19 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 09:59:01 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_all		*initializing_structures(t_all *s, int *error)
 		*error = -4;
 	if (!(s->win = initializing_win_structure()))
 		*error = -5;
-	if (!(s->ConstValue = initializing_const_values_structure()))
+	if (!(s->cnst = initializing_const_values_structure()))
 		*error = -6;
 	if (!(s->wall = initializing_wall_structure(s->wall)))
 		*error = -7;
@@ -78,7 +78,7 @@ int		checking_map(char **map, int size, int len)
 		j = 1;
 		while (map[i][j++] && j < len - 1)
 		{
-			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' || \ 
+			if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' || \
 				map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
 			{
 				if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ' || \
@@ -87,6 +87,29 @@ int		checking_map(char **map, int size, int len)
 			}
 		}
 	}
+}
+
+int			creating_array_for_ray(t_all *s)
+{
+	if (!(s->dataWall->wall_h = ft_calloc((s->win->x), sizeof(double))))
+		return (-1);
+	if (!(s->dataWall->wall_hFull = ft_calloc((s->win->x), sizeof(double))))
+		return (-1);
+	if (!(s->dataWall->celing_h = ft_calloc((s->win->x), sizeof(int))))
+		return (-1);
+	if (!(s->dataWall->y_image = ft_calloc((s->win->x), sizeof(int))))
+		return (-1);
+	if (!(s->dataWall->side_of_world = ft_calloc((s->win->x), sizeof(char))))
+		return (-1);
+	if (!(s->dataWall->x_image = ft_calloc((s->win->x), sizeof(int))))
+		return (-1);
+	if (!(s->dataWall->distance_wall = ft_calloc((s->win->x), sizeof(double))))
+		return (-1);
+	if (!(s->dataWall->distance_wall_not_corr = ft_calloc((s->win->x), sizeof(double))))
+		return (-1);
+	if (!(s->dataWall->distan_of_sprites = ft_calloc((s->win->x), sizeof(double))))
+		return (-1);
+	return (0);
 }
 
 int			run_game(char *cub)
@@ -105,6 +128,8 @@ int			run_game(char *cub)
 	error = checking_map(s->map->map, s->map->size, ft_strlen(head->content));
 	make_windows(s, s->win);
 	if ((take_texture_parameters_sprite(s, s->map->item, s->fd->filename) < 0))
+		return (ft_strerror(s->fd->err));
+	if ((creating_array_for_ray(s)))
 		return (ft_strerror(s->fd->err));
 	search_player_and_sprites(s);
 	calculation_constant_values(s);

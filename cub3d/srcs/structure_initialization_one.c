@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 12:49:10 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 10:12:37 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_map		*initializing_map_structure()
 	map->size = 0;
 	map->x_p = 0;
 	map->y_p = 0;
-	map->x_pp = 0;
-	map->y_pp = 0;
 	map->a_p = 0;
 	map->angle_start = 0;
 	map->c = 0.0;
@@ -82,25 +80,25 @@ t_win		*initializing_win_structure()
 	return (win);
 }
 
-t_ConstValue		*initializing_const_values_structure()
+t_const		*initializing_const_values_structure()
 {
-	t_ConstValue	*constValue;
+	t_const	*cnst;
 
-	if (!(constValue = (t_ConstValue *)malloc(sizeof(t_ConstValue))))
+	if (!(cnst = (t_const *)malloc(sizeof(t_const))))
 		return(NULL);
-	constValue->DistanceProjectionPlan = 0;
-	constValue->CenterProjection = 0;
-	constValue->delta_ray = 0;
-	constValue->xMapMax = 0;
-	constValue->yMapMax = 0;
-	constValue->ratio_of_texture_height_to_CUBE_SIZE_NORD = 0;
-	constValue->ratio_of_texture_height_to_CUBE_SIZE_South = 0;
-	constValue->ratio_of_texture_height_to_CUBE_SIZE_WEST = 0;
-	constValue->ratio_of_texture_height_to_CUBE_SIZE_EAST = 0;
-	constValue->thiry_degrees = M_PI / 6;
-	constValue->two_pi = 2 * M_PI;
-	constValue->tree_pi_by_two = 3 * M_PI_2;
-	return (constValue);
+	cnst->DistanceProjectionPlan = 0;
+	cnst->CenterProjection = 0;
+	cnst->delta_ray = 0;
+	cnst->xMapMax = 0;
+	cnst->yMapMax = 0;
+	cnst->ratio_of_texture_height_to_CUBE_NORD = 0;
+	cnst->ratio_of_texture_height_to_CUBE_South = 0;
+	cnst->ratio_of_texture_height_to_CUBE_WEST = 0;
+	cnst->ratio_of_texture_height_to_CUBE_EAST = 0;
+	cnst->thiry_degrees = M_PI / 6;
+	cnst->two_PI = 2 * M_PI;
+	cnst->tree_PI_on_two = 3 * M_PI_2;
+	return (cnst);
 }
 
 t_all		*initializing_structure_of_structures(t_all	*s)
@@ -111,7 +109,7 @@ t_all		*initializing_structure_of_structures(t_all	*s)
 	s->map = NULL;
 	s->fd = NULL;
 	s->win = NULL;
-	s->ConstValue = NULL;
+	s->cnst = NULL;
 	s->dataWall = NULL;
 	s->sprite = NULL; 
 	s->wall = NULL;
@@ -173,17 +171,14 @@ t_dataWall		*initializing_slice_parameters_structure()
 	if(!(dataWall = (t_dataWall *)malloc(sizeof(t_dataWall))))
 		return(NULL);
 	dataWall->index = -1;
-	while(++index < 2560)
-	{
-		dataWall->ProjectedSliceHeight[index] = 0.0;
-		dataWall->ProjectedSliceHeightNotCorr[index] = 0.0;
-		dataWall->PositionWall[index] = 0.0;
-		dataWall->CardinalDirections[index] = 0.0;
-		dataWall->OfsetX[index] = 0.0;
-		dataWall->scalingIndex[index] = 0.0;
-		dataWall->yCoordinateInTexture[index] = 0.0;
-		dataWall->distance_wall[index] = 0.0;
-		dataWall->distance_wall_not_corr[index] = 0.0;
-	}
+	dataWall->wall_h = NULL;
+	dataWall->wall_hFull = NULL;
+	dataWall->celing_h = NULL;
+	dataWall->y_image = NULL;
+	dataWall->side_of_world = NULL;
+	dataWall->x_image = NULL;
+	dataWall->distance_wall = NULL;
+	dataWall->distance_wall_not_corr = NULL;
+	dataWall->distan_of_sprites = NULL;
 	return(dataWall);
 }

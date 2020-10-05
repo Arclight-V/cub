@@ -6,79 +6,96 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 16:53:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 12:47:49 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 11:11:51 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		checking_coordinates_h(t_all *s)
+void	horizontal_intersection_with_wall(t_map *map, t_const *cnst)
 {
-	if ((s->map->x_horizont > 0 && s->map->x_horizont < s->ConstValue->xMapMax) 
-		&& (s->map->y_horizont > 0 && s->map->y_horizont < s->ConstValue->yMapMax))
+	if ((map->x_horizont > 0 && map->x_horizont < cnst->xMapMax) && \
+		(map->y_horizont > 0 && map->y_horizont < cnst->yMapMax))
 	{
-		if (s->map->map[(int)s->map->y_horizont/CUBE_SIZE][(int)s->map->x_horizont/CUBE_SIZE] != '1')
+		if (map->map[(int)map->y_horizont/CUBE][(int)map->x_horizont/CUBE] != '1')
 			{
-				s->map->y_horizont += s->map->Y_a_h;
-				s->map->x_horizont += s->map->X_a_h;
-				checking_coordinates_h(s);
+				map->y_horizont += map->Y_a_h;
+				map->x_horizont += map->X_a_h;
+				horizontal_intersection_with_wall(map, cnst);
 			}
 	}
 }
 
-void		checking_coordinates_v(t_all *s)
+void	vertical_intersection_with_wall(t_map *map, t_const *cnst)
 {
-	if ((s->map->x_vertical > 0 && s->map->x_vertical < s->ConstValue->xMapMax )
-		&& (s->map->y_vertical > 0 && s->map->y_vertical < s->ConstValue->yMapMax))
+	if ((map->x_vertical > 0 && map->x_vertical < cnst->xMapMax )
+		&& (map->y_vertical > 0 && map->y_vertical < cnst->yMapMax))
 	{
-		if (s->map->map[(int)s->map->y_vertical/CUBE_SIZE][(int)s->map->x_vertical/CUBE_SIZE] != '1')
+		if (map->map[(int)map->y_vertical/CUBE][(int)map->x_vertical/CUBE] != '1')
 			{
-				s->map->y_vertical += s->map->Y_a_v;
-				s->map->x_vertical += s->map->X_a_v;
-				checking_coordinates_v(s);
+				map->y_vertical += map->Y_a_v;
+				map->x_vertical += map->X_a_v;
+				vertical_intersection_with_wall(map, cnst);
 			}
 	}
 }
 
-void	calculatingDeltaForHorizontalIntersection(t_all *s, float a_p)
+void	first_horisont_intersection(t_map *map)
 {	
 	double tang;
 
-	tang = tan(a_p);
-	if (a_p > 0 && a_p < M_PI )
+	tang = tan(map->angle_start);
+	if (map->angle_start > 0 && map->angle_start < M_PI )
 	{
-		s->map->X_a_h = CUBE_SIZE /tang;
-		s->map->y_horizont = (int)(s->map->y_pp / CUBE_SIZE) * CUBE_SIZE - 0.0001;
-		s->map->x_horizont = s->map->x_pp + (s->map->y_pp - s->map->y_horizont) / tang;
-		s->map->Y_a_h = -CUBE_SIZE;
+		map->X_a_h = CUBE /tang;
+		map->y_horizont = (int)(map->y_p / CUBE) * CUBE - 0.0001;
+		map->x_horizont = map->x_p + (map->y_p - map->y_horizont) / tang;
+		map->Y_a_h = -CUBE;
 	}
-	else if (a_p > M_PI && a_p < s->ConstValue->two_pi)
+	else
 	{
-		s->map->X_a_h = -(CUBE_SIZE /tang);
-		s->map->y_horizont = (int)(s->map->y_pp / CUBE_SIZE) * CUBE_SIZE + CUBE_SIZE;
-		s->map->x_horizont = s->map->x_pp + (s->map->y_pp - s->map->y_horizont) / tang;
-		s->map->Y_a_h = CUBE_SIZE;
+		map->X_a_h = -(CUBE /tang);
+		map->y_horizont = (int)(map->y_p / CUBE) * CUBE + CUBE;
+		map->x_horizont = map->x_p + (map->y_p - map->y_horizont) / tang;
+		map->Y_a_h = CUBE;
 	}
 }
 
-void	calculatingDeltaForVerticallIntersection(t_all *s, float a_p)
+void	first_vertical_intersection(t_map *map, double tree_PI_on_2)
 {
 	double	tang;
 
-	tang = tan(a_p);
-
-	if (a_p < M_PI_2 || a_p > s->ConstValue->tree_pi_by_two)
+	tang = tan(map->angle_start);
+	if (map->angle_start < M_PI_2 || map->angle_start > tree_PI_on_2)
 	{
-		s->map->Y_a_v = -(CUBE_SIZE * tang);
-		s->map->x_vertical = (int)(s->map->x_pp / CUBE_SIZE) * CUBE_SIZE + CUBE_SIZE;
-		s->map->y_vertical = s->map->y_pp + ((s->map->x_pp - s->map->x_vertical) * tang);
-		s->map->X_a_v = CUBE_SIZE;
+		map->Y_a_v = -(CUBE * tang);
+		map->x_vertical = (int)(map->x_p / CUBE) * CUBE + CUBE;
+		map->y_vertical = map->y_p + ((map->x_p - map->x_vertical) * tang);
+		map->X_a_v = CUBE;
 	}
-	else if (a_p > M_PI_2 || a_p < s->ConstValue->tree_pi_by_two)
+	else
 	{
-		s->map->Y_a_v = CUBE_SIZE * tang;
-		s->map->x_vertical = (int)(s->map->x_pp / CUBE_SIZE) * CUBE_SIZE - 0.0001;
-		s->map->y_vertical = (s->map->y_pp + (s->map->x_pp - s->map->x_vertical) * tang);
-		s->map->X_a_v = -CUBE_SIZE;
+		map->Y_a_v = CUBE * tang;
+		map->x_vertical = (int)(map->x_p / CUBE) * CUBE - 0.0001;
+		map->y_vertical = (map->y_p + (map->x_p - map->x_vertical) * tang);
+		map->X_a_v = -CUBE;
+	}
+}
+
+void	calculating_nearest_distance_to_wall(t_map *map, t_dataWall *dataWall)
+{
+	map->PD = sqrt(pow((map->x_p - map->x_horizont), 2) + pow((map->y_p - map->y_horizont), 2));
+	map->PE = sqrt(pow((map->x_p - map->x_vertical), 2) + pow((map->y_p - map->y_vertical), 2));
+	if (map->PD < map->PE)
+	{
+		dataWall->distance_wall_not_corr[dataWall->index] = map->PD;
+		dataWall->distance_wall[dataWall->index] = map->PD * cos(map->a_p - map->angle_start);
+		map->flagPDPE = 1;
+	}
+	else
+	{
+		dataWall->distance_wall_not_corr[dataWall->index] = map->PE;
+		dataWall->distance_wall[dataWall->index] = map->PE * cos(map->a_p - map->angle_start);
+		map->flagPDPE = 0;
 	}
 }

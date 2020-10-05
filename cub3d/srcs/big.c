@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 12:57:58 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 12:59:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,11 @@ void			ft_search_view(t_all *s, int ch)
 	if (ch == 'N')
 		s->map->a_p = M_PI_2;
 	else if (ch == 'S')
-		s->map->a_p = s->ConstValue->tree_pi_by_two;
+		s->map->a_p = s->cnst->tree_PI_on_two;
 	else if (ch == 'E')
 		s->map->a_p = M_PI;
 	else if (ch == 'W')
-		s->map->a_p = s->ConstValue->two_pi;
+		s->map->a_p = s->cnst->two_PI;
 	
 }
 
@@ -141,8 +141,8 @@ void		record_coordinates_of_sprite(t_all *s, int count_sprites)
 {
 	s->sprite[count_sprites].x = s->map->x + 32;
 	s->sprite[count_sprites].y = s->map->y + 32;
-	s->map->x += CUBE_SIZE;
-	s->map->y += CUBE_SIZE;
+	s->map->x += CUBE;
+	s->map->y += CUBE;
 }
 
 int			search_player_and_sprites(t_all *s)
@@ -154,16 +154,16 @@ int			search_player_and_sprites(t_all *s)
 
 	count_sprites = -1;
 	i = -1;
-	k = CUBE_SIZE;
+	k = CUBE;
 	while (++i < s->map->size)
 	{
 		j = -1;
 		while (s->map->map[i][++j])
 		{
-				s->map->y = i * CUBE_SIZE + 1;
-				s->map->x = j * CUBE_SIZE;
-				k = s->map->x + CUBE_SIZE;
-				while (s->map->y++ < ( (i + 1) * CUBE_SIZE))
+				s->map->y = i * CUBE + 1;
+				s->map->x = j * CUBE;
+				k = s->map->x + CUBE;
+				while (s->map->y++ < ( (i + 1) * CUBE))
 				{
 					while (s->map->x++ < k - 1)
 						if (s->map->map[i][j] == 'N' || s->map->map[i][j] == 'S'
@@ -171,12 +171,12 @@ int			search_player_and_sprites(t_all *s)
 							ft_search_view(s, s->map->map[i][j]);
 						else if (s->map->map[i][j] == '2')
 							record_coordinates_of_sprite(s, ++count_sprites);
-					s->map->x = j * CUBE_SIZE;
+					s->map->x = j * CUBE;
 				}
 		}
 	}
-	s->map->x_pp = s->map->x_p - 32;
-	s->map->y_pp = s->map->y_p - 32;
+	s->map->x_p = s->map->x_p - 32;
+	s->map->y_p = s->map->y_p - 32;
 
 }
 
@@ -206,7 +206,7 @@ int			get_color_pixel(t_all *s, char *adr, int size_line, int bits_per_pixel)
 {
 	char	*color;
 
-	color = adr + (s->dataWall->yCoordinateInTexture[s->dataWall->index] * size_line + s->dataWall->OfsetX[s->dataWall->index] * (bits_per_pixel / 8));
+	color = adr + (s->dataWall->y_image[s->dataWall->index] * size_line + s->dataWall->x_image[s->dataWall->index] * (bits_per_pixel / 8));
 	return (*(unsigned int*)color);
 }
 
@@ -218,22 +218,22 @@ void		printSliceWall(t_all *s, char *addr, int size_line, int bits_per_pixel)
 
 	colour_pixel = get_color_pixel(s, addr, size_line, bits_per_pixel);
 	// count = -1;
-	// if (s->map->yyy < s->dataWall->ProjectedSliceHeight[s->dataWall->index])
+	// if (s->map->yyy < s->dataWall->wall_h[s->dataWall->index])
 	{	
 			my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, colour_pixel);
 			s->map->yyy++;
 	}
-	s->dataWall->yCoordinateInTexture[s->dataWall->index]++;
+	s->dataWall->y_image[s->dataWall->index]++;
 }
 
 double	calc_y(t_all *s)
 {
-	return (floor(s->map->yyy + (s->dataWall->ProjectedSliceHeightNotCorr[s->dataWall->index] - s->dataWall->ProjectedSliceHeight[s->dataWall->index]) / 2));
+	return (floor(s->map->yyy + (s->dataWall->wall_hFull[s->dataWall->index] - s->dataWall->wall_h[s->dataWall->index]) / 2));
 }
 
 void		search_y_texture(t_all *s, double y_slice, int h_texture, double sliceWnot)
 {
-	s->dataWall->yCoordinateInTexture[s->dataWall->index] = floor(y_slice * (h_texture ) / (sliceWnot));
+	s->dataWall->y_image[s->dataWall->index] = floor(y_slice * (h_texture ) / (sliceWnot));
 }
 
 double		calculating_sprite_direction(double TWO_M_PI, double x_player, double y_player, int x_sprite, int y_sprite)
@@ -266,15 +266,15 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
 	i = -1;
 	while (++i < s->map->item)
 	{
-		s->sprite[i].sprite_angle = calculating_sprite_direction(s->ConstValue->two_pi,s->map->x_pp, s->map->y_pp, s->sprite[i].x, s->sprite[i].y);
-		s->sprite[i].distance = sqrt(pow(s->map->x_pp - s->sprite[i].x, 2) + pow(s->map->y_pp - s->sprite[i].y, 2));
-		s->sprite[i].sprite_screen_size_full = (CUBE_SIZE / (s->sprite[i].distance  * cos(s->map->a_p - s->sprite[i].sprite_angle))) * s->ConstValue->DistanceProjectionPlan;
+		s->sprite[i].sprite_angle = calculating_sprite_direction(s->cnst->two_PI,s->map->x_p, s->map->y_p, s->sprite[i].x, s->sprite[i].y);
+		s->sprite[i].distance = sqrt(pow(s->map->x_p - s->sprite[i].x, 2) + pow(s->map->y_p - s->sprite[i].y, 2));
+		s->sprite[i].sprite_screen_size_full = (CUBE / (s->sprite[i].distance  * cos(s->map->a_p - s->sprite[i].sprite_angle))) * s->cnst->DistanceProjectionPlan;
 		s->sprite[i].sprite_screen_size_coor = s->sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : s->sprite[i].sprite_screen_size_full;
-		s->sprite[i].sprite_width = CUBE_SIZE / s->sprite[i].distance * s->ConstValue->DistanceProjectionPlan;
+		s->sprite[i].sprite_width = CUBE / s->sprite[i].distance * s->cnst->DistanceProjectionPlan;
 		s->sprite[i].sprite_screen_size_half = s->sprite[i].sprite_screen_size_coor / 2;
-		delta = calculating_delta(s->ConstValue->two_pi, s->map->a_p + s->ConstValue->thiry_degrees, s->sprite[i].sprite_angle);
+		delta = calculating_delta(s->cnst->two_PI, s->map->a_p + s->cnst->thiry_degrees, s->sprite[i].sprite_angle);
 		s->sprite[i].h_offset =  delta / ( FOV / s->win->x) - s->sprite[i].sprite_screen_size_half;
-		s->sprite[i].position_sprite = ((s->ConstValue->CenterProjection - s->sprite[i].sprite_screen_size_half));
+		s->sprite[i].position_sprite = ((s->cnst->CenterProjection - s->sprite[i].sprite_screen_size_half));
 	}
 
 }
@@ -287,11 +287,13 @@ void	drawing_floor(t_all *s)
 		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, s->map->floor);
 }
 
-void	drawing_celing(t_all *s)
+void	drawing_celing(t_dataWall *dataWall, t_win *win, int ceil)
 {
-	s->map->yyy = -1;
-	while (++s->map->yyy < s->dataWall->PositionWall[s->dataWall->index])
-		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->yyy, s->map->ceil);
+	int	y;
+
+	y = -1;
+	while (++y < dataWall->celing_h[dataWall->index])
+		my_mlx_pixel_put(win, dataWall->index, y, ceil);
 }
 
 int		get_color_pixel_sprite(t_sprite *sprite, int ofset_x, int i, int y)
@@ -313,7 +315,6 @@ int		print_pixel_of_sprite(t_all *s, int j, int i)
 
 	offset_x = floor((double)j * ((double)s->sprite[i].width / s->sprite[i].sprite_width)); 
 	y_sprite = floor(s->map->yyy + ((s->sprite[i].sprite_screen_size_full -  s->sprite[i].sprite_screen_size_coor) / 2));
-
 	color_pixel = get_color_pixel_sprite(s->sprite, offset_x, i, floor(y_sprite * (s->sprite[i].height) / (s->sprite[i].sprite_screen_size_full)));
 	if (color_pixel <= 0)
 		return (s->map->i + 1);
@@ -327,19 +328,17 @@ void	drawing_sprites(t_all *s)
 {
 	int		i;
 	int		j;
-	int		*array_of_sequence_numbers_of_sprites;
 
 	i = -1;
 	int k;
 	calculation_of_parameters_of_sprites(s, s->dataWall);
 
-	array_of_sequence_numbers_of_sprites = ft_calloc(s->map->item, sizeof(int));
-	array_of_sequence_numbers_of_sprites = sorting_of_distances_of_sprites(s, array_of_sequence_numbers_of_sprites);
+	s->dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, s->dataWall->distan_of_sprites);
 
 	while (++i < s->map->item)
 	{
 		j = -1;
-		k = array_of_sequence_numbers_of_sprites[i];
+		k = s->dataWall->distan_of_sprites[i];
 		while (++j < s->sprite[k].sprite_width)
 		{
 			if ((s->sprite[k].h_offset + j ) == s->dataWall->index)
@@ -364,26 +363,26 @@ void	drawing_sprites(t_all *s)
 void	drawing_walls(t_all *s, t_dataWall *dataWall)
 {
 	s->map->yyy = 0;
-	while (s->map->yyy < dataWall->ProjectedSliceHeight[dataWall->index])
+	while (s->map->yyy < dataWall->wall_h[dataWall->index])
 	{
-		if (dataWall->CardinalDirections[dataWall->index] == 'N')
+		if (dataWall->side_of_world[dataWall->index] == 'N')
 		{
-			search_y_texture(s, calc_y(s), s->wall[NORD].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			search_y_texture(s, calc_y(s), s->wall[NORD].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[NORD].adr, s->wall[NORD].size_line, s->wall[NORD].bits_per_pixel);
 		}
-		else if (dataWall->CardinalDirections[dataWall->index] == 'E')
+		else if (dataWall->side_of_world[dataWall->index] == 'E')
 		{
-			search_y_texture(s, calc_y(s), s->wall[EAST].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			search_y_texture(s, calc_y(s), s->wall[EAST].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[EAST].adr, s->wall[EAST].size_line, s->wall[EAST].bits_per_pixel);
 		}
-		else if (dataWall->CardinalDirections[dataWall->index] == 'W')
+		else if (dataWall->side_of_world[dataWall->index] == 'W')
 		{
-			search_y_texture(s, calc_y(s), s->wall[WEST].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			search_y_texture(s, calc_y(s), s->wall[WEST].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[WEST].adr, s->wall[WEST].size_line, s->wall[WEST].bits_per_pixel);		
 		}
-		else if (dataWall->CardinalDirections[dataWall->index] == 'S')
+		else if (dataWall->side_of_world[dataWall->index] == 'S')
 		{
-			search_y_texture(s, calc_y(s), s->wall[SOUTH].height, dataWall->ProjectedSliceHeightNotCorr[dataWall->index]);
+			search_y_texture(s, calc_y(s), s->wall[SOUTH].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[SOUTH].adr, s->wall[SOUTH].size_line, s->wall[SOUTH].bits_per_pixel);
 		}		
 	}
@@ -393,50 +392,41 @@ void	drawing_walls(t_all *s, t_dataWall *dataWall)
 
 
 
-void	specifyDirectionWallAndCalculateOffset(t_all *s, char ch, int width, double height)
+void	calculating_offsetx_in_texture(t_all *s, t_dataWall *dataWall, t_map *map, char ch)
 {
-	s->dataWall->CardinalDirections[s->dataWall->index] = ch;
-	s->dataWall->scalingIndex[s->dataWall->index] = ceil(s->dataWall->ProjectedSliceHeightNotCorr[s->dataWall->index] / height); 
-	if (s->map->flagPDPE == 1 && ch == 'N')
-	{
-		s->dataWall->OfsetX[s->dataWall->index] = floor(fmod(s->map->x_horizont, CUBE_SIZE) * s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_NORD);
-	}
+	dataWall->side_of_world[dataWall->index] = ch;
+	if (map->flagPDPE == 1 && ch == 'N')
+		dataWall->x_image[dataWall->index] = floor(fmod(map->x_horizont, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_NORD);
 	else if (ch == 'W')
-	{
-		s->dataWall->OfsetX[s->dataWall->index] = floor(fmod(s->map->y_vertical, CUBE_SIZE) * s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_WEST);
-	}
+		dataWall->x_image[dataWall->index] = floor(fmod(map->y_vertical, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_WEST);
 	else if (ch == 'S')
-	{
-		s->dataWall->OfsetX[s->dataWall->index] = floor(fmod(s->map->x_horizont, CUBE_SIZE) * s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_South);
-	}
+		dataWall->x_image[dataWall->index] = floor(fmod(map->x_horizont, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_South);
 	else if (ch == 'E')
-	{
-		s->dataWall->OfsetX[s->dataWall->index] = floor(fmod(s->map->y_vertical, CUBE_SIZE) * s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_EAST);
-	}
+		dataWall->x_image[dataWall->index] = floor(fmod(map->y_vertical, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_EAST);
 }
 
-void	calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall)
+void	calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
 {
-	s->dataWall->ProjectedSliceHeightNotCorr[dataWall->index] = CUBE_SIZE / s->dataWall->distance_wall[s->dataWall->index] * s->ConstValue->DistanceProjectionPlan;
-	dataWall->ProjectedSliceHeight[dataWall->index] = s->dataWall->ProjectedSliceHeightNotCorr[dataWall->index] > s->win->y ? s->win->y : s->dataWall->ProjectedSliceHeightNotCorr[dataWall->index];
-	dataWall->PositionWall[dataWall->index] = floor((s->ConstValue->CenterProjection - dataWall->ProjectedSliceHeight[dataWall->index] / 2));
-	if (s->map->angle_start > 0 && s->map->angle_start < M_PI)
+	dataWall->wall_hFull[dataWall->index] = CUBE / dataWall->distance_wall[dataWall->index] * cnst->DistanceProjectionPlan;
+	dataWall->wall_h[dataWall->index] = dataWall->wall_hFull[dataWall->index] > s->win->y ? s->win->y : dataWall->wall_hFull[dataWall->index];
+	dataWall->celing_h[dataWall->index] = floor((cnst->CenterProjection - dataWall->wall_h[dataWall->index] / 2));
+	if (map->angle_start > 0 && map->angle_start < M_PI)
 	{
-		if (s->map->flagPDPE == 1)
-			specifyDirectionWallAndCalculateOffset(s, 'N', s->wall[NORD].width, s->wall[NORD].height);
-		else if (s->map->angle_start < M_PI_2 && s->map->flagPDPE == 0)
-			specifyDirectionWallAndCalculateOffset(s, 'E', s->wall[EAST].width, s->wall[EAST].height);	
+		if (map->flagPDPE == 1)
+			calculating_offsetx_in_texture(s, dataWall, map, 'N');
+		else if (map->angle_start < M_PI_2 && map->flagPDPE == 0)
+			calculating_offsetx_in_texture(s, dataWall, map, 'E');
 		else
-			specifyDirectionWallAndCalculateOffset(s, 'W', s->wall[WEST].width, s->wall[WEST].height);
+			calculating_offsetx_in_texture(s, dataWall, map, 'W');
 	}
 	else
 	{
-		if (s->map->flagPDPE == 1)
-			specifyDirectionWallAndCalculateOffset(s, 'S', s->wall[SOUTH].width, s->wall[SOUTH].height);
-		else if (s->map->angle_start >  s->ConstValue->tree_pi_by_two && s->map->flagPDPE == 0)
-			specifyDirectionWallAndCalculateOffset(s, 'E', s->wall[EAST].width, s->wall[EAST].height);
+		if (map->flagPDPE == 1)
+			calculating_offsetx_in_texture(s, dataWall, map, 'S');
+		else if (map->angle_start >  cnst->tree_PI_on_two && map->flagPDPE == 0)
+			calculating_offsetx_in_texture(s, dataWall, map, 'E');
 		else
-			specifyDirectionWallAndCalculateOffset(s, 'W', s->wall[WEST].width, s->wall[WEST].height);
+			calculating_offsetx_in_texture(s, dataWall, map,'W');
 	}	
 }
 
@@ -469,43 +459,43 @@ int			drawRayToWall(t_all *s, int xPlayer, int yPlayer, int xWall, int yWall)
 
 
 
-int		ray_2(t_all *s,  t_dataWall *dataWall)
-{
-	float PD;
-	float PE;
-	if (s->map->angle_start > 2 * M_PI)
-		s->map->angle_start -= 2 * M_PI;
-	else if (s->map->angle_start < 0)
-		s->map->angle_start += 2 * M_PI;
-	calculatingDeltaForHorizontalIntersection(s, s->map->angle_start);
-	calculatingDeltaForVerticallIntersection(s, s->map->angle_start);
-	checking_coordinates_h(s);
-	checking_coordinates_v(s);
-	PD = sqrt(pow((s->map->x_pp - s->map->x_horizont), 2) + pow((s->map->y_pp - s->map->y_horizont), 2));
-	PE = sqrt(pow((s->map->x_pp - s->map->x_vertical), 2) + pow((s->map->y_pp - s->map->y_vertical), 2));
-	if (PD < PE)
-	{
-		my_mlx_pixel_put(s->win, s->map->x_horizont, s->map->y_horizont, 0x1456e3);
-		drawRayToWall(s, s->map->x_pp, s->map->y_pp, s->map->x_horizont, s->map->y_horizont);
-	}
-	else
-	{
-		my_mlx_pixel_put(s->win, s->map->x_vertical, s->map->y_vertical, 0x1456e3);
-		drawRayToWall(s, s->map->x_pp, s->map->y_pp, s->map->x_vertical, s->map->y_vertical);
-	}
-}
+// int		ray_2(t_all *s,  t_dataWall *dataWall)
+// {
+// 	float PD;
+// 	float PE;
+// 	if (s->map->angle_start > 2 * M_PI)
+// 		s->map->angle_start -= 2 * M_PI;
+// 	else if (s->map->angle_start < 0)
+// 		s->map->angle_start += 2 * M_PI;
+// 	first_horisont_intersection(s, s->map->angle_start, s->map);
+// 	first_vertical_intersection(s, s->map->angle_start);
+// 	horizontal_intersection_with_wall(s);
+// 	vertical_intersection_with_wall(s);
+// 	PD = sqrt(pow((s->map->x_p - s->map->x_horizont), 2) + pow((s->map->y_p - s->map->y_horizont), 2));
+// 	PE = sqrt(pow((s->map->x_p - s->map->x_vertical), 2) + pow((s->map->y_p - s->map->y_vertical), 2));
+// 	if (PD < PE)
+// 	{
+// 		my_mlx_pixel_put(s->win, s->map->x_horizont, s->map->y_horizont, 0x1456e3);
+// 		drawRayToWall(s, s->map->x_p, s->map->y_p, s->map->x_horizont, s->map->y_horizont);
+// 	}
+// 	else
+// 	{
+// 		my_mlx_pixel_put(s->win, s->map->x_vertical, s->map->y_vertical, 0x1456e3);
+// 		drawRayToWall(s, s->map->x_p, s->map->y_p, s->map->x_vertical, s->map->y_vertical);
+// 	}
+// }
 
 
-int ft_ray_cast_2(t_all *s, t_dataWall *dataWall)
-{
-	s->map->angle_start = s->map->a_p + M_PI / 6;
-	dataWall->index = -1;
-	while (++dataWall->index < s->win->x)
-	{
-		ray_2(s, dataWall);
-		s->map->angle_start -= s->ConstValue->delta_ray;
-	}	
-}
+// int ft_ray_cast_2(t_all *s, t_dataWall *dataWall)
+// {
+// 	s->map->angle_start = s->map->a_p + M_PI / 6;
+// 	dataWall->index = -1;
+// 	while (++dataWall->index < s->win->x)
+// 	{
+// 		ray_2(s, dataWall);
+// 		s->map->angle_start -= cnst->delta_ray;
+// 	}	
+// }
 
 
 
@@ -517,22 +507,22 @@ void 		draw2DMap(t_all *s)
 	int x;
 	int y = -1;
 	i = -1;
-	k = CUBE_SIZE;
+	k = CUBE;
 	int a = 1;
 	while (++i < s->map->size)
 	{
 		{
-			while (++y < (i + 1) * CUBE_SIZE)
+			while (++y < (i + 1) * CUBE)
 			{
 				x = -1;
 				j = 0;
 				while (s->map->map[i][j])
 				{
-					while (++x < (j + 1) * CUBE_SIZE)
+					while (++x < (j + 1) * CUBE)
 					{
 						if (s->map->map[i][j] == '1')
 						{
-							if ((x + 1) == ((j + 1) * CUBE_SIZE))
+							if ((x + 1) == ((j + 1) * CUBE))
 							{
 								my_mlx_pixel_put(s->win, x, y, 0xaa0000);
 								my_mlx_pixel_put(s->win, x + 1, y, 0xaa0000);
@@ -544,7 +534,7 @@ void 		draw2DMap(t_all *s)
 								s->map->map[i][j] == '2' || s->map->map[i][j] == 'W' ||
 								s->map->map[i][j] == 'U' || s->map->map[i][j] == 'S')
 						{	
-							if ((x + 1) == ((j + 1) * CUBE_SIZE))
+							if ((x + 1) == ((j + 1) * CUBE))
 							{
 								my_mlx_pixel_put(s->win, x, y, 0xaa0000);
 								my_mlx_pixel_put(s->win, x + 1, y, 0xaa0000);
@@ -555,11 +545,11 @@ void 		draw2DMap(t_all *s)
 					}
 					j++;
 				}
-				if ((y + 1) == ((i + 1) * CUBE_SIZE))
+				if ((y + 1) == ((i + 1) * CUBE))
 				{
 					x = -1;
 					j--;
-					while (++x < (j + 1) * CUBE_SIZE)
+					while (++x < (j + 1) * CUBE)
 					{
 						my_mlx_pixel_put(s->win, x, y, 0xaa0000);
 						my_mlx_pixel_put(s->win, x, y + 1, 0xaa0000);
@@ -574,15 +564,15 @@ void 		draw2DMap(t_all *s)
 
 void		calculation_constant_values(t_all *s)
 {
-	s->ConstValue->DistanceProjectionPlan = floor((float)s->win->x / 2) / tan(FOV / 2);
-	s->ConstValue->CenterProjection = floor((float)s->win->y / 2);
-	s->ConstValue->delta_ray = FOV / s->win->x;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_NORD = s->wall[NORD].width / CUBE_SIZE;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_South = s->wall[SOUTH].width / CUBE_SIZE;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_WEST = s->wall[WEST].width / CUBE_SIZE;
-	s->ConstValue->ratio_of_texture_height_to_CUBE_SIZE_EAST = s->wall[EAST].width / CUBE_SIZE;
-	s->ConstValue->xMapMax = s->fd->max_len * CUBE_SIZE - 1;
-	s->ConstValue->yMapMax = s->map->size * CUBE_SIZE - 1;
+	s->cnst->DistanceProjectionPlan = floor((float)s->win->x / 2) / tan(FOV / 2);
+	s->cnst->CenterProjection = floor((float)s->win->y / 2);
+	s->cnst->delta_ray = FOV / s->win->x;
+	s->cnst->ratio_of_texture_height_to_CUBE_NORD = s->wall[NORD].width / CUBE;
+	s->cnst->ratio_of_texture_height_to_CUBE_South = s->wall[SOUTH].width / CUBE;
+	s->cnst->ratio_of_texture_height_to_CUBE_WEST = s->wall[WEST].width / CUBE;
+	s->cnst->ratio_of_texture_height_to_CUBE_EAST = s->wall[EAST].width / CUBE;
+	s->cnst->xMapMax = s->fd->max_len * CUBE - 1;
+	s->cnst->yMapMax = s->map->size * CUBE - 1;
 }
 
 int	take_texture_parameters_sprite(t_all *s, int item, char *filename)

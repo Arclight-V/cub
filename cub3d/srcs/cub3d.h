@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 12:48:16 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 11:25:10 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 
-# define CUBE_SIZE 64
+# define CUBE 64
 # define FOV M_PI / 3
 
 
@@ -96,10 +96,8 @@ typedef struct		s_map
 	int				y;
 	int				item;
 	int				size;
-	int				x_p;
-	int				y_p;
-	double				x_pp;
-	double				y_pp;
+	double				x_p;
+	double				y_p;
 	double				x_horizont;
 	double				y_horizont;
 	double				X_a_h;
@@ -117,26 +115,26 @@ typedef struct		s_map
 	int				flagPDPE;
 	int				i;
 	int				yyy;
-	int	floor;
-	int	ceil;
+	int				floor;
+	int				ceil;
 }					t_map;
 
 
-typedef struct	s_constValue 
+typedef struct	s_const 
 {
 	double		DistanceProjectionPlan;
 	int			CenterProjection;
 	double		delta_ray;
 	int			xMapMax;
 	int			yMapMax;
-	double		ratio_of_texture_height_to_CUBE_SIZE_NORD;
-	double		ratio_of_texture_height_to_CUBE_SIZE_South;
-	double		ratio_of_texture_height_to_CUBE_SIZE_EAST;
-	double		ratio_of_texture_height_to_CUBE_SIZE_WEST;
+	double		ratio_of_texture_height_to_CUBE_NORD;
+	double		ratio_of_texture_height_to_CUBE_South;
+	double		ratio_of_texture_height_to_CUBE_EAST;
+	double		ratio_of_texture_height_to_CUBE_WEST;
 	double		thiry_degrees;
-	double		two_pi;
-	double		tree_pi_by_two;
-}				t_ConstValue;
+	double		two_PI;
+	double		tree_PI_on_two;
+}				t_const;
 
 /*
 ** structure for window
@@ -198,15 +196,15 @@ typedef struct	s_sprite
 
 typedef struct	s_dataWall
 {
-	double 		ProjectedSliceHeight[2560];
-	double 		ProjectedSliceHeightNotCorr[2560];
-	int			PositionWall[2560];
-	int			yCoordinateInTexture[2560];
-	char		CardinalDirections[2560];
-	int			OfsetX[2560];
-	double			scalingIndex[2560];
-	double		distance_wall[2560];
-	double		distance_wall_not_corr[2560];
+	double 		*wall_h;
+	double 		*wall_hFull;
+	int			*celing_h;
+	int			*y_image;
+	char		*side_of_world;
+	int			*x_image;
+	double		*distance_wall;
+	double		*distance_wall_not_corr;
+	int			*distan_of_sprites;
 	int			index;
 }				t_dataWall;
 
@@ -226,7 +224,7 @@ typedef struct		s_all
 	t_map			*map;
 	t_fd			*fd;
 	t_win			*win;
-	t_ConstValue	*ConstValue;
+	t_const			*cnst;
 	t_dataWall		*dataWall;
 	t_wall			*wall;
 	t_sprite		*sprite;
@@ -247,7 +245,7 @@ t_all		*initializing_structures(t_all *s, int *error);
 t_map			*initializing_map_structure();
 t_fd			*initializing_fd_structure();
 t_win			*initializing_win_structure();
-t_ConstValue	*initializing_const_values_structure();
+t_const	*initializing_const_values_structure();
 t_wall			*initializing_wall_structure(t_wall *wall);
 t_dataWall		*initializing_slice_parameters_structure();
 t_sprite		*ft_creat_sprite_s();
@@ -294,22 +292,22 @@ int			create_trgb(int t, int r, int g, int b);
 
 int			make_windows(t_all *s, t_win *win);
 int			render_next_frame(t_all *s);
-void 		raycasting(t_all *s, t_dataWall *dataWall);
-int			drawing_screen(t_all *s, t_dataWall *dataWall);
-void		calculatingDeltaForHorizontalIntersection(t_all *s, float a_p);
-void		calculatingDeltaForVerticallIntersection(t_all *s, float a_p);
-void		checking_coordinates_h(t_all *s);
-void		checking_coordinates_v(t_all *s);
-void		calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall);
+void 		raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
+int			drawing_screen(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
+void		first_horisont_intersection(t_map *map);
+void		first_vertical_intersection(t_map *map, double tree_PI_on_2);
+void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
+void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
+void		calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
 int			loop_hook(t_all *s, void *mlx, void *win);
-void		drawing_celing(t_all *s);
+void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
 void		drawing_walls(t_all *s, t_dataWall *dataWall);
 void		drawing_floor(t_all *s);
 void		drawing_sprites(t_all *s);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 int			search_player_and_sprites(t_all *s);
 void		calculation_constant_values(t_all *s);
-
+void		calculating_nearest_distance_to_wall(t_map *map, t_dataWall *dataWall);
 
 int			ft_key(int keycode, t_all *s);
 void		ft_move_forward_back(t_all *s, int i);
