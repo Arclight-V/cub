@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 17:43:26 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ void	checking_direction(double *direction)
 		*direction += TWO_PI;
 }
 
-void raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
+void raycasting(t_all *s, t_data *data, t_map *map, t_const *cnst)
 {
 	map->angle_start = map->a_p + M_PI_6;
-	while (++dataWall->index < s->win->x)
+	while (++data->index < s->win->x)
 	{
 		checking_direction(&map->angle_start);
 		first_horisont_intersection(map);
 		first_vertical_intersection(map);
 		horizontal_intersection_with_wall(map, cnst);
 		vertical_intersection_with_wall(map, cnst);
-		calculating_nearest_distance_to_wall(map, dataWall);
-		calculating_wall_length_in_one_slice(s, dataWall, map, cnst);	
+		calculating_nearest_distance_to_wall(map, data);
+		calculating_wall_length_in_one_slice(s, data, map, cnst);	
 		map->angle_start -= cnst->delta_ray;
 	}
 }
@@ -42,9 +42,9 @@ void raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
 int			render_next_frame(t_all *s)
 {
 
-	s->dataWall->index = -1;
-	raycasting(s, s->dataWall, s->map, s->cnst);
-	if ((drawing_screen(s, s->dataWall, s->map, s->cnst)) < 0)
+	s->data->index = -1;
+	raycasting(s, s->data, s->map, s->cnst);
+	if ((drawing_screen(s, s->data, s->map, s->cnst)) < 0)
 		return (-1);
 	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
 	// mlx_destroy_image(s->win->mlx, s->win->img);

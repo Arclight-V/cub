@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:25:58 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int			keystroke(int keycode, t_all *s)
 		exit(0);
 	}
 	else if (keycode == UP)
-		s->dataWall->celing_h[s->dataWall->index]--;
+		s->data->celing_h[s->data->index]--;
 	return (0);
 }

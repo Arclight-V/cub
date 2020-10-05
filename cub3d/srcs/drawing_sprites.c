@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:02:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:21:25 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 	color_pixel = get_color_pixel_sprite(s->sprite, offset_x, i, floor(y_sprite * (s->sprite[i].height) / (s->sprite[i].sprite_screen_size_full)));
 	if (color_pixel <= 0)
 		return (s->map->i + 1);
-	my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i, color_pixel);
+	my_mlx_pixel_put(s->win, s->data->index, s->map->i, color_pixel);
 	return (s->map->i + 1);
 
 }
 
-int	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
+int	drawing_sprites(t_all *s, t_data *data, t_sprite *sprite)
 {
 	int		i;
 	int		j;
@@ -47,19 +47,19 @@ int	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
 	int		y;
 
 	i = -1;
-	calculation_of_parameters_of_sprites(s, dataWall, sprite, s->cnst);
-	if (!(dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, dataWall->distan_of_sprites)))
+	calculation_of_parameters_of_sprites(s, data, sprite, s->cnst);
+	if (!(data->distan_of_sprites = sorting_of_distances_of_sprites(s, data->distan_of_sprites)))
 		return (-1);
 	while (++i < s->map->item)
 	{
 		j = -1;
-		k = dataWall->distan_of_sprites[i];
+		k = data->distan_of_sprites[i];
 		while (++j < sprite[k].sprite_width)
 		{
-			if ((sprite[k].h_offset + j ) == dataWall->index)
+			if ((sprite[k].h_offset + j ) == data->index)
 			{
 				s->map->i = sprite[k].position_sprite;
-				if (sprite[k].distance < dataWall->distance_wall_not_corr[dataWall->index])
+				if (sprite[k].distance < data->distance_wall_not_corr[data->index])
 				{	
 					y = -1;
 					while (++y < sprite[k].sprite_screen_size_coor)

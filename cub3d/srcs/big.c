@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:25:22 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,41 +76,41 @@ void            my_mlx_pixel_put(t_win *win, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void	calculating_offsetx_in_texture(t_all *s, t_dataWall *dataWall, t_map *map, char ch)
+void	calculating_offsetx_in_texture(t_all *s, t_data *data, t_map *map, char ch)
 {
-	dataWall->side_of_world[dataWall->index] = ch;
+	data->side_of_world[data->index] = ch;
 	if (map->flagPDPE == 1 && ch == 'N')
-		dataWall->x_image[dataWall->index] = floor(fmod(map->x_horizont, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_NORD);
+		data->x_image[data->index] = floor(fmod(map->x_horizont, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_NORD);
 	else if (ch == 'W')
-		dataWall->x_image[dataWall->index] = floor(fmod(map->y_vertical, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_WEST);
+		data->x_image[data->index] = floor(fmod(map->y_vertical, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_WEST);
 	else if (ch == 'S')
-		dataWall->x_image[dataWall->index] = floor(fmod(map->x_horizont, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_South);
+		data->x_image[data->index] = floor(fmod(map->x_horizont, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_South);
 	else if (ch == 'E')
-		dataWall->x_image[dataWall->index] = floor(fmod(map->y_vertical, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_EAST);
+		data->x_image[data->index] = floor(fmod(map->y_vertical, CUBE) * s->cnst->ratio_of_texture_height_to_CUBE_EAST);
 }
 
-void	calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
+void	calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst)
 {
-	dataWall->wall_hFull[dataWall->index] = CUBE / dataWall->distance_wall[dataWall->index] * cnst->DistanceProjectionPlan;
-	dataWall->wall_h[dataWall->index] = dataWall->wall_hFull[dataWall->index] > s->win->y ? s->win->y : dataWall->wall_hFull[dataWall->index];
-	dataWall->celing_h[dataWall->index] = floor((cnst->CenterProjection - dataWall->wall_h[dataWall->index] / 2));
+	data->wall_hFull[data->index] = CUBE / data->distance_wall[data->index] * cnst->DistanceProjectionPlan;
+	data->wall_h[data->index] = data->wall_hFull[data->index] > s->win->y ? s->win->y : data->wall_hFull[data->index];
+	data->celing_h[data->index] = floor((cnst->CenterProjection - data->wall_h[data->index] / 2));
 	if (map->angle_start > 0 && map->angle_start < M_PI)
 	{
 		if (map->flagPDPE == 1)
-			calculating_offsetx_in_texture(s, dataWall, map, 'N');
+			calculating_offsetx_in_texture(s, data, map, 'N');
 		else if (map->angle_start < M_PI_2 && map->flagPDPE == 0)
-			calculating_offsetx_in_texture(s, dataWall, map, 'E');
+			calculating_offsetx_in_texture(s, data, map, 'E');
 		else
-			calculating_offsetx_in_texture(s, dataWall, map, 'W');
+			calculating_offsetx_in_texture(s, data, map, 'W');
 	}
 	else
 	{
 		if (map->flagPDPE == 1)
-			calculating_offsetx_in_texture(s, dataWall, map, 'S');
+			calculating_offsetx_in_texture(s, data, map, 'S');
 		else if (map->angle_start > TREE_PI_ON_2 && map->flagPDPE == 0)
-			calculating_offsetx_in_texture(s, dataWall, map, 'E');
+			calculating_offsetx_in_texture(s, data, map, 'E');
 		else
-			calculating_offsetx_in_texture(s, dataWall, map,'W');
+			calculating_offsetx_in_texture(s, data, map,'W');
 	}	
 }
 

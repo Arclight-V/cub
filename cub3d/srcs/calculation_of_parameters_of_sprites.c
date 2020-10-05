@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:11:23 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:13:57 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static double	calculating_delta(double fov_start, double sprite_dir)
 	return (delta);
 }
 
-void	calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall,\
+void	calculation_of_parameters_of_sprites(t_all *s, t_data *data,\
 											 t_sprite *sprite, t_const *cnst)
 {
 	int		i;

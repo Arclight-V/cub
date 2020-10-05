@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 16:53:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 16:23:33 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,20 @@ void	first_vertical_intersection(t_map *map)
 	}
 }
 
-void	calculating_nearest_distance_to_wall(t_map *map, t_dataWall *dataWall)
+void	calculating_nearest_distance_to_wall(t_map *map, t_data *data)
 {
 	map->PD = sqrt(pow((map->x_p - map->x_horizont), 2) + pow((map->y_p - map->y_horizont), 2));
 	map->PE = sqrt(pow((map->x_p - map->x_vertical), 2) + pow((map->y_p - map->y_vertical), 2));
 	if (map->PD < map->PE)
 	{
-		dataWall->distance_wall_not_corr[dataWall->index] = map->PD;
-		dataWall->distance_wall[dataWall->index] = map->PD * cos(map->a_p - map->angle_start);
+		data->distance_wall_not_corr[data->index] = map->PD;
+		data->distance_wall[data->index] = map->PD * cos(map->a_p - map->angle_start);
 		map->flagPDPE = 1;
 	}
 	else
 	{
-		dataWall->distance_wall_not_corr[dataWall->index] = map->PE;
-		dataWall->distance_wall[dataWall->index] = map->PE * cos(map->a_p - map->angle_start);
+		data->distance_wall_not_corr[data->index] = map->PE;
+		data->distance_wall[data->index] = map->PE * cos(map->a_p - map->angle_start);
 		map->flagPDPE = 0;
 	}
 }

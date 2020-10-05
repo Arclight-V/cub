@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 17:07:29 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_all		*initializing_structure_of_structures(t_all	*s)
 	s->fd = NULL;
 	s->win = NULL;
 	s->cnst = NULL;
-	s->dataWall = NULL;
+	s->data = NULL;
 	s->sprite = NULL; 
 	s->wall = NULL;
 	return (s);
@@ -156,23 +156,23 @@ t_sprite		*ft_creat_sprite_s()
 	return(sprite);
 }
 
-t_dataWall		*initializing_slice_parameters_structure()
+t_data		*initializing_slice_parameters_structure()
 {
-	t_dataWall 	*dataWall;
+	t_data 	*data;
 	int			index;
 
 	index = -1;
-	if(!(dataWall = (t_dataWall *)malloc(sizeof(t_dataWall))))
+	if(!(data = (t_data *)malloc(sizeof(t_data))))
 		return(NULL);
-	dataWall->index = -1;
-	dataWall->wall_h = NULL;
-	dataWall->wall_hFull = NULL;
-	dataWall->celing_h = NULL;
-	dataWall->y_image = NULL;
-	dataWall->side_of_world = NULL;
-	dataWall->x_image = NULL;
-	dataWall->distance_wall = NULL;
-	dataWall->distance_wall_not_corr = NULL;
-	dataWall->distan_of_sprites = NULL;
-	return(dataWall);
+	data->index = -1;
+	data->wall_h = NULL;
+	data->wall_hFull = NULL;
+	data->celing_h = NULL;
+	data->y_image = NULL;
+	data->side_of_world = NULL;
+	data->x_image = NULL;
+	data->distance_wall = NULL;
+	data->distance_wall_not_corr = NULL;
+	data->distan_of_sprites = NULL;
+	return(data);
 }

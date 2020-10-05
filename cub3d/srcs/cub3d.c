@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 17:01:14 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_all		*initializing_structures(t_all *s, int *error)
 		*error = -6;
 	if (!(s->wall = initializing_wall_structure(s->wall)))
 		*error = -7;
-	if (!(s->dataWall = initializing_slice_parameters_structure()))
+	if (!(s->data = initializing_slice_parameters_structure()))
 		*error = -8;
 	*error = 0;
 	return (s);
@@ -91,23 +91,23 @@ int		checking_map(char **map, int size, int len)
 
 int			creating_array_for_ray(t_all *s)
 {
-	if (!(s->dataWall->wall_h = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->wall_h = ft_calloc((s->win->x), sizeof(double))))
 		return (-1);
-	if (!(s->dataWall->wall_hFull = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->wall_hFull = ft_calloc((s->win->x), sizeof(double))))
 		return (-1);
-	if (!(s->dataWall->celing_h = ft_calloc((s->win->x), sizeof(int))))
+	if (!(s->data->celing_h = ft_calloc((s->win->x), sizeof(int))))
 		return (-1);
-	if (!(s->dataWall->y_image = ft_calloc((s->win->x), sizeof(int))))
+	if (!(s->data->y_image = ft_calloc((s->win->x), sizeof(int))))
 		return (-1);
-	if (!(s->dataWall->side_of_world = ft_calloc((s->win->x), sizeof(char))))
+	if (!(s->data->side_of_world = ft_calloc((s->win->x), sizeof(char))))
 		return (-1);
-	if (!(s->dataWall->x_image = ft_calloc((s->win->x), sizeof(int))))
+	if (!(s->data->x_image = ft_calloc((s->win->x), sizeof(int))))
 		return (-1);
-	if (!(s->dataWall->distance_wall = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->distance_wall = ft_calloc((s->win->x), sizeof(double))))
 		return (-1);
-	if (!(s->dataWall->distance_wall_not_corr = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->distance_wall_not_corr = ft_calloc((s->win->x), sizeof(double))))
 		return (-1);
-	if (!(s->dataWall->distan_of_sprites = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->distan_of_sprites = ft_calloc((s->win->x), sizeof(double))))
 		return (-1);
 	return (0);
 }
