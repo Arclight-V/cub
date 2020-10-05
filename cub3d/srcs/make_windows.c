@@ -6,25 +6,14 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 15:52:53 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 17:43:26 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3d.h"
 
 
-int		drawing_screen(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
-{
-	dataWall->index = -1;
-	while(++dataWall->index < s->win->x)
-	{
-		s->map->i = dataWall->celing_h[dataWall->index];
-		drawing_celing(dataWall, s->win, map->ceil);
-		drawing_walls(s, dataWall, s->wall);
-		drawing_floor(s->map, s->win, dataWall->index);
-		drawing_sprites(s, s->dataWall, s->sprite);
-	}
-}
+
 
 void	checking_direction(double *direction)
 {
@@ -36,12 +25,12 @@ void	checking_direction(double *direction)
 
 void raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
 {
-	map->angle_start = map->a_p + cnst->thiry_degrees;
+	map->angle_start = map->a_p + M_PI_6;
 	while (++dataWall->index < s->win->x)
 	{
 		checking_direction(&map->angle_start);
 		first_horisont_intersection(map);
-		first_vertical_intersection(map, cnst->tree_PI_on_two);
+		first_vertical_intersection(map);
 		horizontal_intersection_with_wall(map, cnst);
 		vertical_intersection_with_wall(map, cnst);
 		calculating_nearest_distance_to_wall(map, dataWall);
@@ -58,6 +47,7 @@ int			render_next_frame(t_all *s)
 	if ((drawing_screen(s, s->dataWall, s->map, s->cnst)) < 0)
 		return (-1);
 	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
+	// mlx_destroy_image(s->win->mlx, s->win->img);
 	mlx_do_sync(s->win->mlx);
 	return (0);
 }

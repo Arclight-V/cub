@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 15:57:11 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 17:58:35 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define FOV M_PI / 3
 # define M_PI_6 0.52359877559829882
 # define TWO_PI 6.2831853071795862
-# define TREE_PI_2 4.7123889803846897 
+# define TREE_PI_ON_2 4.7123889803846897 
 
 
 
@@ -94,8 +94,6 @@ typedef struct		s_fd
 typedef struct		s_map 
 {
 	char			**map;
-	int				x;
-	int				y;
 	int				item;
 	int				size;
 	double				x_p;
@@ -132,9 +130,6 @@ typedef struct	s_const
 	double		ratio_of_texture_height_to_CUBE_South;
 	double		ratio_of_texture_height_to_CUBE_EAST;
 	double		ratio_of_texture_height_to_CUBE_WEST;
-	double		thiry_degrees;
-	double		two_PI;
-	double		tree_PI_on_two;
 }				t_const;
 
 /*
@@ -296,25 +291,28 @@ int			render_next_frame(t_all *s);
 void 		raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
 int			drawing_screen(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
 void		first_horisont_intersection(t_map *map);
-void		first_vertical_intersection(t_map *map, double tree_PI_on_2);
+void		first_vertical_intersection(t_map *map);
 void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
 void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
 int			loop_hook(t_all *s, void *mlx, void *win);
-void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
+// void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
 void		drawing_walls(t_all *s, t_dataWall *dataWall, t_wall *wall);
-void		drawing_floor(t_map *map, t_win *win, int index);
+// void		drawing_floor(t_map *map, t_win *win, int index);
 int			drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
-int			search_player_and_sprites(t_all *s);
+void		search_player_and_sprites(t_map *map, t_sprite *sprite, int x, int y);
 void		calculation_constant_values(t_all *s);
 void		calculating_nearest_distance_to_wall(t_map *map, t_dataWall *dataWall);
 int			keystroke(int keycode, t_all *s);
 void		checking_direction(double *direction);
 void		ft_move_forward_back(t_map *map, int i);
-// void		ft_rotate(t_all *s, int i);
-void			ft_rotate(double *direction, int i);
+void		ft_rotate(double *direction, int i);
 void		ft_move_left_right(t_map *map, int i);
+// void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
+// void		drawing_floor(t_map *map, t_win *win, int index);
+void            my_mlx_pixel_put(t_win *win, int x, int y, int color);
+
 /*
 ** free memory
 */

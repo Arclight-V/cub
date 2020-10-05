@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 16:53:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 11:11:51 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:23:33 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void	first_horisont_intersection(t_map *map)
 	}
 }
 
-void	first_vertical_intersection(t_map *map, double tree_PI_on_2)
+void	first_vertical_intersection(t_map *map)
 {
 	double	tang;
 
 	tang = tan(map->angle_start);
-	if (map->angle_start < M_PI_2 || map->angle_start > tree_PI_on_2)
+	if (map->angle_start < M_PI_2 || map->angle_start > TREE_PI_ON_2)
 	{
 		map->Y_a_v = -(CUBE * tang);
 		map->x_vertical = (int)(map->x_p / CUBE) * CUBE + CUBE;

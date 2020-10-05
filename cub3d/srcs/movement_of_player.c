@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 15:57:29 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:59:33 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_move_left_right(t_map *map, int i)
 	map->y_p += i * cos(map->a_p) * 10;
 }
 
+
 int			keystroke(int keycode, t_all *s)
 {
 	if (keycode == W)
@@ -46,9 +47,12 @@ int			keystroke(int keycode, t_all *s)
 		ft_rotate(&s->map->a_p, -1);
 	else if (keycode == LEFT)
 		ft_rotate(&s->map->a_p, 1);
+	else if (keycode == ESC)
+	{
+		mlx_destroy_window(s->win->mlx, s->win->win);
+		exit(0);
+	}
 	else if (keycode == UP)
 		s->dataWall->celing_h[s->dataWall->index]--;
-	else if (keycode == ESC)
-		mlx_destroy_window(s->win->mlx, s->win->win);
 	return (0);
 }

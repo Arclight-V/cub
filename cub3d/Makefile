@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/09/30 17:27:02 by anatashi         ###   ########.fr        #
+#    Updated: 2020/10/05 17:53:54 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,10 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(SRCS_DIR)/make_windows.c \
 		$(SRCS_DIR)/movement_of_player.c\
 		$(SRCS_DIR)/calculation_of_parameters_for_horizontal_and_vertical_lines.c \
-		$(SRCS_DIR)/loop_hook.c
+		$(SRCS_DIR)/loop_hook.c\
+		$(SRCS_DIR)/search_player_and_sprites.c\
+		$(SRCS_DIR)/drawing_screen_one.c\
+		$(SRCS_DIR)/drawing_walls.c
 
 
 

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:13:27 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 17:07:29 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_map		*initializing_map_structure()
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
 	map->map = NULL;
-	map->x = 0;
-	map->y = 0;
 	map->item = 0;
 	map->size = 0;
 	map->x_p = 0;
@@ -94,9 +92,6 @@ t_const		*initializing_const_values_structure()
 	cnst->ratio_of_texture_height_to_CUBE_South = 0;
 	cnst->ratio_of_texture_height_to_CUBE_WEST = 0;
 	cnst->ratio_of_texture_height_to_CUBE_EAST = 0;
-	cnst->thiry_degrees = M_PI / 6;
-	cnst->two_PI = 2 * M_PI;
-	cnst->tree_PI_on_two = 3 * M_PI_2;
 	return (cnst);
 }
 

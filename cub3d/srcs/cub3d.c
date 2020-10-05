@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 15:03:03 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 17:01:14 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int			run_game(char *cub)
 		return (ft_strerror(s->fd->err));
 	if ((creating_array_for_ray(s)))
 		return (ft_strerror(s->fd->err));
-	search_player_and_sprites(s);
+	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);
 	if ((loop_hook(s, s->win->mlx, s->win->win)) < 0)
 		return (ft_strerror(-1));
