@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:09:37 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:23:00 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,7 +301,7 @@ void		calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map
 int			loop_hook(t_all *s, void *mlx, void *win);
 void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
 void		drawing_walls(t_all *s, t_dataWall *dataWall);
-void		drawing_floor(t_all *s);
+void		drawing_floor(t_map *map, t_win *win, int index);
 void		drawing_sprites(t_all *s);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 int			search_player_and_sprites(t_all *s);

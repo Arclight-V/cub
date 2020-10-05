@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:13:28 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:22:59 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,11 +273,11 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
 }
 
 
-void	drawing_floor(t_all *s)
+void	drawing_floor(t_map *map, t_win *win, int index)
 {
 
-	while (s->map->i < s->win->y - 1)
-		my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, s->map->floor);
+	while (map->i < win->y - 1)
+		my_mlx_pixel_put(win, index, map->i++, map->floor);
 }
 
 void	drawing_celing(t_dataWall *dataWall, t_win *win, int ceil)
@@ -340,9 +340,7 @@ void	drawing_sprites(t_all *s)
 				{	
 					y = -1;
 					while (++y < s->sprite[k].sprite_screen_size_coor)
-					{
 						s->map->i = print_pixel_of_sprite(s, j, k, y);
-					}
 				}
 			}
 		}

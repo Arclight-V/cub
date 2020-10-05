@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 12:42:54 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:22:18 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		drawing_screen(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
 		s->map->i = dataWall->celing_h[dataWall->index];
 		drawing_celing(dataWall, s->win, map->ceil);
 		drawing_walls(s, dataWall);
-		drawing_floor(s);
+		drawing_floor(s->map, s->win, dataWall->index);
 		drawing_sprites(s);
 	}
 }
