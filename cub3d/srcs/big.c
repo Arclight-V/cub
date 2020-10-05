@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:22:59 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 14:01:56 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,26 +251,7 @@ double		calculating_delta(double TWO_M_PI, double fov_start, double sprite_dir)
 	return (delta);
 }
 
-void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall)
-{
-	int		i;
-	double	delta;
 
-	i = -1;
-	while (++i < s->map->item)
-	{
-		s->sprite[i].sprite_angle = calculating_sprite_direction(s->cnst->two_PI,s->map->x_p, s->map->y_p, s->sprite[i].x, s->sprite[i].y);
-		s->sprite[i].distance = sqrt(pow(s->map->x_p - s->sprite[i].x, 2) + pow(s->map->y_p - s->sprite[i].y, 2));
-		s->sprite[i].sprite_screen_size_full = (CUBE / (s->sprite[i].distance  * cos(s->map->a_p - s->sprite[i].sprite_angle))) * s->cnst->DistanceProjectionPlan;
-		s->sprite[i].sprite_screen_size_coor = s->sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : s->sprite[i].sprite_screen_size_full;
-		s->sprite[i].sprite_width = CUBE / s->sprite[i].distance * s->cnst->DistanceProjectionPlan;
-		s->sprite[i].sprite_screen_size_half = s->sprite[i].sprite_screen_size_coor / 2;
-		delta = calculating_delta(s->cnst->two_PI, s->map->a_p + s->cnst->thiry_degrees, s->sprite[i].sprite_angle);
-		s->sprite[i].h_offset =  delta / ( FOV / s->win->x) - s->sprite[i].sprite_screen_size_half;
-		s->sprite[i].position_sprite = ((s->cnst->CenterProjection - s->sprite[i].sprite_screen_size_half));
-	}
-
-}
 
 
 void	drawing_floor(t_map *map, t_win *win, int index)
@@ -316,8 +297,28 @@ int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 
 }
 
+void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite, t_const *cnst)
+{
+	int		i;
+	double	delta;
 
-void	drawing_sprites(t_all *s)
+	i = -1;
+	while (++i < s->map->item)
+	{
+		sprite[i].sprite_angle = calculating_sprite_direction(cnst->two_PI,s->map->x_p, s->map->y_p, sprite[i].x, sprite[i].y);
+		sprite[i].distance = sqrt(pow(s->map->x_p - sprite[i].x, 2) + pow(s->map->y_p - sprite[i].y, 2));
+		sprite[i].sprite_screen_size_full = (CUBE / (sprite[i].distance  * cos(s->map->a_p - sprite[i].sprite_angle))) * cnst->DistanceProjectionPlan;
+		sprite[i].sprite_screen_size_coor = sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : sprite[i].sprite_screen_size_full;
+		sprite[i].sprite_width = CUBE / sprite[i].distance * cnst->DistanceProjectionPlan;
+		sprite[i].sprite_screen_size_half = sprite[i].sprite_screen_size_coor / 2;
+		delta = calculating_delta(cnst->two_PI, s->map->a_p + cnst->thiry_degrees, sprite[i].sprite_angle);
+		sprite[i].h_offset =  delta / ( FOV / s->win->x) - sprite[i].sprite_screen_size_half;
+		sprite[i].position_sprite = ((cnst->CenterProjection - sprite[i].sprite_screen_size_half));
+	}
+
+}
+
+void	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
 {
 	int		i;
 	int		j;
@@ -325,21 +326,21 @@ void	drawing_sprites(t_all *s)
 	int		y;
 
 	i = -1;
-	calculation_of_parameters_of_sprites(s, s->dataWall);
-	s->dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, s->dataWall->distan_of_sprites);
+	calculation_of_parameters_of_sprites(s, dataWall, sprite, s->cnst);
+	dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, dataWall->distan_of_sprites);
 	while (++i < s->map->item)
 	{
 		j = -1;
-		k = s->dataWall->distan_of_sprites[i];
-		while (++j < s->sprite[k].sprite_width)
+		k = dataWall->distan_of_sprites[i];
+		while (++j < sprite[k].sprite_width)
 		{
-			if ((s->sprite[k].h_offset + j ) == s->dataWall->index)
+			if ((sprite[k].h_offset + j ) == dataWall->index)
 			{
-				s->map->i = s->sprite[k].position_sprite;
-				if (s->sprite[k].distance < s->dataWall->distance_wall_not_corr[s->dataWall->index])
+				s->map->i = sprite[k].position_sprite;
+				if (sprite[k].distance < dataWall->distance_wall_not_corr[dataWall->index])
 				{	
 					y = -1;
-					while (++y < s->sprite[k].sprite_screen_size_coor)
+					while (++y < sprite[k].sprite_screen_size_coor)
 						s->map->i = print_pixel_of_sprite(s, j, k, y);
 				}
 			}
@@ -350,32 +351,32 @@ void	drawing_sprites(t_all *s)
 	
 }
 
-void	drawing_walls(t_all *s, t_dataWall *dataWall)
+void	drawing_walls(t_all *s, t_dataWall *dataWall, t_wall *wall)
 {
 	int y;
 
-	y = 0;
-	while (y++ < dataWall->wall_h[dataWall->index])
+	y = -1;
+	while (++y < dataWall->wall_h[dataWall->index])
 	{
 		if (dataWall->side_of_world[dataWall->index] == 'N')
 		{
-			search_y_texture(s, calc_y(s, y), s->wall[NORD].height, dataWall->wall_hFull[dataWall->index]);
-			printSliceWall(s, s->wall[NORD].adr, s->wall[NORD].size_line, s->wall[NORD].bits_per_pixel);
+			search_y_texture(s, calc_y(s, y), wall[NORD].height, dataWall->wall_hFull[dataWall->index]);
+			printSliceWall(s, wall[NORD].adr, wall[NORD].size_line, wall[NORD].bits_per_pixel);
 		}
 		else if (dataWall->side_of_world[dataWall->index] == 'E')
 		{
-			search_y_texture(s, calc_y(s, y), s->wall[EAST].height, dataWall->wall_hFull[dataWall->index]);
-			printSliceWall(s, s->wall[EAST].adr, s->wall[EAST].size_line, s->wall[EAST].bits_per_pixel);
+			search_y_texture(s, calc_y(s, y), wall[EAST].height, dataWall->wall_hFull[dataWall->index]);
+			printSliceWall(s, wall[EAST].adr, wall[EAST].size_line, wall[EAST].bits_per_pixel);
 		}
 		else if (dataWall->side_of_world[dataWall->index] == 'W')
 		{
-			search_y_texture(s, calc_y(s, y), s->wall[WEST].height, dataWall->wall_hFull[dataWall->index]);
-			printSliceWall(s, s->wall[WEST].adr, s->wall[WEST].size_line, s->wall[WEST].bits_per_pixel);		
+			search_y_texture(s, calc_y(s, y), wall[WEST].height, dataWall->wall_hFull[dataWall->index]);
+			printSliceWall(s, wall[WEST].adr, wall[WEST].size_line, wall[WEST].bits_per_pixel);		
 		}
 		else if (dataWall->side_of_world[dataWall->index] == 'S')
 		{
-			search_y_texture(s, calc_y(s, y), s->wall[SOUTH].height, dataWall->wall_hFull[dataWall->index]);
-			printSliceWall(s, s->wall[SOUTH].adr, s->wall[SOUTH].size_line, s->wall[SOUTH].bits_per_pixel);
+			search_y_texture(s, calc_y(s, y), wall[SOUTH].height, dataWall->wall_hFull[dataWall->index]);
+			printSliceWall(s, wall[SOUTH].adr, wall[SOUTH].size_line, wall[SOUTH].bits_per_pixel);
 		}		
 	}
 }

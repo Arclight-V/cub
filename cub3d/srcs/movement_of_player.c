@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 10:05:45 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:53:58 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_move_forward_back(t_all *s, int i)
 
 void			ft_rotate(t_all *s, int i)
 {
-	s->map->a_p = s->map->a_p + i * 0.04;
+	s->map->a_p = s->map->a_p + i * 0.03;
 	if (s->map->a_p > s->cnst->two_PI)
 		s->map->a_p -= s->cnst->two_PI;
 	else if (s->map->a_p < 0)

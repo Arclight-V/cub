@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:23:00 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:46:19 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 
-# define CUBE 64
+# define CUBE 32
 # define FOV M_PI / 3
 
 
@@ -300,9 +300,9 @@ void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst);
 int			loop_hook(t_all *s, void *mlx, void *win);
 void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
-void		drawing_walls(t_all *s, t_dataWall *dataWall);
+void		drawing_walls(t_all *s, t_dataWall *dataWall, t_wall *wall);
 void		drawing_floor(t_map *map, t_win *win, int index);
-void		drawing_sprites(t_all *s);
+void		drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 int			search_player_and_sprites(t_all *s);
 void		calculation_constant_values(t_all *s);
