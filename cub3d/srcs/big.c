@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 12:59:07 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:13:28 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,33 +202,26 @@ int		draw_square(t_all *s, int x, int y)
 
 
 
-int			get_color_pixel(t_all *s, char *adr, int size_line, int bits_per_pixel)
+int			get_color_pixel(t_dataWall *dataWall, char *adr, int size_line, int bits_per_pixel)
 {
 	char	*color;
 
-	color = adr + (s->dataWall->y_image[s->dataWall->index] * size_line + s->dataWall->x_image[s->dataWall->index] * (bits_per_pixel / 8));
+	color = adr + (dataWall->y_image[dataWall->index] * size_line + dataWall->x_image[dataWall->index] * (bits_per_pixel / 8));
 	return (*(unsigned int*)color);
 }
 
 void		printSliceWall(t_all *s, char *addr, int size_line, int bits_per_pixel)
 {
 	int				colour_pixel;
-	// int				count;
 
-
-	colour_pixel = get_color_pixel(s, addr, size_line, bits_per_pixel);
-	// count = -1;
-	// if (s->map->yyy < s->dataWall->wall_h[s->dataWall->index])
-	{	
-			my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, colour_pixel);
-			s->map->yyy++;
-	}
+	colour_pixel = get_color_pixel(s->dataWall, addr, size_line, bits_per_pixel);	
+	my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i++, colour_pixel);
 	s->dataWall->y_image[s->dataWall->index]++;
 }
 
-double	calc_y(t_all *s)
+double	calc_y(t_all *s, int y)
 {
-	return (floor(s->map->yyy + (s->dataWall->wall_hFull[s->dataWall->index] - s->dataWall->wall_h[s->dataWall->index]) / 2));
+	return (floor(y + (s->dataWall->wall_hFull[s->dataWall->index] - s->dataWall->wall_h[s->dataWall->index]) / 2));
 }
 
 void		search_y_texture(t_all *s, double y_slice, int h_texture, double sliceWnot)
@@ -305,7 +298,7 @@ int		get_color_pixel_sprite(t_sprite *sprite, int ofset_x, int i, int y)
 
 }
 
-int		print_pixel_of_sprite(t_all *s, int j, int i)
+int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 {
 	int 	color_pixel;
 	int		count;
@@ -314,7 +307,7 @@ int		print_pixel_of_sprite(t_all *s, int j, int i)
 	double 	y_sprite;
 
 	offset_x = floor((double)j * ((double)s->sprite[i].width / s->sprite[i].sprite_width)); 
-	y_sprite = floor(s->map->yyy + ((s->sprite[i].sprite_screen_size_full -  s->sprite[i].sprite_screen_size_coor) / 2));
+	y_sprite = floor(y + ((s->sprite[i].sprite_screen_size_full -  s->sprite[i].sprite_screen_size_coor) / 2));
 	color_pixel = get_color_pixel_sprite(s->sprite, offset_x, i, floor(y_sprite * (s->sprite[i].height) / (s->sprite[i].sprite_screen_size_full)));
 	if (color_pixel <= 0)
 		return (s->map->i + 1);
@@ -328,13 +321,12 @@ void	drawing_sprites(t_all *s)
 {
 	int		i;
 	int		j;
+	int 	k;
+	int		y;
 
 	i = -1;
-	int k;
 	calculation_of_parameters_of_sprites(s, s->dataWall);
-
 	s->dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, s->dataWall->distan_of_sprites);
-
 	while (++i < s->map->item)
 	{
 		j = -1;
@@ -346,10 +338,10 @@ void	drawing_sprites(t_all *s)
 				s->map->i = s->sprite[k].position_sprite;
 				if (s->sprite[k].distance < s->dataWall->distance_wall_not_corr[s->dataWall->index])
 				{	
-					s->map->yyy = -1;
-					while (++s->map->yyy < s->sprite[k].sprite_screen_size_coor)
+					y = -1;
+					while (++y < s->sprite[k].sprite_screen_size_coor)
 					{
-						s->map->i = print_pixel_of_sprite(s, j, k);
+						s->map->i = print_pixel_of_sprite(s, j, k, y);
 					}
 				}
 			}
@@ -362,27 +354,29 @@ void	drawing_sprites(t_all *s)
 
 void	drawing_walls(t_all *s, t_dataWall *dataWall)
 {
-	s->map->yyy = 0;
-	while (s->map->yyy < dataWall->wall_h[dataWall->index])
+	int y;
+
+	y = 0;
+	while (y++ < dataWall->wall_h[dataWall->index])
 	{
 		if (dataWall->side_of_world[dataWall->index] == 'N')
 		{
-			search_y_texture(s, calc_y(s), s->wall[NORD].height, dataWall->wall_hFull[dataWall->index]);
+			search_y_texture(s, calc_y(s, y), s->wall[NORD].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[NORD].adr, s->wall[NORD].size_line, s->wall[NORD].bits_per_pixel);
 		}
 		else if (dataWall->side_of_world[dataWall->index] == 'E')
 		{
-			search_y_texture(s, calc_y(s), s->wall[EAST].height, dataWall->wall_hFull[dataWall->index]);
+			search_y_texture(s, calc_y(s, y), s->wall[EAST].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[EAST].adr, s->wall[EAST].size_line, s->wall[EAST].bits_per_pixel);
 		}
 		else if (dataWall->side_of_world[dataWall->index] == 'W')
 		{
-			search_y_texture(s, calc_y(s), s->wall[WEST].height, dataWall->wall_hFull[dataWall->index]);
+			search_y_texture(s, calc_y(s, y), s->wall[WEST].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[WEST].adr, s->wall[WEST].size_line, s->wall[WEST].bits_per_pixel);		
 		}
 		else if (dataWall->side_of_world[dataWall->index] == 'S')
 		{
-			search_y_texture(s, calc_y(s), s->wall[SOUTH].height, dataWall->wall_hFull[dataWall->index]);
+			search_y_texture(s, calc_y(s, y), s->wall[SOUTH].height, dataWall->wall_hFull[dataWall->index]);
 			printSliceWall(s, s->wall[SOUTH].adr, s->wall[SOUTH].size_line, s->wall[SOUTH].bits_per_pixel);
 		}		
 	}

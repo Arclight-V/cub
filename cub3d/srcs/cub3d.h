@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 11:25:10 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:09:37 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ typedef struct		s_map
 	double			PE;
 	int				flagPDPE;
 	int				i;
-	int				yyy;
 	int				floor;
 	int				ceil;
 }					t_map;
