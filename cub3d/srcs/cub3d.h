@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:46:19 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 15:57:11 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 
 # define CUBE 32
 # define FOV M_PI / 3
-
+# define M_PI_6 0.52359877559829882
+# define TWO_PI 6.2831853071795862
+# define TREE_PI_2 4.7123889803846897 
 
 
 
@@ -302,16 +304,17 @@ int			loop_hook(t_all *s, void *mlx, void *win);
 void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
 void		drawing_walls(t_all *s, t_dataWall *dataWall, t_wall *wall);
 void		drawing_floor(t_map *map, t_win *win, int index);
-void		drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite);
+int			drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 int			search_player_and_sprites(t_all *s);
 void		calculation_constant_values(t_all *s);
 void		calculating_nearest_distance_to_wall(t_map *map, t_dataWall *dataWall);
-
-int			ft_key(int keycode, t_all *s);
-void		ft_move_forward_back(t_all *s, int i);
-void		ft_rotate(t_all *s, int i);
-void		ft_move_left_right(t_all *s, int i);
+int			keystroke(int keycode, t_all *s);
+void		checking_direction(double *direction);
+void		ft_move_forward_back(t_map *map, int i);
+// void		ft_rotate(t_all *s, int i);
+void			ft_rotate(double *direction, int i);
+void		ft_move_left_right(t_map *map, int i);
 /*
 ** free memory
 */

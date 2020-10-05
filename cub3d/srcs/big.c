@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 14:01:56 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 15:03:11 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall, t_spr
 
 }
 
-void	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
+int	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
 {
 	int		i;
 	int		j;
@@ -327,7 +327,8 @@ void	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
 
 	i = -1;
 	calculation_of_parameters_of_sprites(s, dataWall, sprite, s->cnst);
-	dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, dataWall->distan_of_sprites);
+	if (!(dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, dataWall->distan_of_sprites)))
+		return (-1);
 	while (++i < s->map->item)
 	{
 		j = -1;

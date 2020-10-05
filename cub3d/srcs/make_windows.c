@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:44:18 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 15:52:53 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int		drawing_screen(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
 	}
 }
 
-void	checking_direction(double *direction, double two_PI)
+void	checking_direction(double *direction)
 {
-	if (*direction > two_PI)
-		*direction -= two_PI;
+	if (*direction > TWO_PI)
+		*direction -= TWO_PI;
 	else if (*direction < 0)
-		*direction += two_PI;
+		*direction += TWO_PI;
 }
 
 void raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
@@ -39,7 +39,7 @@ void raycasting(t_all *s, t_dataWall *dataWall, t_map *map, t_const *cnst)
 	map->angle_start = map->a_p + cnst->thiry_degrees;
 	while (++dataWall->index < s->win->x)
 	{
-		checking_direction(&map->angle_start, cnst->two_PI);
+		checking_direction(&map->angle_start);
 		first_horisont_intersection(map);
 		first_vertical_intersection(map, cnst->tree_PI_on_two);
 		horizontal_intersection_with_wall(map, cnst);
@@ -55,12 +55,8 @@ int			render_next_frame(t_all *s)
 
 	s->dataWall->index = -1;
 	raycasting(s, s->dataWall, s->map, s->cnst);
-	drawing_screen(s, s->dataWall, s->map, s->cnst);
-	// draw2DMap(s);
-	// ft_ray_cast_2(s, s->dataWall);
-	// my_mlx_pixel_put(s->win, s->map->x_p, s->map->y_p, 0x1456e3);
-	// for (int i = 0; i < s->map->item; i++)
-	// 	my_mlx_pixel_put(s->win, s->sprite[i].x, s->sprite[i].y, 0x1456e3);
+	if ((drawing_screen(s, s->dataWall, s->map, s->cnst)) < 0)
+		return (-1);
 	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
 	mlx_do_sync(s->win->mlx);
 	return (0);

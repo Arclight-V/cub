@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:23:36 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 13:42:56 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 15:03:05 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			*sorting_of_distances_of_sprites(t_all *s, int *array)
 		if (!(tree = ft_addnode(s->sprite[i].distance, tree, i)))
 		{
 			freemem(tree);
-			return (array);
+			return (NULL);
 		}
 	}
 	i = 0;
