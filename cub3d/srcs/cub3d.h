@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 17:58:35 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:26:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,9 @@ void		ft_rotate(double *direction, int i);
 void		ft_move_left_right(t_map *map, int i);
 // void		drawing_celing(t_dataWall *dataWall, t_win *win, int ceil);
 // void		drawing_floor(t_map *map, t_win *win, int index);
-void            my_mlx_pixel_put(t_win *win, int x, int y, int color);
+void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
+void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite, t_const *cnst);
+t_list			*ft_creat_list(t_list *head, t_all *s, char *line);
 
 /*
 ** free memory

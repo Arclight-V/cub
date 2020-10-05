@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 17:46:38 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:25:22 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		ft_max_len(t_list **head, t_all *s)
 	}
 }
 
-// /*
 t_list		*ft_add_space(t_list **head, t_all *s)
 {
 	t_list 	*tmp;
@@ -57,7 +56,6 @@ t_list		*ft_add_space(t_list **head, t_all *s)
 	}
 	return (*head);
 }
-// */
 
 
 
@@ -65,54 +63,10 @@ t_list		*ft_add_space(t_list **head, t_all *s)
 
 
 
-int				checking_validity_map(t_list *head, char *line, t_all *s)
-{
-	int			i;
 
-	i = 0;
-	ft_skip_spaces(line, &i);
-	if (line[i] == 'R' && line[i + 1] == ' ')
-		return (s->fd->err = checking_resolution(s, line, &i));
-	else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, NORD));
-	else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, SOUTH));
-	else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, WEST));
-	else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, EAST));
-	else if (line[i] == 'S' && line[i + 1] == ' ')
-		return (s->fd->err = checking_textures_sprite(s, line, &i));
-	else if (line[i] == 'F')
-		return (s->fd->err = checking_color(&s->map->floor, line, &i, &s->fd->count_ind));
-	else if (line[i] == 'C')
-		return (s->fd->err = checking_color(&s->map->ceil, line, &i, &s->fd->count_ind));	
-	else if (line[i] == '1')
-		return (s->fd->err = ft_forb_char_map(&head, line, s, &i));
-	else if (ft_skip_spaces(line, &i) && line[i] != '\0')
-		return (-92);
-	return (1);
-}
 
-t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
-{
-	t_list	*new;
 
-	new = NULL;
-	if ((s->fd->err = checking_validity_map(head, line, s)) < 0)
-		return (NULL);
-	if (s->fd->count_ind > 8)
-	{
-		if (!(new = ft_lstnew(line)))
-		{	
-			ft_lstclear(&head,lstdelone_f);
-			s->fd->err = -15;
-			return (NULL);
-		}
-		ft_lstadd_back(&head, new);
-	}
-	return (head);
-}
+
 
 void            my_mlx_pixel_put(t_win *win, int x, int y, int color)
 {
@@ -120,137 +74,6 @@ void            my_mlx_pixel_put(t_win *win, int x, int y, int color)
 
     dst = win->addr + (y * win->line_lenght + x * (win->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
-}
-
-int		draw_square(t_all *s, int x, int y)
-{
-	int i = x - 2;
-	int	j = y - 2;
-	while (i != x + 2)
-	{
-		j = y - 2;
-		while(j != y + 2)
-		{
-			my_mlx_pixel_put(s->win, i, j, 0x1456e3);
-			j++;
-		}
-		i++;
-	}
-}
-
-
-
-int			get_color_pixel(t_dataWall *dataWall, char *adr, int size_line, int bits_per_pixel)
-{
-	char	*color;
-
-	color = adr + (dataWall->y_image[dataWall->index] * size_line + dataWall->x_image[dataWall->index] * (bits_per_pixel / 8));
-	return (*(unsigned int*)color);
-}
-
-
-double		calculating_sprite_direction(double x_player, double y_player, int x_sprite, int y_sprite)
-{
-	double	sprite_direction;
-
-	sprite_direction = atan2(y_player - y_sprite, x_sprite - x_player);
-
-	sprite_direction = sprite_direction >= 0 ? sprite_direction : TWO_PI + sprite_direction;
-	return (sprite_direction);
-}
-
-double		calculating_delta(double fov_start, double sprite_dir)
-{
-	double 	delta;
-
-	delta = fov_start - sprite_dir;
-	if (delta <= -M_PI)
-		delta += TWO_PI;
-	else if (delta >= M_PI)
-		delta -= TWO_PI;
-	return (delta);
-}
-
-int		get_color_pixel_sprite(t_sprite *sprite, int ofset_x, int i, int y)
-{
-	char	*color;
-
-	color = sprite[i].adr + ( y * sprite[i].size_line + ofset_x * (sprite[i].bits_per_pixel / 8));
-	return (*(unsigned int*)color);
-
-}
-
-int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
-{
-	int 	color_pixel;
-	int		count;
-	int		offset_x;
-	int		corr_size_sprite;
-	double 	y_sprite;
-
-	offset_x = floor((double)j * ((double)s->sprite[i].width / s->sprite[i].sprite_width)); 
-	y_sprite = floor(y + ((s->sprite[i].sprite_screen_size_full -  s->sprite[i].sprite_screen_size_coor) / 2));
-	color_pixel = get_color_pixel_sprite(s->sprite, offset_x, i, floor(y_sprite * (s->sprite[i].height) / (s->sprite[i].sprite_screen_size_full)));
-	if (color_pixel <= 0)
-		return (s->map->i + 1);
-	my_mlx_pixel_put(s->win, s->dataWall->index, s->map->i, color_pixel);
-	return (s->map->i + 1);
-
-}
-
-void		calculation_of_parameters_of_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite, t_const *cnst)
-{
-	int		i;
-	double	delta;
-
-	i = -1;
-	while (++i < s->map->item)
-	{
-		sprite[i].sprite_angle = calculating_sprite_direction(s->map->x_p, s->map->y_p, sprite[i].x, sprite[i].y);
-		sprite[i].distance = sqrt(pow(s->map->x_p - sprite[i].x, 2) + pow(s->map->y_p - sprite[i].y, 2));
-		sprite[i].sprite_screen_size_full = (CUBE / (sprite[i].distance  * cos(s->map->a_p - sprite[i].sprite_angle))) * cnst->DistanceProjectionPlan;
-		sprite[i].sprite_screen_size_coor = sprite[i].sprite_screen_size_full > s->win->y ? s->win->y : sprite[i].sprite_screen_size_full;
-		sprite[i].sprite_width = CUBE / sprite[i].distance * cnst->DistanceProjectionPlan;
-		sprite[i].sprite_screen_size_half = sprite[i].sprite_screen_size_coor / 2;
-		delta = calculating_delta(s->map->a_p + M_PI_6, sprite[i].sprite_angle);
-		sprite[i].h_offset =  delta / ( FOV / s->win->x) - sprite[i].sprite_screen_size_half;
-		sprite[i].position_sprite = ((cnst->CenterProjection - sprite[i].sprite_screen_size_half));
-	}
-
-}
-
-int	drawing_sprites(t_all *s, t_dataWall *dataWall, t_sprite *sprite)
-{
-	int		i;
-	int		j;
-	int 	k;
-	int		y;
-
-	i = -1;
-	calculation_of_parameters_of_sprites(s, dataWall, sprite, s->cnst);
-	if (!(dataWall->distan_of_sprites = sorting_of_distances_of_sprites(s, dataWall->distan_of_sprites)))
-		return (-1);
-	while (++i < s->map->item)
-	{
-		j = -1;
-		k = dataWall->distan_of_sprites[i];
-		while (++j < sprite[k].sprite_width)
-		{
-			if ((sprite[k].h_offset + j ) == dataWall->index)
-			{
-				s->map->i = sprite[k].position_sprite;
-				if (sprite[k].distance < dataWall->distance_wall_not_corr[dataWall->index])
-				{	
-					y = -1;
-					while (++y < sprite[k].sprite_screen_size_coor)
-						s->map->i = print_pixel_of_sprite(s, j, k, y);
-				}
-			}
-		}
-		
-
-	}
-	
 }
 
 void	calculating_offsetx_in_texture(t_all *s, t_dataWall *dataWall, t_map *map, char ch)
@@ -292,91 +115,8 @@ void	calculating_wall_length_in_one_slice(t_all *s, t_dataWall *dataWall, t_map 
 }
 
 
-int			drawRayToWall(t_all *s, int xPlayer, int yPlayer, int xWall, int yWall)
-{
-	int	dx = xWall - xPlayer;
-	int	dy = yWall - yPlayer;
-	int		steps;
-	float x_increment;
-	float y_increment;
-	float x = xPlayer;
-	float y = yPlayer;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx);
-	else
-		steps = abs(dy);
-	x_increment = dx / (float)steps;
-	y_increment = dy / (float)steps;
-	int i = 0;
-	while (i < steps)
-	{
-		x +=x_increment;
-		y += y_increment;
-		my_mlx_pixel_put(s->win, round(x), round(y), 0x1456e3);
-		i++;
-	}
-}	
+	
 
-void 		draw2DMap(t_all *s)
-{
-	int k;
-	int i;
-	int j;
-	int x;
-	int y = -1;
-	i = -1;
-	k = CUBE;
-	int a = 1;
-	while (++i < s->map->size)
-	{
-		{
-			while (++y < (i + 1) * CUBE)
-			{
-				x = -1;
-				j = 0;
-				while (s->map->map[i][j])
-				{
-					while (++x < (j + 1) * CUBE)
-					{
-						if (s->map->map[i][j] == '1')
-						{
-							if ((x + 1) == ((j + 1) * CUBE))
-							{
-								my_mlx_pixel_put(s->win, x, y, 0xaa0000);
-								my_mlx_pixel_put(s->win, x + 1, y, 0xaa0000);
-							}
-							else
-								my_mlx_pixel_put(s->win, x, y, 0x878794);
-						}
-						else if (s->map->map[i][j] == '0' || s->map->map[i][j] == 'N' ||
-								s->map->map[i][j] == '2' || s->map->map[i][j] == 'W' ||
-								s->map->map[i][j] == 'U' || s->map->map[i][j] == 'S')
-						{	
-							if ((x + 1) == ((j + 1) * CUBE))
-							{
-								my_mlx_pixel_put(s->win, x, y, 0xaa0000);
-								my_mlx_pixel_put(s->win, x + 1, y, 0xaa0000);
-							}
-							else
-								my_mlx_pixel_put(s->win, x, y, 0x36054d);
-						}
-					}
-					j++;
-				}
-				if ((y + 1) == ((i + 1) * CUBE))
-				{
-					x = -1;
-					j--;
-					while (++x < (j + 1) * CUBE)
-					{
-						my_mlx_pixel_put(s->win, x, y, 0xaa0000);
-						my_mlx_pixel_put(s->win, x, y + 1, 0xaa0000);
-					}
-				}
-			}
-		}
-	}
-}
 
 
 

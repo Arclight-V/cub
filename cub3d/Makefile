@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/10/05 17:53:54 by anatashi         ###   ########.fr        #
+#    Updated: 2020/10/05 18:20:32 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(SRCS_DIR)/loop_hook.c\
 		$(SRCS_DIR)/search_player_and_sprites.c\
 		$(SRCS_DIR)/drawing_screen_one.c\
-		$(SRCS_DIR)/drawing_walls.c
+		$(SRCS_DIR)/drawing_walls.c\
+		$(SRCS_DIR)/calculation_of_parameters_of_sprites.c\
+		$(SRCS_DIR)/drawing_sprites.c
 
 
 
