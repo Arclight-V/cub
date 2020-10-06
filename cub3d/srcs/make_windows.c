@@ -6,14 +6,11 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 10:34:29 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 11:28:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3d.h"
-
-
-
 
 void	checking_direction(double *direction)
 {

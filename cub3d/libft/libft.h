@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 09:22:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/25 12:54:32 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 12:31:37 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void				ft_putendl(char *s);
 char				*ft_strndup(const char *src, size_t n);
 size_t				ft_strlenchar(const char *s, int ch);
 char				*ft_strjnoin(char **s1, char *s2, size_t size);
-void				ft_free_tmp(char *tmp);
+void				ft_free_tmp(void *tmp);
 char				*ft_str_add_char(char *str, size_t count,  int ch);
 void				ft_freearrpoint(char **nstr, size_t j);
 int					ft_min(int value_1, int value_2);

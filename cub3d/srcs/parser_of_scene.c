@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:17:10 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:26:15 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 15:59:51 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
 			return (NULL);
 		}
 		ft_lstadd_back(&head, new);
+		return(head);
 	}
+	ft_free_tmp(line);
 	return (head);
 }
 

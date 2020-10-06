@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:54:35 by anatashi          #+#    #+#             */
-/*   Updated: 2020/08/22 15:01:35 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 12:10:06 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_tmp(char *tmp)
+void	ft_free_tmp(void *tmp)
 {
 	if (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:23:36 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 15:03:05 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 14:48:34 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static t_tre			*ft_creat_tre(double distance, t_tre *tree, int i)
 {
-
 	if (!(tree = (t_tre *)malloc(sizeof(t_tre))))
 		return (NULL);
 	tree->num = i;
@@ -89,6 +88,6 @@ int			*sorting_of_distances_of_sprites(t_all *s, int *array)
 	}
 	i = 0;
 	*array = creat_sort_arr(array, &i, tree);
-	free(tree);
+	freemem(tree);
 	return (array);
 }

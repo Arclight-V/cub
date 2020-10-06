@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 11:22:01 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 16:36:10 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int rendered_image_in_bmp(char *cub)
 	if ((render_next_frame(s)) < 0)
 		return (ft_strerror(-1));
 	save_bmp(s->win->x, s->win->y, s->win->addr);
-	// game_exit(0, s);
+	// mlx_destroy_image(s->win->mlx, s->win->img);
+	// mlx_destroy_window(s->win->mlx, s->win->win);
+	game_exit(0, s, head);
 	exit(0);
 }

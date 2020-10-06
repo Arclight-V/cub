@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 11:25:09 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 12:34:43 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,7 @@ t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 int 		rendered_image_in_bmp(char *cub);
 int			checking_map(char **map, int size, int len);
 int			creating_array_for_ray(t_all *s);
+int			game_exit(int num, t_all *s, t_list *head);
 
 /*
 ** free memory
