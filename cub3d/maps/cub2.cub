@@ -1,4 +1,4 @@
-R 800 600
+R 999 333
 
 NO ./textures/WALL_NORD.xpm
 SO ./textures/WALL_SOUTH.xpm

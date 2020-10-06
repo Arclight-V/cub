@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 10:34:29 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int			render_next_frame(t_all *s)
 	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
 	// mlx_destroy_image(s->win->mlx, s->win->img);
 	mlx_do_sync(s->win->mlx);
+	
 	return (0);
 }
 

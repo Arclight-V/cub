@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 11:25:45 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ int		checking_borders(char **map, int size)
 	return (1);
 }
 
-int 	checking_space(char **m, int size, int i, int j)
-{
-}
 
 int		checking_map(char **map, int size, int len)
 {
@@ -137,10 +134,26 @@ int			run_game(char *cub)
 		return (ft_strerror(-1));
 }
 
+
+
+
 int		main (int argc, char **argv)
 {
 	if (argc == 2)
-		run_game(argv[1]);
+		{
+			if (!(ft_strnstrindex(argv[1], ".cub")))
+			{
+				ft_putendl_fd("Error : map format needs to be.'cub'", 2);
+				return (0);
+			}
+			run_game(argv[1]);
+		}
+	else if (argc == 3)
+	{
+		if (ft_strnstrindex(argv[2], "--save"))
+				rendered_image_in_bmp(argv[1]);
+		ft_putendl_fd("Error : only the --save option is available", 2);
+	}
 	else
 		ft_putendl_fd("Error : Invalid arguments", 2);
 	return (0);

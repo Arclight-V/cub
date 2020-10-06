@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:38:57 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 12:12:23 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/05 18:54:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		ft_strnstrindex(char *big, char *little)
 	size_t	j;
 
 	i = -1;
+	if (big == NULL)
+		return (0);
 	while (big[++i])
 	{
 		if (big[i] == little[0])

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:41:55 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 11:25:09 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,31 @@ typedef struct		s_all
 	t_sprite		*sprite;
 }					t_all;
 
+typedef struct s_bitmap_file_header
+{
+	char 		bfType[2];
+	int			bfSyze;
+	short		bfRezerved1;
+	short		bfRezerved2;
+	int			bfOffBits;
+}				t_bitmap_file_header;
+
+typedef struct s_bitmap_info_header
+{
+	int			biSize;
+	int			biWidth;
+	int			biHeigt;
+	short		biPlanes;
+	short		biBitCount;
+	int			biCompression;
+	int			biSizeImage;
+	int			biXPelsPerMeter;
+	int			biYPelsPerMeter;
+	int			biClrUsed;
+	int			biClrImportant;
+
+}				t_bitmap_info_header;
+
 
 
 /*
@@ -300,9 +325,7 @@ void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
 void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst);
 int			loop_hook(t_all *s, void *mlx, void *win);
-// void		drawing_celing(t_data *data, t_win *win, int ceil);
 void		drawing_walls(t_all *s, t_data *data, t_wall *wall);
-// void		drawing_floor(t_map *map, t_win *win, int index);
 int			drawing_sprites(t_all *s, t_data *data, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 void		search_player_and_sprites(t_map *map, t_sprite *sprite, int x, int y);
@@ -313,11 +336,12 @@ void		checking_direction(double *direction);
 void		ft_move_forward_back(t_map *map, int i);
 void		ft_rotate(double *direction, int i);
 void		ft_move_left_right(t_map *map, int i);
-// void		drawing_celing(t_data *data, t_win *win, int ceil);
-// void		drawing_floor(t_map *map, t_win *win, int index);
 void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
 void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *sprite, t_const *cnst);
-t_list			*ft_creat_list(t_list *head, t_all *s, char *line);
+t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
+int 		rendered_image_in_bmp(char *cub);
+int			checking_map(char **map, int size, int len);
+int			creating_array_for_ray(t_all *s);
 
 /*
 ** free memory
