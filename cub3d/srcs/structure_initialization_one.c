@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:15:40 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_map		*initializing_map_structure()
 	map->y_p = 0;
 	map->a_p = 0;
 	map->angle_start = 0;
-	map->c = 0.0;
 	map->x_horizont = 0;
 	map->y_horizont = 0;
 	map->X_a_h = 0;
@@ -125,6 +124,7 @@ t_wall		*initializing_wall_structure(t_wall *wall)
 		wall[i].img = 0;
 		wall[i].size_line = 0;
 		wall[i].width = 0;
+		wall[i].filename = NULL;
 	}
 	return(wall);
 }

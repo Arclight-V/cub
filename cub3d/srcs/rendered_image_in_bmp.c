@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 16:36:10 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 15:54:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,23 @@ int rendered_image_in_bmp(char *cub)
 
 	head = NULL;
 	if (!(s = initializing_structures(s, &error)))
-		return (ft_strerror(error));
+		return (ft_strerror(s, head, error));
 	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
-		return (ft_strerror(s->fd->err));
+		return (ft_strerror(s, head, s->fd->err));
 	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
-		return (ft_strerror(s->fd->err));
-	error = checking_map(s->map->map, s->map->size, ft_strlen(head->content));
-	make_windows(s, s->win);
-	if ((take_texture_parameters_sprite(s, s->map->item, s->fd->filename) < 0))
-		return (ft_strerror(s->fd->err));
+		return (ft_strerror(s, head, s->fd->err));
+	checking_map(s->map->map, s->map->size, ft_strlen(head->content), &error);
+	if (error < 0)
+		return (ft_strerror(s, head, error));
+	make_windows(s->win);
+	if ((take_texture_parameters(s, s->map->item, s->fd->filename) < 0))
+		return (ft_strerror(s, head, s->fd->err));
 	if ((creating_array_for_ray(s)))
-		return (ft_strerror(s->fd->err));
+		return (ft_strerror(s, head, s->fd->err));
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);
 	if ((render_next_frame(s)) < 0)
-		return (ft_strerror(-1));
+		return (ft_strerror(s, head,-1));
 	save_bmp(s->win->x, s->win->y, s->win->addr);
-	// mlx_destroy_image(s->win->mlx, s->win->img);
-	// mlx_destroy_window(s->win->mlx, s->win->win);
-	game_exit(0, s, head);
-	exit(0);
+	game_exit(s, head, 0);
 }

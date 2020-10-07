@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:48:28 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 11:28:07 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 12:50:52 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,16 @@ int			render_next_frame(t_all *s)
 	if ((drawing_screen(s, s->data, s->map, s->cnst)) < 0)
 		return (-1);
 	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
-	// mlx_destroy_image(s->win->mlx, s->win->img);
 	mlx_do_sync(s->win->mlx);
-	
+	// mlx_destroy_image(s->win->mlx, s->win->img);
 	return (0);
 }
 
-int			make_windows(t_all *s, t_win *win)
+void			make_windows(t_win *win)
 {	
 
-    s->win->mlx = mlx_init();
-    s->win->win = mlx_new_window(s->win->mlx, s->win->x, s->win->y, "Cub3D");
-	s->win->img = mlx_new_image(s->win->mlx, s->win->x, s->win->y);
-	s->win->addr = mlx_get_data_addr(s->win->img, &win->bits_per_pixel, &win->line_lenght, &win->endian);
-	return (1);
+    win->mlx = mlx_init();
+    win->win = mlx_new_window(win->mlx, win->x, win->y, "Cub3D");
+	win->img = mlx_new_image(win->mlx, win->x, win->y);
+	win->addr = mlx_get_data_addr(win->img, &win->bits_per_pixel, &win->line_lenght, &win->endian);
 }

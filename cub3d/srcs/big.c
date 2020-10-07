@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:22:16 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ t_list		*ft_add_space(t_list **head, t_all *s)
 			tmp_str = tmp->content;
 			tmp->len = s->fd->max_len - tmp->len;
 			if (!(tmp->content = ft_str_add_char(tmp->content, tmp->len, '1')))
+			{
+				s->fd->err = -27;
 				return (NULL);
+			}
 			ft_free_tmp(tmp_str);
 			tmp = tmp->next;
 		}
@@ -133,11 +136,13 @@ void		calculation_constant_values(t_all *s)
 	s->cnst->yMapMax = s->map->size * CUBE - 1;
 }
 
-int	take_texture_parameters_sprite(t_all *s, int item, char *filename)
+int	take_texture_parameters(t_all *s, int item, char *filename)
 {
 	int i;
-	
+	int	j;
 	i = -1;
+	j = -1;
+
 	if (!(s->sprite = (t_sprite *)malloc(item * (sizeof(t_sprite)))))
 	{
 		s->fd->err = -1;
@@ -147,6 +152,21 @@ int	take_texture_parameters_sprite(t_all *s, int item, char *filename)
 	{
 		s->sprite[i].img = mlx_xpm_file_to_image(s->win->mlx, filename, &s->sprite[i].width, &s->sprite[i].height);
 		s->sprite[i].adr = mlx_get_data_addr(s->sprite[i].img, &s->sprite[i].bits_per_pixel, &s->sprite[i].size_line, &s->sprite[i].endian);
+		if (!(s->sprite[i].adr))
+		{
+			s->fd->err = -1;
+			return (-1);
+		}
+	}
+	while (++j < 4)
+	{	
+		s->wall[j].img = mlx_xpm_file_to_image(s->win->mlx, s->wall[j].filename, &s->wall[j].width, &s->wall[j].height);
+		s->wall[j].adr = mlx_get_data_addr(s->wall[j].img, &s->wall[j].bits_per_pixel, &s->wall[j].size_line, &s->wall[j].endian);
+		if (!(s->wall[j].adr))
+		{
+			s->fd->err = -1;
+			return (-1);
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:28:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 16:40:57 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 14:47:24 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,12 @@
 
 static void 	freeing_memory_from_map_structure(t_map *map)
 {
-	int	i;
-
-	i = -1;
-	// while (map->map[++i])
-		// ft_free_tmp(map->map[i]);
 	free(map->map);
 	free(map);
 	map = NULL;
 }
 static void freeing_memory_from_list(t_list *head)
 {
-	t_list *tmp;
-
-	// tmp = head;
-	// while (tmp->next)
-	// {
-
-	// 	ft_free_tmp(tmp->content);
-	// 	tmp = tmp->next;
-	// }
 	ft_lstclear(&head,ft_lstdelone_f);
 	ft_free_tmp(head);
 }
@@ -41,18 +27,18 @@ static void freeing_memory_from_list(t_list *head)
 static void freeing_memory_from_fd_structure(t_fd *fd)
 {
 	ft_free_tmp(fd->filename);
-	free(fd);
-	fd = NULL;
+	ft_free_tmp(fd);
 }
 
 static void freeing_memory_from_win_structure(t_win *win)
 {
-	ft_free_tmp(win->addr);
-	mlx_destroy_window(win->mlx, win->win);
-	// mlx_destroy_image(win->mlx, win->img);
+	if (win->img)
+		mlx_destroy_image(win->mlx, win->img);
+	if (win->win)
+		mlx_destroy_window(win->mlx, win->win);
+	win->win = NULL;
+	win->img = NULL;
 	ft_free_tmp(win->mlx);
-	// ft_free_tmp(win->win);
-	ft_free_tmp(win->img);
 	ft_free_tmp(win);
 }
 
@@ -102,8 +88,10 @@ static void freeing_memory_form_wall_texture(t_wall *wall)
 	ft_free_tmp(wall);
 }
 
-int	game_exit(int num, t_all *s, t_list *head)
+int	game_exit(t_all *s, t_list *head, int num)
 {
+	if (s->win)
+		freeing_memory_from_win_structure(s->win);
 	if (head)
 		freeing_memory_from_list(head);
 	if (s->sprite)
@@ -112,8 +100,6 @@ int	game_exit(int num, t_all *s, t_list *head)
 		freeing_memory_from_map_structure(s->map);
 	if (s->fd)
 		freeing_memory_from_fd_structure(s->fd);
-	if (s->win)
-		freeing_memory_from_win_structure(s->win);
 	if (s->cnst)
 		ft_free_tmp(s->cnst);
 	if (s->data)
@@ -121,6 +107,6 @@ int	game_exit(int num, t_all *s, t_list *head)
 	if (s->wall)
 		freeing_memory_form_wall_texture(s->wall);
 	ft_free_tmp(s);
-	sleep(1000);
+	// sleep(10000);
 	exit(num);
 }

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 12:34:43 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 15:31:32 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,36 @@
 
 # define MALLOC_1 "Error : Malloc fail (initializing_structure_of_structures)"
 # define MALLOC_2 "Error : Malloc fail (initializing_map_structure)"
-
-# define MALLOC_4 "Error : Malloc fail (initializing_fd_structure)"
-# define MALLOC_5 "Error : Malloc fail (initializing_win_structure)"
-# define MALLOC_6 "Error : Malloc fail (initializing_const_values_structure)"
-
-# define MALLOC_11 "Error : Malloc fail (initializing_slice_parameters_structure_structure)"
-# define MALLOC_12 "Error : Malloc fail (checking_textures_wall)"
-# define MALLOC_13 "Error : Malloc fail (checking_textures_sprite)"
+# define MALLOC_3 "Error : Malloc fail (initializing_fd_structure)"
+# define MALLOC_4 "Error : Malloc fail (initializing_win_structure)"
+# define MALLOC_5 "Error : Malloc fail (initializing_cnst_structure)"
+# define MALLOC_6 "Error : Malloc fail (initializing_wall_structure)"
+# define MALLOC_7 "Error : Malloc fail (initializing_slice_parameters_structure)"
+# define MALLOC_8 "Error : Malloc fail (checking_textures_wall)"
+# define MALLOC_9 "Error : Malloc fail (checking_textures_sprite)"
+# define MALLOC_10 "Error : Malloc fail (ft_creat_list (ft_lstnew))"
+# define MALLOC_11 "Error : Malloc fail (ft_add_space (ft_str_add_chr))"
+# define MALLOC_12 "Error : Malloc fail (make_map (ft_calloc))"
 # define FD_1 "Error : Couldn't read fd (CUB)"
-# define FD_2 "Error : Couldn't read fd (Texture of the wall)"
-# define FD_3 "Error : Couldn't read fd (checking_textures_sprite)"
+# define FD_2 "Error : Readed fd complited with error (get_next_line)"
+# define FD_3 "Error : Couldn't read fd (checking_textures_wall)"
+# define FD_4 "Error : Couldn't read fd (checking_textures_sprite)"
 # define RESOLUTION_1 "Error : Resolution specified twice"
 # define RESOLUTION_2 "Error : Invalid resolution"
 # define TEXTURE_1 "Error : Texture of the wall image twice"
 # define TEXTURE_2 "Error : Texture of the wall information contains invalid characters"
 # define TEXTURE_3 "Error : Not available image format of the wall"
-
 # define TEXTURE_4 "Error : Texture of the sprite image twice"
 # define TEXTURE_5 "Error : Texture of the sprite information contains invalid characters"
 # define TEXTURE_6 "Error : Not available image format of the sprite"
 # define FLOOR_1 "Error : Floor/ceiling specified twice"
 # define FLOOR_2 "Error : Invalid floor/celing line"
-# define MAP_1 "Error : The map content is not the last element"
+# define MAP_1 "Error : The map content information contains invalid characters"
+# define MAP_2 "Error : The map content is not the last element"
+# define MAP_3 "Error : The .cub scene contains invalid characters"
+# define MAP_4 "Error : The map must contain only one player"
+
+
 
 /*
 ** file descriptor for reading the map
@@ -96,20 +103,19 @@ typedef struct		s_map
 	char			**map;
 	int				item;
 	int				size;
-	double				x_p;
-	double				y_p;
-	double				x_horizont;
-	double				y_horizont;
-	double				X_a_h;
-	double				Y_a_h;
-	double				x_vertical;
-	double				y_vertical;
-	double				X_a_v;
-	double				Y_a_v;
+	double			x_p;
+	double			y_p;
+	double			x_horizont;
+	double			y_horizont;
+	double			X_a_h;
+	double			Y_a_h;
+	double			x_vertical;
+	double			y_vertical;
+	double			X_a_v;
+	double			Y_a_v;
 	double			PDvsPE;
 	double			a_p;
 	double			angle_start;
-	double			c;
 	double			PD;
 	double			PE;
 	int				flagPDPE;
@@ -155,6 +161,7 @@ typedef struct	s_win
 
 typedef struct	s_wall
 {
+	char			*filename;
 	char			*adr;
 	void			*img;
 	int				width;
@@ -298,15 +305,15 @@ int			checking_textures_wall(t_all *s, char *line, int *i, int num);
 int			checking_textures_sprite(t_all *s, char *line, int *i);
 int			checking_color(int *color, char *line, int *i, int *count_ind);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
-void		take_texture_parameters(t_win *win, t_wall *wall, int i, char *filename);
+int			take_texture_parameters(t_all *s, int item, char *filename);
 
 /*
 **	tools:
 */
 int			ft_skip_spaces(char *line, int *i);
-int			ft_strerror(int err);
+int			ft_strerror(t_all *s, t_list *head, int err);
 int			ft_atoi_mod(const char *nptr, int *i);
-int			ft_errorstr(char *str);
+int			ft_errorstr(t_all *s, t_list *head, char *str);
 int			ft_strnstrindex(char *big, char *little);
 char		**make_map(t_list **head, int size, t_all *s);
 int			create_trgb(int t, int r, int g, int b);
@@ -315,7 +322,7 @@ int			create_trgb(int t, int r, int g, int b);
 **	functions for drawing the screen
 */
 
-int			make_windows(t_all *s, t_win *win);
+void		make_windows(t_win *win);
 int			render_next_frame(t_all *s);
 void 		raycasting(t_all *s, t_data *data, t_map *map, t_const *cnst);
 int			drawing_screen(t_all *s, t_data *data, t_map *map, t_const *cnst);
@@ -340,9 +347,9 @@ void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
 void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *sprite, t_const *cnst);
 t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 int 		rendered_image_in_bmp(char *cub);
-int			checking_map(char **map, int size, int len);
+void		checking_map(char **map, int size, int len, int *error);
 int			creating_array_for_ray(t_all *s);
-int			game_exit(int num, t_all *s, t_list *head);
+int			game_exit(t_all *s, t_list *head, int num);
 
 /*
 ** free memory

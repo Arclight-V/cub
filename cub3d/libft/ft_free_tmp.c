@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:54:35 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 12:10:06 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/06 17:20:10 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_tmp(void *tmp)
 {
-	if (tmp)
+	if (tmp != NULL)
 	{
 		free(tmp);
 		tmp = NULL;

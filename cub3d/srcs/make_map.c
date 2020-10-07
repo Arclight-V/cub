@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:45:13 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/03 12:48:25 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 12:26:31 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ char	**make_map(t_list **head, int size, t_all *s)
 	i = -1;
 	j = -1;
 	if (!(s->map->map = ft_calloc(size + 1, sizeof(char *))))
+	{
+		s->fd->err = -28;
 		return (NULL);
+	}
 	while (tmp)
 	{
 		s->map->map[++i] = tmp->content;

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:17:10 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 15:59:51 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 11:21:48 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 	else if (line[i] == '1')
 		return (s->fd->err = ft_forb_char_map(&head, line, s, &i));
 	else if (ft_skip_spaces(line, &i) && line[i] != '\0')
-		return (-92);
+		return (-26);
 	return (1);
 }
 
@@ -52,8 +52,7 @@ t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
 	{
 		if (!(new = ft_lstnew(line)))
 		{	
-			ft_lstclear(&head,lstdelone_f);
-			s->fd->err = -15;
+			s->fd->err = -27;
 			return (NULL);
 		}
 		ft_lstadd_back(&head, new);
@@ -72,7 +71,7 @@ t_list			*parser_of_scene(char *cub, t_all *s, t_list *head)
 	line = NULL;
 	if ((fd = open(cub, O_RDONLY)) < 0)
 	{	
-		s->fd->err = -1;
+		s->fd->err = -8;
 		return (NULL);
 	}
 	while ((ret = get_next_line(fd, &line)) > 0)
@@ -80,9 +79,13 @@ t_list			*parser_of_scene(char *cub, t_all *s, t_list *head)
 		if (!(head = ft_creat_list(head, s, line)) && s->fd->err < 0)
 			return (NULL);
 	}
+	if (ret < 0)
+	{	s->fd->err = -9;
+		return (NULL);
+	}
 	if (!(head = ft_creat_list(head, s, line)) && s->fd->err < 0)
 		return (NULL);
-	if (!(head = ft_add_space(&head, s)))
+	if (!(head = ft_add_space(&head, s)) && s->fd->err < 0)
 		return (NULL);
 	return (head);
 }
