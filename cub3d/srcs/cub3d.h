@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:00:00 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:29:34 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@
 # define MALLOC_10 "Error : Malloc fail (ft_creat_list (ft_lstnew))"
 # define MALLOC_11 "Error : Malloc fail (ft_add_space (ft_str_add_chr))"
 # define MALLOC_12 "Error : Malloc fail (make_map (ft_calloc))"
+# define MALLOC_13 "Error : Malloc fail (take_texture_parameters)"
 # define FD_1 "Error : Couldn't read fd (CUB)"
 # define FD_2 "Error : Readed fd complited with error (get_next_line)"
 # define FD_3 "Error : Couldn't read fd (checking_textures_wall)"
@@ -73,6 +74,8 @@
 # define TEXTURE_4 "Error : Texture of the sprite image twice"
 # define TEXTURE_5 "Error : Texture of the sprite information contains invalid characters"
 # define TEXTURE_6 "Error : Not available image format of the sprite"
+# define TEXTURE_7 "Error : Broken file .xpm (sprite)"
+# define TEXTURE_8 "Error : Broken file .xpm (wall)"
 # define FLOOR_1 "Error : Floor/ceiling specified twice"
 # define FLOOR_2 "Error : Invalid floor/celing line"
 # define MAP_1 "Error : The map content information contains invalid characters"
@@ -305,7 +308,7 @@ void		checking_textures_wall(t_all *s, t_list *head, char *line, int num);
 void		checking_textures_sprite(t_all *s, t_list *head, char *line, int *i);
 void		checking_color(t_all *s, t_list *head, char *line, int *color);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
-int			take_texture_parameters(t_all *s, int item, char *filename);
+void		take_texture_parameters(t_all *s, t_list *head, int item, char *filename);
 
 /*
 **	tools:
@@ -347,7 +350,7 @@ void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
 void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *sprite, t_const *cnst);
 // t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 int 		rendered_image_in_bmp(char *cub);
-void		checking_map(char **map, int size, int len, int *error);
+void		checking_map(t_all *s, t_list *head, int size, int len);
 int			creating_array_for_ray(t_all *s);
 int			game_exit(t_all *s, t_list *head, int num);
 

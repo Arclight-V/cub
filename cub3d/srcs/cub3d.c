@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 18:57:19 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:31:55 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_all 	*initializing_structures(t_all *s, t_list *head)
 }
 
 
-int		checking_borders(char **map, int size)
+void		checking_borders(t_all *s, t_list *head, char **map, int size)
 {
 	int i;
 	int j;
@@ -47,18 +47,17 @@ int		checking_borders(char **map, int size)
 			while (map[i][++j])
 			{
 				if (map[i][j] != '1' && map[i][j] != ' ')
-					return (-1);
+					ft_errorstr(s, head, MAP_1);
 			}
 		}
 		if (map[i][0] != '1' && map[0][i] != ' ')
-			return(-1);
+			ft_errorstr(s, head, MAP_1);
 		j = -1;
 		while (map[i][++j])
 			;
-		if (map[i][j - 1] != '1' && map[i][j - 1] != '0')
-			return (-1);
+		if (map[i][j - 1] != '1' && map[i][j - 1] != ' ')
+			ft_errorstr(s, head, MAP_1);
 	}
-	return (1);
 }
 
 static void checking_player(char ch, int *player)
@@ -68,20 +67,21 @@ static void checking_player(char ch, int *player)
 		(*player)++;
 }
 
-void		checking_map(char **map, int size, int len, int *error)
+void		checking_map(t_all *s, t_list *head, int size, int len)
 {
 	int i;
 	int	j;
 	int player;
+	char **map;
 
+	map = s->map->map;
 	i = 0;
 	player = 0;
-	if (checking_borders(map, size) < 0)
-		*error = -24;
+	checking_borders(s, head, s->map->map, size);
 	while (++i < size)
 	{
 		j = 1;
-		while (map[i][j++] && j < len - 1)
+		while (s->map->map[i][j++] && j < len - 1)
 		{
 			if (map[i][j] == '0' || map[i][j] == '2' || map[i][j] == 'S' || \
 				map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
@@ -89,12 +89,12 @@ void		checking_map(char **map, int size, int len, int *error)
 				checking_player(map[i][j], &player);
 				if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ' || \
 					map[i - 1][j] == ' ' || map[i - 1][j] == ' ')
-					*error = -24;
+					ft_errorstr(s, head, MAP_1);
 			}
 		}
 	}
 	if ((player == 0) || (player > 1))
-		*error = -29;
+		ft_errorstr(s, head, MAP_4);
 }
 
 int			creating_array_for_ray(t_all *s)
@@ -129,15 +129,11 @@ int			run_game(char *cub)
 	error = 0;
 	head = NULL;
 	s = initializing_structures(s, head);
-
-	if (!(head = parser_of_scene(s, head, cub)) && s->fd->err < 0)
-		return (ft_strerror(s, head, s->fd->err));
+	head = parser_of_scene(s, head, cub);
 	make_map(s, head, s->map->size = ft_lstsize(head));
-	checking_map(s->map->map, s->map->size, ft_strlen(head->content), &error);
-	error < 0 ? ft_strerror(s, head, error) : 0;
+	checking_map(s, head, s->map->size, ft_strlen(head->content));
 	make_windows(s->win);
-	if ((take_texture_parameters(s, s->map->item, s->fd->filename) < 0))
-		return (ft_strerror(s, head, s->fd->err));
+	take_texture_parameters(s, head, s->map->item, s->fd->filename);
 	if ((creating_array_for_ray(s)))
 		return (ft_strerror(s, head, s->fd->err));
 	search_player_and_sprites(s->map, s->sprite, 0, 0);

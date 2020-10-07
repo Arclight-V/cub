@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 18:37:34 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:32:50 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,38 +122,29 @@ void		calculation_constant_values(t_all *s)
 	s->cnst->yMapMax = s->map->size * CUBE - 1;
 }
 
-int	take_texture_parameters(t_all *s, int item, char *filename)
+void	take_texture_parameters(t_all *s, t_list *head, int item, char *filename)
 {
 	int i;
 	int	j;
 	i = -1;
 	j = -1;
-
 	if (!(s->sprite = (t_sprite *)malloc(item * (sizeof(t_sprite)))))
-	{
-		s->fd->err = -1;
-		return (-1);
-	}
+		ft_errorstr(s, head, MALLOC_13);
 	while (++i < item)
 	{
 		s->sprite[i].img = mlx_xpm_file_to_image(s->win->mlx, filename, &s->sprite[i].width, &s->sprite[i].height);
 		s->sprite[i].adr = mlx_get_data_addr(s->sprite[i].img, &s->sprite[i].bits_per_pixel, &s->sprite[i].size_line, &s->sprite[i].endian);
 		if (!(s->sprite[i].adr))
-		{
-			s->fd->err = -1;
-			return (-1);
-		}
+			ft_errorstr(s, head, TEXTURE_7);
 	}
+	ft_free_tmp(filename);
 	while (++j < 4)
 	{	
 		s->wall[j].img = mlx_xpm_file_to_image(s->win->mlx, s->wall[j].filename, &s->wall[j].width, &s->wall[j].height);
 		s->wall[j].adr = mlx_get_data_addr(s->wall[j].img, &s->wall[j].bits_per_pixel, &s->wall[j].size_line, &s->wall[j].endian);
+		ft_free_tmp(s->wall[j].filename);
 		if (!(s->wall[j].adr))
-		{
-			s->fd->err = -1;
-			return (-1);
-		}
+			ft_errorstr(s, head, TEXTURE_8);
 	}
-	return (0);
 }
 
