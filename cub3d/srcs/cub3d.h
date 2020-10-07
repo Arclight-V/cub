@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:29:34 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:38:49 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,19 @@
 # define MALLOC_11 "Error : Malloc fail (ft_add_space (ft_str_add_chr))"
 # define MALLOC_12 "Error : Malloc fail (make_map (ft_calloc))"
 # define MALLOC_13 "Error : Malloc fail (take_texture_parameters)"
+# define MALLOC_14 "Error : Malloc fail (creating_array_for_ray (wall_h))"
+# define MALLOC_15 "Error : Malloc fail (creating_array_for_ray(wall_hFUll))"
+# define MALLOC_16 "Error : Malloc fail (creating_array_for_ray(celing_h))"
+# define MALLOC_17 "Error : Malloc fail (creating_array_for_ray(y_image))"
+# define MALLOC_18 "Error : Malloc fail (creating_array_for_ray(side_of_world))"
+# define MALLOC_19 "Error : Malloc fail (creating_array_for_ray(x_image))"
+# define MALLOC_20 "Error : Malloc fail (creating_array_for_ray(distance_wall))"
+# define MALLOC_21 "Error : Malloc fail (creating_array_for_ray(distance_wall_not_corr))"
+# define MALLOC_22 "Error : Malloc fail (creating_array_for_ray(distan_of_sprites))"
+
+
+
+
 # define FD_1 "Error : Couldn't read fd (CUB)"
 # define FD_2 "Error : Readed fd complited with error (get_next_line)"
 # define FD_3 "Error : Couldn't read fd (checking_textures_wall)"
@@ -351,7 +364,7 @@ void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *spr
 // t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 int 		rendered_image_in_bmp(char *cub);
 void		checking_map(t_all *s, t_list *head, int size, int len);
-int			creating_array_for_ray(t_all *s);
+void		creating_array_for_ray(t_all *s, t_list *head);
 int			game_exit(t_all *s, t_list *head, int num);
 
 /*

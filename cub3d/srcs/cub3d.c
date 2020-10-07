@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:31:55 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:39:10 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,27 +97,26 @@ void		checking_map(t_all *s, t_list *head, int size, int len)
 		ft_errorstr(s, head, MAP_4);
 }
 
-int			creating_array_for_ray(t_all *s)
+void		creating_array_for_ray(t_all *s, t_list *head)
 {
 	if (!(s->data->wall_h = ft_calloc((s->win->x), sizeof(double))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_14);
 	if (!(s->data->wall_hFull = ft_calloc((s->win->x), sizeof(double))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_15);
 	if (!(s->data->celing_h = ft_calloc((s->win->x), sizeof(int))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_16);
 	if (!(s->data->y_image = ft_calloc((s->win->x), sizeof(int))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_17);
 	if (!(s->data->side_of_world = ft_calloc((s->win->x), sizeof(char))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_18);
 	if (!(s->data->x_image = ft_calloc((s->win->x), sizeof(int))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_19);
 	if (!(s->data->distance_wall = ft_calloc((s->win->x), sizeof(double))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_20);
 	if (!(s->data->distance_wall_not_corr = ft_calloc((s->win->x), sizeof(double))))
-		return (-1);
+		ft_errorstr(s, head, MALLOC_21);
 	if (!(s->data->distan_of_sprites = ft_calloc((s->win->x), sizeof(double))))
-		return (-1);
-	return (0);
+		ft_errorstr(s, head, MALLOC_22);
 }
 
 int			run_game(char *cub)
@@ -134,8 +133,7 @@ int			run_game(char *cub)
 	checking_map(s, head, s->map->size, ft_strlen(head->content));
 	make_windows(s->win);
 	take_texture_parameters(s, head, s->map->item, s->fd->filename);
-	if ((creating_array_for_ray(s)))
-		return (ft_strerror(s, head, s->fd->err));
+	creating_array_for_ray(s, head);
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);
 	if ((loop_hook(s, s->win->mlx, s->win->win)) < 0)
