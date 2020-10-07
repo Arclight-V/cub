@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:31:21 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:50:35 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,26 @@ int rendered_image_in_bmp(char *cub)
 	t_list	*head;
 	int		error;
 
-	head = NULL;
-	// if (!(s = initializing_structures(s, &error)))
+	// head = NULL;
+	// // if (!(s = initializing_structures(s, &error)))
+	// // 	return (ft_strerror(s, head, error));
+	// s = initializing_structures(s, head);
+	// if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
+	// 	return (ft_strerror(s, head, s->fd->err));
+	// if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
+	// 	return (ft_strerror(s, head, s->fd->err));
+	// checking_map(s->map->map, s->map->size, ft_strlen(head->content), &error);
+	// if (error < 0)
 	// 	return (ft_strerror(s, head, error));
-	s = initializing_structures(s, head);
-	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
-		return (ft_strerror(s, head, s->fd->err));
-	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
-		return (ft_strerror(s, head, s->fd->err));
-	checking_map(s->map->map, s->map->size, ft_strlen(head->content), &error);
-	if (error < 0)
-		return (ft_strerror(s, head, error));
-	make_windows(s->win);
-	if ((take_texture_parameters(s, s->map->item, s->fd->filename) < 0))
-		return (ft_strerror(s, head, s->fd->err));
-	if ((creating_array_for_ray(s)))
-		return (ft_strerror(s, head, s->fd->err));
-	search_player_and_sprites(s->map, s->sprite, 0, 0);
-	calculation_constant_values(s);
-	if ((render_next_frame(s)) < 0)
-		return (ft_strerror(s, head,-1));
+	// make_windows(s->win);
+	// if ((take_texture_parameters(s, s->map->item, s->fd->filename) < 0))
+	// 	return (ft_strerror(s, head, s->fd->err));
+	// if ((creating_array_for_ray(s)))
+	// 	return (ft_strerror(s, head, s->fd->err));
+	// search_player_and_sprites(s->map, s->sprite, 0, 0);
+	// calculation_constant_values(s);
+	// if ((render_next_frame(s)) < 0)
+	// 	return (ft_strerror(s, head,-1));
 	save_bmp(s->win->x, s->win->y, s->win->addr);
 	game_exit(s, head, 0);
 }

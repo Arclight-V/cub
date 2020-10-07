@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:17:10 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 18:25:49 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:01:05 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			checking_validity_map(t_all *s, t_list *head, char *line)
 		ft_errorstr(s, head, MAP_3);
 }
 
-t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
+void		*ft_creat_list(t_all *s, t_list *head, char *line)
 {
 	t_list	*new;
 
@@ -49,15 +49,15 @@ t_list			*ft_creat_list(t_list *head, t_all *s, char *line)
 	if (s->fd->count_ind > 8)
 	{
 		if (!(new = ft_lstnew(line)))
-			ft_errorstr(s, head, MALLOC_11);
+			ft_errorstr(s, head, MALLOC_10);
 		ft_lstadd_back(&head, new);
-		return(head);
+		return (head);
 	}
 	ft_free_tmp(line);
 	return (head);
 }
 
-t_list			*parser_of_scene(char *cub, t_all *s, t_list *head)
+t_list			*parser_of_scene(t_all *s, t_list *head, char *cub)
 {	
 	char	*line;
 	int		fd;
@@ -67,11 +67,10 @@ t_list			*parser_of_scene(char *cub, t_all *s, t_list *head)
 	if ((fd = open(cub, O_RDONLY)) < 0)
 		ft_errorstr(s, head, FD_1);
 	while ((ret = get_next_line(fd, &line)) > 0)
-		head = ft_creat_list(head, s, line);
-	ret < 0 ? ft_errorstr(s, head, FD_2) : 0;
-	if (!(head = ft_creat_list(head, s, line)) && s->fd->err < 0)
-		return (NULL);
-	if (!(head = ft_add_space(&head, s)) && s->fd->err < 0)
-		return (NULL);
+		head = ft_creat_list(s, head, line);
+	if (ret < 0)
+	 	ft_errorstr(s, head, FD_2);
+	head = ft_creat_list(s, head, line);
+	head = ft_add_space(s, head);
 	return (head);
 }

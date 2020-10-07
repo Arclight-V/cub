@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 17:28:36 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:57:19 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,9 @@ int			run_game(char *cub)
 	head = NULL;
 	s = initializing_structures(s, head);
 
-	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
+	if (!(head = parser_of_scene(s, head, cub)) && s->fd->err < 0)
 		return (ft_strerror(s, head, s->fd->err));
-	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
-		return (ft_strerror(s, head, s->fd->err));
+	make_map(s, head, s->map->size = ft_lstsize(head));
 	checking_map(s->map->map, s->map->size, ft_strlen(head->content), &error);
 	error < 0 ? ft_strerror(s, head, error) : 0;
 	make_windows(s->win);

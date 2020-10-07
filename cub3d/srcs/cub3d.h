@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 18:22:12 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 19:00:00 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,11 +288,11 @@ t_all			*initializing_structure_of_structures(t_all *s);
 /*
 **	parser
 */
-t_list		*parser_of_scene(char *cub, t_all *s, t_list *head);
-t_list		*ft_add_space(t_list **head, t_all *s);
+t_list		*parser_of_scene(t_all *s, t_list *head, char *cub);
+t_list		*ft_add_space( t_all *s, t_list *head);
 void		checking_validity_map(t_all *s, t_list *head, char *line);
-t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
-void		ft_max_len(t_list **head, t_all *s);
+void		*ft_creat_list(t_all *s, t_list *head, char *line);
+void		ft_max_len(t_all *s, t_list *head);
 // int		ft_creat_list(t_list *head, t_all *s, char *line);
 
 /*
@@ -315,7 +315,7 @@ int			ft_strerror(t_all *s, t_list *head, int err);
 int			ft_atoi_mod(const char *nptr, int *i);
 int			ft_errorstr(t_all *s, t_list *head, char *str);
 int			ft_strnstrindex(char *big, char *little);
-char		**make_map(t_list **head, int size, t_all *s);
+void		make_map( t_all *s, t_list *head, int size);
 int			create_trgb(int t, int r, int g, int b);
 
 /*
@@ -345,7 +345,7 @@ void		ft_rotate(double *direction, int i);
 void		ft_move_left_right(t_map *map, int i);
 void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
 void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *sprite, t_const *cnst);
-t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
+// t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 int 		rendered_image_in_bmp(char *cub);
 void		checking_map(char **map, int size, int len, int *error);
 int			creating_array_for_ray(t_all *s);

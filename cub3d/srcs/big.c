@@ -6,17 +6,17 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 18:29:32 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:37:34 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		ft_max_len(t_list **head, t_all *s)
+void		ft_max_len(t_all *s, t_list *head)
 {
 	t_list	*tmp;
 
-	tmp = *head;
+	tmp = head;
 	while (tmp)
 	{
 		if (s->fd->flag == 0)
@@ -33,13 +33,13 @@ void		ft_max_len(t_list **head, t_all *s)
 	}
 }
 
-t_list		*ft_add_space(t_list **head, t_all *s)
+t_list		*ft_add_space(t_all *s, t_list *head)
 {
 	t_list 	*tmp;
 	char	*tmp_str;
 
-	tmp = *head;
-	ft_max_len(head, s);
+	tmp = head;
+	ft_max_len(s, head);
 	while (tmp)
 	{
 		if (tmp->len < s->fd->max_len)
@@ -54,19 +54,8 @@ t_list		*ft_add_space(t_list **head, t_all *s)
 		else
 			tmp = tmp->next;
 	}
-	return (*head);
+	return (head);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 void            my_mlx_pixel_put(t_win *win, int x, int y, int color)
 {
