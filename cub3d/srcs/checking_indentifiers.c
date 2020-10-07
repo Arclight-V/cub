@@ -6,17 +6,17 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:15:36 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:42:54 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-int				checking_resolution(t_all *s, char *line, int *i)
+void	checking_resolution(t_all *s, t_list *head, char *line, int *i)
 {
 	if (s->win->x != 0 || s->win->y != 0)
-		return(-10);
+		ft_strerror(s, head, -10);
 	(*i)++;
 	s->win->x = ft_atoi_mod(line, i);
 	s->win->y = ft_atoi_mod(line, i);
@@ -26,9 +26,8 @@ int				checking_resolution(t_all *s, char *line, int *i)
 		s->win->y = 1400;
 	ft_skip_spaces(line, i);
 	if (s->win->x <= 0 || s->win->y <= 0 || line[*i] != '\0')
-		return (-11);
+		ft_strerror(s, head, -11);
 	s->fd->count_ind++;
-	return (0);
 }
 
 int				checking_textures_wall(t_all *s, char *line, int *i, int num)

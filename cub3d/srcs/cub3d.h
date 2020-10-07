@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:31:11 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:43:08 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ void		ft_max_len(t_list **head, t_all *s);
 */
 
 int			ft_forb_char_map(t_list **head, char *line, t_all *s, int *i);
-int			checking_resolution(t_all *s, char *line, int *i);
+void		checking_resolution(t_all *s, t_list *head, char *line, int *i);
 int			checking_textures_wall(t_all *s, char *line, int *i, int num);
 int			checking_textures_sprite(t_all *s, char *line, int *i);
 int			checking_color(int *color, char *line, int *i, int *count_ind);
