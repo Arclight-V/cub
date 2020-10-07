@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:56:19 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 17:53:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	checking_resolution(t_all *s, t_list *head, char *line, int *i)
 {
 	if (s->win->x != 0 || s->win->y != 0)
-		ft_strerror(s, head, -10);
+		ft_errorstr(s, head, RESOLUTION_1);
 	(*i)++;
 	s->win->x = ft_atoi_mod(line, i);
 	s->win->y = ft_atoi_mod(line, i);
@@ -26,7 +26,7 @@ void	checking_resolution(t_all *s, t_list *head, char *line, int *i)
 		s->win->y = 1400;
 	ft_skip_spaces(line, i);
 	if (s->win->x <= 0 || s->win->y <= 0 || line[*i] != '\0')
-		ft_strerror(s, head, -11);
+		ft_errorstr(s, head, RESOLUTION_2);
 	s->fd->count_ind++;
 }
 
@@ -38,33 +38,32 @@ void	checking_textures_wall(t_all *s, t_list *head, char *line, int num)
 
 	i = 2;
 	if (s->wall[num].filename)
-		ft_strerror(s, head, -12);
+		ft_errorstr(s, head, TEXTURE_1);
 	ft_skip_spaces(line, &i);
 	if ((xpm = ft_strnstrindex(line, ".xpm")))
 	{
 		j = xpm + 1;
 		ft_skip_spaces(line, &j);
 		if (line[j] != '\0')
-			ft_strerror(s, head, -13);
+			ft_errorstr(s, head, TEXTURE_2);
 		if (!(s->wall[num].filename = ft_substr(line, i, xpm - i + 1)))
-			ft_strerror(s, head, -14);
+			ft_errorstr(s, head, MALLOC_8);
 		if (open(s->wall[num].filename, O_RDONLY) < 0)
-			ft_strerror(s, head, -15);
+			ft_errorstr(s, head, FD_3);
 		s->fd->count_ind++;
 	}
 	else
-		ft_strerror(s, head, -16);
+		ft_errorstr(s, head, TEXTURE_3);
 }
 
 
-int			checking_textures_sprite(t_all *s, char *line, int *i)
+void			checking_textures_sprite(t_all *s, t_list *head, char *line, int *i)
 {
-
 	int			xpm;
 	int			j;
 
 	if (s->fd->flag_sprite != 0)
-		return (-17);
+		ft_errorstr(s, head, TEXTURE_4);
 	(*i)++;
 	ft_skip_spaces(line, i);
 	if ((xpm = ft_strnstrindex(line, ".xpm")))
@@ -72,17 +71,16 @@ int			checking_textures_sprite(t_all *s, char *line, int *i)
 		j = xpm + 1;
 		ft_skip_spaces(line, &j);
 		if (line[j] != '\0')
-			return (-18);
+			ft_errorstr(s, head, TEXTURE_5);
 		if (!(s->fd->filename = ft_substr(line, (*i), xpm - (*i) + 1)))
-			return (-19);
+			ft_errorstr(s, head, MALLOC_9);
 		if (open(s->fd->filename, O_RDONLY) < 0)
-			return (-20);
+			ft_errorstr(s, head, FD_4);
 		s->fd->flag_sprite = 1;
 		s->fd->count_ind++;
-		return (0);
 	}
 	else
-		return (-21);
+		ft_errorstr(s, head, TEXTURE_6);
 }
 
 int		create_trgb(int t, int r, int g, int b)
@@ -90,25 +88,24 @@ int		create_trgb(int t, int r, int g, int b)
 	return(t << 24 | r << 16 | g << 8 | b);
 }
 
-int		checking_color(int *color, char *line, int *i, int *count_ind)
+void	checking_color(t_all *s, t_list *head, char *line, int *color)
 {
 	int	r;
 	int	g;
 	int	b;
+	int	i;
 
+	i = 1;
 	if (*color >= 0)
-		return (-22);
-	(*i)++;
-	r = ft_atoi_mod(line, i);
-	(*i)++;
-	g = ft_atoi_mod(line, i);
-	(*i)++;
-	b = ft_atoi_mod(line, i);
-	ft_skip_spaces(line, i);
-	if (line[*i] != '\0' || r > 255 || g > 255 || b > 255)
-		return (-23);
+		ft_errorstr(s, head, FLOOR_1);
+	r = ft_atoi_mod(line, &i);
+	i++;
+	g = ft_atoi_mod(line, &i);
+	i++;
+	b = ft_atoi_mod(line, &i);
+	ft_skip_spaces(line, &i);
+	if (line[i] != '\0' || r > 255 || g > 255 || b > 255)
+		ft_errorstr(s, head, FLOOR_2);
 	*color = create_trgb(0, r, g, b);
-	(*count_ind)++;
-	return (0);
-
+	s->fd->count_ind++;
 }

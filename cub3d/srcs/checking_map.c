@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:13:33 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 10:55:51 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:22:11 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3d.h"
 
-int				ft_forb_char_map(t_list **head, char *line, t_all *s, int *i)
+void			ft_forb_char_map(t_all *s, t_list *head, char *line, int *i)
 {
 	if (s->fd->count_ind >= 8)
 	{
@@ -28,10 +28,10 @@ int				ft_forb_char_map(t_list **head, char *line, t_all *s, int *i)
 				(*i)++;
 			}
 			else if (line[*i] != '\0')
-				return (-24);
+				ft_errorstr(s, head, MAP_1);
 			s->fd->count_ind++;
 		}
-		return (0);
 	}
-	return (-25);
+	else
+		ft_errorstr(s, head, MAP_2);
 }

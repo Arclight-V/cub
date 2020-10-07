@@ -1,5 +1,6 @@
 R 1200 1000
 
+
 NO ./textures/WALL_NORD.xpm
 SO ./textures/WALL_SOUTH.xpm
 WE ./textures/WALL_WEST.xpm

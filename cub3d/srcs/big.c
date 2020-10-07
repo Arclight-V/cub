@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:22:16 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 18:29:32 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ t_list		*ft_add_space(t_list **head, t_all *s)
 			tmp_str = tmp->content;
 			tmp->len = s->fd->max_len - tmp->len;
 			if (!(tmp->content = ft_str_add_char(tmp->content, tmp->len, '1')))
-			{
-				s->fd->err = -27;
-				return (NULL);
-			}
+				ft_errorstr(s, head, MALLOC_11);
 			ft_free_tmp(tmp_str);
 			tmp = tmp->next;
 		}

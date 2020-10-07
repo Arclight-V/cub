@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:31:32 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 17:28:36 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ t_all 	*initializing_structures(t_all *s, t_list *head)
 {
 
 	if (!(s = initializing_structure_of_structures(s)))
-		ft_strerror(s, head, -1);
+		ft_errorstr(s, head, MALLOC_1);
 	if (!(s->map = initializing_map_structure()))
-		ft_strerror(s, head, -2);
+		ft_errorstr(s, head, MALLOC_2);
 	if (!(s->fd = initializing_fd_structure()))
-		ft_strerror(s, head, -3);
+		ft_errorstr(s, head, MALLOC_3);
 	if (!(s->win = initializing_win_structure()))
-		ft_strerror(s, head, -4);
+		ft_errorstr(s, head, MALLOC_4);
 	if (!(s->cnst = initializing_const_values_structure()))
-		ft_strerror(s, head, -5);
+		ft_errorstr(s, head, MALLOC_5);
 	if (!(s->wall = initializing_wall_structure(s->wall)))
-		ft_strerror(s, head, -6);
+		ft_errorstr(s, head, MALLOC_6);
 	if (!(s->data = initializing_slice_parameters_structure()))
-		ft_strerror(s, head, -7);
+		ft_errorstr(s, head, MALLOC_7);
 	return (s);
 }
 
@@ -128,8 +128,6 @@ int			run_game(char *cub)
 
 	error = 0;
 	head = NULL;
-	// if (!(s = initializing_structures(s, &error)))
-	// 	return (ft_strerror(s, head, error));
 	s = initializing_structures(s, head);
 
 	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
@@ -137,8 +135,6 @@ int			run_game(char *cub)
 	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
 		return (ft_strerror(s, head, s->fd->err));
 	checking_map(s->map->map, s->map->size, ft_strlen(head->content), &error);
-	// if (error < 0)
-	// 	return (ft_strerror(s, head, error));
 	error < 0 ? ft_strerror(s, head, error) : 0;
 	make_windows(s->win);
 	if ((take_texture_parameters(s, s->map->item, s->fd->filename) < 0))
