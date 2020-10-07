@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 15:54:20 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:31:21 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ int rendered_image_in_bmp(char *cub)
 	int		error;
 
 	head = NULL;
-	if (!(s = initializing_structures(s, &error)))
-		return (ft_strerror(s, head, error));
+	// if (!(s = initializing_structures(s, &error)))
+	// 	return (ft_strerror(s, head, error));
+	s = initializing_structures(s, head);
 	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
 		return (ft_strerror(s, head, s->fd->err));
 	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))

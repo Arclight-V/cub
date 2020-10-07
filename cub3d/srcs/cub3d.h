@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 15:31:32 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:31:11 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ typedef struct s_bitmap_info_header
 */
 
 
-t_all		*initializing_structures(t_all *s, int *error);
+t_all 	*initializing_structures(t_all *s, t_list *head);
 
 /*
 ** structure initialization

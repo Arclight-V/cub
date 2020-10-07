@@ -6,30 +6,29 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 15:54:23 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:31:32 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_all		*initializing_structures(t_all *s, int *error)
+t_all 	*initializing_structures(t_all *s, t_list *head)
 {
 
 	if (!(s = initializing_structure_of_structures(s)))
-		*error = -1;
+		ft_strerror(s, head, -1);
 	if (!(s->map = initializing_map_structure()))
-		*error = -2;
+		ft_strerror(s, head, -2);
 	if (!(s->fd = initializing_fd_structure()))
-		*error = -3;
+		ft_strerror(s, head, -3);
 	if (!(s->win = initializing_win_structure()))
-		*error = -4;
+		ft_strerror(s, head, -4);
 	if (!(s->cnst = initializing_const_values_structure()))
-		*error = -5;
+		ft_strerror(s, head, -5);
 	if (!(s->wall = initializing_wall_structure(s->wall)))
-		*error = -6;
+		ft_strerror(s, head, -6);
 	if (!(s->data = initializing_slice_parameters_structure()))
-		*error = -7;
-	*error = 0;
+		ft_strerror(s, head, -7);
 	return (s);
 }
 
@@ -129,8 +128,10 @@ int			run_game(char *cub)
 
 	error = 0;
 	head = NULL;
-	if (!(s = initializing_structures(s, &error)))
-		return (ft_strerror(s, head, error));
+	// if (!(s = initializing_structures(s, &error)))
+	// 	return (ft_strerror(s, head, error));
+	s = initializing_structures(s, head);
+
 	if (!(head = parser_of_scene(cub, s, head)) && s->fd->err < 0)
 		return (ft_strerror(s, head, s->fd->err));
 	if (!(make_map(&head, s->map->size = ft_lstsize(head), s)))
