@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:17:10 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:43:44 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:55:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int				checking_validity_map(t_list *head, char *line, t_all *s)
 	if (line[i] == 'R' && line[i + 1] == ' ')
 		checking_resolution(s, head, line, &i);
 	else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, NORD));
+		checking_textures_wall(s, head, line, NORD);
 	else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, SOUTH));
+		checking_textures_wall(s, head, line, SOUTH);
 	else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, WEST));
+		checking_textures_wall(s, head, line, WEST);
 	else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
-		return (s->fd->err = checking_textures_wall(s, line, &i, EAST));
+		checking_textures_wall(s, head, line, EAST);
 	else if (line[i] == 'S' && line[i + 1] == ' ')
 		return (s->fd->err = checking_textures_sprite(s, line, &i));
 	else if (line[i] == 'F')

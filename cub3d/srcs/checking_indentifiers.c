@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:42:54 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 16:56:19 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,30 @@ void	checking_resolution(t_all *s, t_list *head, char *line, int *i)
 	s->fd->count_ind++;
 }
 
-int				checking_textures_wall(t_all *s, char *line, int *i, int num)
+void	checking_textures_wall(t_all *s, t_list *head, char *line, int num)
 {
 	int			xpm;
 	int			j;
+	int			i;
 
+	i = 2;
 	if (s->wall[num].filename)
-		return (-12);
-	(*i) += 2;
-	ft_skip_spaces(line, i);
+		ft_strerror(s, head, -12);
+	ft_skip_spaces(line, &i);
 	if ((xpm = ft_strnstrindex(line, ".xpm")))
 	{
 		j = xpm + 1;
 		ft_skip_spaces(line, &j);
 		if (line[j] != '\0')
-			return (-13);
-		if (!(s->wall[num].filename = ft_substr(line, (*i), xpm - (*i) + 1)))
-			return (-14);
+			ft_strerror(s, head, -13);
+		if (!(s->wall[num].filename = ft_substr(line, i, xpm - i + 1)))
+			ft_strerror(s, head, -14);
 		if (open(s->wall[num].filename, O_RDONLY) < 0)
-			return (-15);
+			ft_strerror(s, head, -15);
 		s->fd->count_ind++;
-		return (0);
 	}
 	else
-		return (-16);
+		ft_strerror(s, head, -16);
 }
 
 
