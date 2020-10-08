@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:13:33 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 09:41:42 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 15:55:53 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void			ft_forb_char_map(t_all *s, t_list *head, char *line, int *i)
 {
+	int j;
+	
+	j = 0;
 	if (s->fd->count_ind >= 8)
 	{
 		while (line[*i])
@@ -31,6 +34,8 @@ void			ft_forb_char_map(t_all *s, t_list *head, char *line, int *i)
 				ft_errorstr(s, MAP_1);
 			s->fd->count_ind++;
 		}
+		if (ft_skip_spaces(line, &j) && line[j] == '\0')
+			ft_errorstr(s, MAP_2);
 	}
 	else
 		ft_errorstr(s, MAP_2);

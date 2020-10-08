@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 10:12:34 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 13:14:57 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_list		*ft_add_space(t_all *s, t_list *head)
 		{	
 			tmp_str = tmp->content;
 			tmp->len = s->fd->max_len - tmp->len;
-			if (!(tmp->content = ft_str_add_char(tmp->content, tmp->len, '1')))
+			if (!(tmp->content = ft_str_add_char(tmp->content, tmp->len, ' ')))
 				ft_errorstr(s, MALLOC_11);
 			ft_free_tmp(tmp_str);
 			tmp = tmp->next;

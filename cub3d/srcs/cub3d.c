@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 10:05:57 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 16:03:55 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,20 @@ void		checking_borders(t_all *s, char **map, int size)
 	while (++i < size)
 	{	
 		j = -1;
-		if (i == 0 || i == size)
+		while (map[i][++j])
 		{
-			while (map[i][++j])
+			if (i == 0 || i == (size - 1))
 			{
 				if (map[i][j] != '1' && map[i][j] != ' ')
 					ft_errorstr(s, MAP_1);
 			}
+			if (map[1][j] == '0'  && map[0][j] != '1')
+				ft_errorstr(s, MAP_1);
+			if (map[size - 2][j] == '0' && map[size - 1][j] != '1')
+				ft_errorstr(s, MAP_1);
 		}
-		if (map[i][0] != '1' && map[0][i] != ' ')
+		if (map[i][0] != '1' && map[i][0] != ' ')
 			ft_errorstr(s, MAP_1);
-		j = -1;
-		while (map[i][++j])
-			;
 		if (map[i][j - 1] != '1' && map[i][j - 1] != ' ')
 			ft_errorstr(s, MAP_1);
 	}
@@ -67,6 +68,19 @@ static void checking_player(char ch, int *player)
 		(*player)++;
 }
 
+static void checking_empty_line(t_all *s, char **map, int size)
+{
+	int i;
+	int	j;
+
+	i = -1;
+	while (++i < size)
+	{
+		j = 0;
+		if (ft_skip_spaces(&map[i][j], &j) && map[i][j] == '\0')
+			ft_errorstr(s, MAP_1);
+	}
+}
 void		checking_map(t_all *s, int size, int len)
 {
 	int i;
@@ -78,6 +92,7 @@ void		checking_map(t_all *s, int size, int len)
 	i = 0;
 	player = 0;
 	checking_borders(s, s->map->map, size);
+	checking_empty_line(s, s->map->map, size);
 	while (++i < size)
 	{
 		j = 1;

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 11:46:46 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 15:56:18 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,6 @@ typedef struct	s_wall
 	int				bits_per_pixel;
 	int				size_line;
 	int				endian;
-
 }					t_wall;
 
 

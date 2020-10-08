@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 09:59:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 09:41:42 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 13:07:45 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,12 @@ void	checking_color(t_all *s, t_list *head, char *line, int *color)
 	if (*color >= 0)
 		ft_errorstr(s, FLOOR_1);
 	r = ft_atoi_mod(line, &i);
+	if (ft_skip_spaces(line, &i) && line[i] != ',')
+		ft_errorstr(s, FLOOR_2);
 	i++;
 	g = ft_atoi_mod(line, &i);
+	if (ft_skip_spaces(line, &i) && line[i] != ',')
+		ft_errorstr(s, FLOOR_2);
 	i++;
 	b = ft_atoi_mod(line, &i);
 	ft_skip_spaces(line, &i);
