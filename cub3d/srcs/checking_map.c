@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:13:33 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 18:22:11 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 09:41:42 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void			ft_forb_char_map(t_all *s, t_list *head, char *line, int *i)
 				(*i)++;
 			}
 			else if (line[*i] != '\0')
-				ft_errorstr(s, head, MAP_1);
+				ft_errorstr(s, MAP_1);
 			s->fd->count_ind++;
 		}
 	}
 	else
-		ft_errorstr(s, head, MAP_2);
+		ft_errorstr(s, MAP_2);
 }

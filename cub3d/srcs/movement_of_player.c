@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:55:31 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 10:13:31 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_move_left_right(t_map *map, int i)
 }
 
 
-int			keystroke(int keycode,  t_all *s, t_list *head)
+int			keystroke(int keycode, t_all *s)
 {
 	if (keycode == W)
 		ft_move_forward_back(s->map, 1);
@@ -48,7 +48,7 @@ int			keystroke(int keycode,  t_all *s, t_list *head)
 	else if (keycode == LEFT)
 		ft_rotate(&s->map->a_p, 1);
 	else if (keycode == ESC)
-		ft_errorstr(s, head, END);
+		ft_errorstr(s, END);
 	else if (keycode == UP)
 		s->data->celing_h[s->data->index]--;
 	return (0);

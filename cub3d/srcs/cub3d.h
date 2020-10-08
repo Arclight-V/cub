@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 21:02:48 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 10:13:09 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ typedef struct		s_all
 	t_data			*data;
 	t_wall			*wall;
 	t_sprite		*sprite;
+	t_list			*head;
 }					t_all;
 
 typedef struct s_bitmap_file_header
@@ -287,7 +288,7 @@ typedef struct s_bitmap_info_header
 */
 
 
-t_all 	*initializing_structures(t_all *s, t_list *head);
+t_all 	*initializing_structures(t_all *s);
 
 /*
 ** structure initialization
@@ -323,16 +324,16 @@ void		checking_textures_wall(t_all *s, t_list *head, char *line, int num);
 void		checking_textures_sprite(t_all *s, t_list *head, char *line, int *i);
 void		checking_color(t_all *s, t_list *head, char *line, int *color);
 int			*sorting_of_distances_of_sprites(t_all *s, int *array_of_sequence_numbers_of_sprites);
-void		take_texture_parameters(t_all *s, t_list *head, int item, char *filename);
+void		take_texture_parameters(t_all *s, t_sprite *sprite, t_wall *wall, int item);
 
 /*
 **	tools:
 */
 int			ft_skip_spaces(char *line, int *i);
 int			ft_atoi_mod(const char *nptr, int *i);
-void		ft_errorstr(t_all *s, t_list *head, char *str);
+void		ft_errorstr(t_all *s, char *str);
 int			ft_strnstrindex(char *big, char *little);
-void		make_map( t_all *s, t_list *head, int size);
+void		make_map( t_all *s, int size);
 int			create_trgb(int t, int r, int g, int b);
 
 /*
@@ -348,26 +349,24 @@ void		first_vertical_intersection(t_map *map);
 void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
 void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst);
-void		loop_hook(t_all *s, t_list *head, void *mlx, void *win);
+void		loop_hook(t_all *s, void *mlx, void *win);
 void		drawing_walls(t_all *s, t_data *data, t_wall *wall);
 int			drawing_sprites(t_all *s, t_data *data, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 void		search_player_and_sprites(t_map *map, t_sprite *sprite, int x, int y);
 void		calculation_constant_values(t_all *s);
 void		calculating_nearest_distance_to_wall(t_map *map, t_data *data);
-// int			keystroke(t_all *s, t_list *head, int keycode);
-int			keystroke(int keycode, t_all *s, t_list *head);
+int			keystroke(int keycode, t_all *s);
 void		checking_direction(double *direction);
 void		ft_move_forward_back(t_map *map, int i);
 void		ft_rotate(double *direction, int i);
 void		ft_move_left_right(t_map *map, int i);
 void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
 void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *sprite, t_const *cnst);
-// t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
 void 		rendered_image_in_bmp(char *cub);
-void		checking_map(t_all *s, t_list *head, int size, int len);
-void		creating_array_for_ray(t_all *s, t_list *head);
-int			game_exit(t_all *s, t_list *head, int num);
+void		checking_map(t_all *s, int size, int len);
+void		creating_array_for_ray(t_all *s);
+int			game_exit(t_all *s, int num);
 
 /*
 ** free memory

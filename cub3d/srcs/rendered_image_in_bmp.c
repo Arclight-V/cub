@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 20:24:22 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 10:08:19 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,27 @@ static void	render_frame(t_all *s, t_list *head)
 	s->data->index = -1;
 	raycasting(s, s->data, s->map, s->cnst);
 	if ((drawing_screen(s, s->data, s->map, s->cnst)) < 0)
-		ft_errorstr(s, head, MALLOC_22);
+		ft_errorstr(s, MALLOC_22);
 }
 
 void rendered_image_in_bmp(char *cub)
 {
-	t_all 	*s;
-	t_list	*head;
-	int		error;
+	// t_all 	*s;
+	// t_list	*head;
+	// int		error;
 
-	error = 0;
-	head = NULL;
-	s = initializing_structures(s, head);
-	head = parser_of_scene(s, head, cub);
-	make_map(s, head, s->map->size = ft_lstsize(head));
-	checking_map(s, head, s->map->size, ft_strlen(head->content));
-	make_windows(s->win);
-	take_texture_parameters(s, head, s->map->item, s->fd->filename);
-	creating_array_for_ray(s, head);
-	search_player_and_sprites(s->map, s->sprite, 0, 0);
-	calculation_constant_values(s);
-	render_frame(s, head);
-	save_bmp(s->win->x, s->win->y, s->win->addr);
-	game_exit(s, head, 0);
+	// error = 0;
+	// head = NULL;
+	// s = initializing_structures(s, head);
+	// head = parser_of_scene(s, head, cub);
+	// make_map(s, head, s->map->size = ft_lstsize(head));
+	// checking_map(s, head, s->map->size, ft_strlen(head->content));
+	// make_windows(s->win);
+	// take_texture_parameters(s, head, s->map->item, s->fd->filename);
+	// creating_array_for_ray(s, head);
+	// search_player_and_sprites(s->map, s->sprite, 0, 0);
+	// calculation_constant_values(s);
+	// render_frame(s, head);
+	// save_bmp(s->win->x, s->win->y, s->win->addr);
+	// game_exit(s, head, 0);
 }

@@ -6,34 +6,34 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 20:09:38 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 10:05:57 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_all 	*initializing_structures(t_all *s, t_list *head)
+t_all 	*initializing_structures(t_all *s)
 {
 
 	if (!(s = initializing_structure_of_structures(s)))
-		ft_errorstr(s, head, MALLOC_1);
+		ft_errorstr(s, MALLOC_1);
 	if (!(s->map = initializing_map_structure()))
-		ft_errorstr(s, head, MALLOC_2);
+		ft_errorstr(s, MALLOC_2);
 	if (!(s->fd = initializing_fd_structure()))
-		ft_errorstr(s, head, MALLOC_3);
+		ft_errorstr(s, MALLOC_3);
 	if (!(s->win = initializing_win_structure()))
-		ft_errorstr(s, head, MALLOC_4);
+		ft_errorstr(s, MALLOC_4);
 	if (!(s->cnst = initializing_const_values_structure()))
-		ft_errorstr(s, head, MALLOC_5);
+		ft_errorstr(s, MALLOC_5);
 	if (!(s->wall = initializing_wall_structure(s->wall)))
-		ft_errorstr(s, head, MALLOC_6);
+		ft_errorstr(s, MALLOC_6);
 	if (!(s->data = initializing_slice_parameters_structure()))
-		ft_errorstr(s, head, MALLOC_7);
+		ft_errorstr(s, MALLOC_7);
 	return (s);
 }
 
 
-void		checking_borders(t_all *s, t_list *head, char **map, int size)
+void		checking_borders(t_all *s, char **map, int size)
 {
 	int i;
 	int j;
@@ -47,16 +47,16 @@ void		checking_borders(t_all *s, t_list *head, char **map, int size)
 			while (map[i][++j])
 			{
 				if (map[i][j] != '1' && map[i][j] != ' ')
-					ft_errorstr(s, head, MAP_1);
+					ft_errorstr(s, MAP_1);
 			}
 		}
 		if (map[i][0] != '1' && map[0][i] != ' ')
-			ft_errorstr(s, head, MAP_1);
+			ft_errorstr(s, MAP_1);
 		j = -1;
 		while (map[i][++j])
 			;
 		if (map[i][j - 1] != '1' && map[i][j - 1] != ' ')
-			ft_errorstr(s, head, MAP_1);
+			ft_errorstr(s, MAP_1);
 	}
 }
 
@@ -67,7 +67,7 @@ static void checking_player(char ch, int *player)
 		(*player)++;
 }
 
-void		checking_map(t_all *s, t_list *head, int size, int len)
+void		checking_map(t_all *s, int size, int len)
 {
 	int i;
 	int	j;
@@ -77,7 +77,7 @@ void		checking_map(t_all *s, t_list *head, int size, int len)
 	map = s->map->map;
 	i = 0;
 	player = 0;
-	checking_borders(s, head, s->map->map, size);
+	checking_borders(s, s->map->map, size);
 	while (++i < size)
 	{
 		j = 1;
@@ -89,54 +89,50 @@ void		checking_map(t_all *s, t_list *head, int size, int len)
 				checking_player(map[i][j], &player);
 				if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ' || \
 					map[i - 1][j] == ' ' || map[i - 1][j] == ' ')
-					ft_errorstr(s, head, MAP_1);
+					ft_errorstr(s, MAP_1);
 			}
 		}
 	}
 	if ((player == 0) || (player > 1))
-		ft_errorstr(s, head, MAP_4);
+		ft_errorstr(s, MAP_4);
 }
 
-void		creating_array_for_ray(t_all *s, t_list *head)
+void		creating_array_for_ray(t_all *s)
 {
 	if (!(s->data->wall_h = ft_calloc((s->win->x), sizeof(double))))
-		ft_errorstr(s, head, MALLOC_14);
+		ft_errorstr(s, MALLOC_14);
 	if (!(s->data->wall_hFull = ft_calloc((s->win->x), sizeof(double))))
-		ft_errorstr(s, head, MALLOC_15);
+		ft_errorstr(s, MALLOC_15);
 	if (!(s->data->celing_h = ft_calloc((s->win->x), sizeof(int))))
-		ft_errorstr(s, head, MALLOC_16);
+		ft_errorstr(s, MALLOC_16);
 	if (!(s->data->y_image = ft_calloc((s->win->x), sizeof(int))))
-		ft_errorstr(s, head, MALLOC_17);
+		ft_errorstr(s, MALLOC_17);
 	if (!(s->data->side_of_world = ft_calloc((s->win->x), sizeof(char))))
-		ft_errorstr(s, head, MALLOC_18);
+		ft_errorstr(s, MALLOC_18);
 	if (!(s->data->x_image = ft_calloc((s->win->x), sizeof(int))))
-		ft_errorstr(s, head, MALLOC_19);
+		ft_errorstr(s, MALLOC_19);
 	if (!(s->data->distance_wall = ft_calloc((s->win->x), sizeof(double))))
-		ft_errorstr(s, head, MALLOC_20);
+		ft_errorstr(s, MALLOC_20);
 	if (!(s->data->distance_wall_not_corr = ft_calloc((s->win->x), sizeof(double))))
-		ft_errorstr(s, head, MALLOC_21);
+		ft_errorstr(s, MALLOC_21);
 	if (!(s->data->distan_of_sprites = ft_calloc((s->win->x), sizeof(double))))
-		ft_errorstr(s, head, MALLOC_22);
+		ft_errorstr(s, MALLOC_22);
 }
 
 void		run_game(char *cub)
 {
 	t_all 	*s;
-	t_list	*head;
-	int		error;
 
-	error = 0;
-	head = NULL;
-	s = initializing_structures(s, head);
-	head = parser_of_scene(s, head, cub);
-	make_map(s, head, s->map->size = ft_lstsize(head));
-	checking_map(s, head, s->map->size, ft_strlen(head->content));
+	s = initializing_structures(s);
+	s->head = parser_of_scene(s, s->head, cub);
+	make_map(s, s->map->size = ft_lstsize(s->head));
+	checking_map(s, s->map->size, ft_strlen(s->head->content));
 	make_windows(s->win);
-	take_texture_parameters(s, head, s->map->item, s->fd->filename);
-	creating_array_for_ray(s, head);
+	take_texture_parameters(s, s->sprite, s->wall, s->map->item);
+	creating_array_for_ray(s);
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);
-	loop_hook(s, head, s->win->mlx, s->win->win);
+	loop_hook(s, s->win->mlx, s->win->win);
 }
 
 

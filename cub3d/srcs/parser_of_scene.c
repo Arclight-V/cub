@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:17:10 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:03:12 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 10:03:59 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void			checking_validity_map(t_all *s, t_list *head, char *line)
 	else if (line[i] == '1')
 		ft_forb_char_map(s, head, line, &i);
 	else if (ft_skip_spaces(line, &i) && line[i] != '\0')
-		ft_errorstr(s, head, MAP_3);
+		ft_errorstr(s, MAP_3);
 }
 
 void		*ft_creat_list(t_all *s, t_list *head, char *line)
@@ -49,7 +49,7 @@ void		*ft_creat_list(t_all *s, t_list *head, char *line)
 	if (s->fd->count_ind > 8)
 	{
 		if (!(new = ft_lstnew(line)))
-			ft_errorstr(s, head, MALLOC_10);
+			ft_errorstr(s, MALLOC_10);
 		ft_lstadd_back(&head, new);
 		return (head);
 	}
@@ -65,11 +65,11 @@ t_list			*parser_of_scene(t_all *s, t_list *head, char *cub)
 
 	line = NULL;
 	if ((fd = open(cub, O_RDONLY)) < 0)
-		ft_errorstr(s, head, FD_1);
+		ft_errorstr(s, FD_1);
 	while ((ret = get_next_line(fd, &line)) > 0)
 		head = ft_creat_list(s, head, line);
 	if (ret < 0)
-	 	ft_errorstr(s, head, FD_2);
+	 	ft_errorstr(s, FD_2);
 	head = ft_creat_list(s, head, line);
 	head = ft_add_space(s, head);
 	return (head);

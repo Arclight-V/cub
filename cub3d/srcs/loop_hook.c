@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 17:21:20 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:50:48 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 10:07:27 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "cub3d.h"
 
-void	loop_hook(t_all *s, t_list *head, void *mlx, void *win)
+void	loop_hook(t_all *s, void *mlx, void *win)
 {
 	// mlx_key_hook(win, ft_close, s->win);
 	mlx_hook(win, 2, 1L<<0, keystroke, s);

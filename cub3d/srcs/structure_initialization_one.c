@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 16:15:40 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 09:39:03 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_all		*initializing_structure_of_structures(t_all	*s)
 	s->data = NULL;
 	s->sprite = NULL; 
 	s->wall = NULL;
+	s->head = NULL;
 	return (s);
 }
 t_wall		*initializing_wall_structure(t_wall *wall)
