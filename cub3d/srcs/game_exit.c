@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:28:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 10:18:25 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 11:08:24 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void freeing_memory_from_win_structure(t_win *win)
 		mlx_destroy_image(win->mlx, win->img);
 	win->win = NULL;
 	win->img = NULL;
-	ft_free_tmp(win->mlx);
 	ft_free_tmp(win);
 }
 
@@ -107,6 +106,6 @@ int	game_exit(t_all *s, int num)
 	if (s->wall)
 		freeing_memory_form_wall_texture(s->wall);
 	ft_free_tmp(s);
-	sleep(10000);
+	// sleep(10000);
 	exit(num);
 }

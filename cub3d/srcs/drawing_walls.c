@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 17:48:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/05 18:41:13 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 11:47:25 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		printSliceWall(t_all *s, char *addr, int size_line, \
 	int			color;
 
 	color = get_color_pixel(s->data, addr, size_line, bits_per_pixel);	
-	my_mlx_pixel_put(s->win, s->data->index, s->map->i++, color);
+	my_mlx_pixel_put(s->win, s->data->index, s->fd->i++, color);
 	s->data->y_image[s->data->index]++;
 }
 

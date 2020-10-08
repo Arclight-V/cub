@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 10:13:09 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 11:46:46 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct		s_fd
 	int				flag_sprite;
 	char			*filename;
 	int				err;
+	int				i;
 }					t_fd;
 
 /*
@@ -137,7 +138,6 @@ typedef struct		s_map
 	double			PD;
 	double			PE;
 	int				flagPDPE;
-	int				i;
 	int				floor;
 	int				ceil;
 }					t_map;

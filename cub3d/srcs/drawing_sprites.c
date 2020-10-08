@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:02:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 20:20:02 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 11:49:54 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 	y_sprite = floor(y + ((s->sprite[i].sprite_screen_size_full -  s->sprite[i].sprite_screen_size_coor) / 2));
 	color_pixel = get_color_pixel_sprite(s->sprite, offset_x, i, floor(y_sprite * (s->sprite[i].height) / (s->sprite[i].sprite_screen_size_full)));
 	if (color_pixel <= 0)
-		return (s->map->i + 1);
-	my_mlx_pixel_put(s->win, s->data->index, s->map->i, color_pixel);
-	return (s->map->i + 1);
+		return (s->fd->i + 1);
+	my_mlx_pixel_put(s->win, s->data->index, s->fd->i, color_pixel);
+	return (s->fd->i + 1);
 
 }
 
@@ -58,12 +58,12 @@ int	drawing_sprites(t_all *s, t_data *data, t_sprite *sprite)
 		{
 			if ((sprite[k].h_offset + j ) == data->index)
 			{
-				s->map->i = sprite[k].position_sprite;
+				s->fd->i = sprite[k].position_sprite;
 				if (sprite[k].distance < data->distance_wall_not_corr[data->index])
 				{	
 					y = -1;
 					while (++y < sprite[k].sprite_screen_size_coor)
-						s->map->i = print_pixel_of_sprite(s, j, k, y);
+						s->fd->i = print_pixel_of_sprite(s, j, k, y);
 				}
 			}
 		}
