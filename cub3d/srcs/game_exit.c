@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:28:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 14:47:24 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 21:05:03 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void 	freeing_memory_from_map_structure(t_map *map)
 	free(map);
 	map = NULL;
 }
-static void freeing_memory_from_list(t_list *head)
+static void freeing_memory_from_list(t_list **head)
 {
-	ft_lstclear(&head,ft_lstdelone_f);
+	ft_lstclear(head,ft_lstdelone_f);
 	ft_free_tmp(head);
 }
 
@@ -32,10 +32,10 @@ static void freeing_memory_from_fd_structure(t_fd *fd)
 
 static void freeing_memory_from_win_structure(t_win *win)
 {
-	if (win->img)
-		mlx_destroy_image(win->mlx, win->img);
 	if (win->win)
 		mlx_destroy_window(win->mlx, win->win);
+	if (win->img)
+		mlx_destroy_image(win->mlx, win->img);
 	win->win = NULL;
 	win->img = NULL;
 	ft_free_tmp(win->mlx);
@@ -93,7 +93,7 @@ int	game_exit(t_all *s, t_list *head, int num)
 	if (s->win)
 		freeing_memory_from_win_structure(s->win);
 	if (head)
-		freeing_memory_from_list(head);
+		freeing_memory_from_list(&head);
 	if (s->sprite)
 		freeing_memory_from_sprite_texture(s->sprite, s->map->item);
 	if (s->map)
@@ -107,6 +107,6 @@ int	game_exit(t_all *s, t_list *head, int num)
 	if (s->wall)
 		freeing_memory_form_wall_texture(s->wall);
 	ft_free_tmp(s);
-	// sleep(10000);
+	sleep(10000);
 	exit(num);
 }

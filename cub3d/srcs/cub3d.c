@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:39:10 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 20:09:38 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		creating_array_for_ray(t_all *s, t_list *head)
 		ft_errorstr(s, head, MALLOC_22);
 }
 
-int			run_game(char *cub)
+void		run_game(char *cub)
 {
 	t_all 	*s;
 	t_list	*head;
@@ -136,8 +136,7 @@ int			run_game(char *cub)
 	creating_array_for_ray(s, head);
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);
-	if ((loop_hook(s, s->win->mlx, s->win->win)) < 0)
-		return (ft_strerror(s, head, -1));
+	loop_hook(s, head, s->win->mlx, s->win->win);
 }
 
 
@@ -157,7 +156,7 @@ int		main (int argc, char **argv)
 	else if (argc == 3)
 	{
 		if (ft_strnstrindex(argv[2], "--save"))
-				rendered_image_in_bmp(argv[1]);
+			rendered_image_in_bmp(argv[1]);
 		ft_putendl_fd("Error : only the --save option is available", 2);
 	}
 	else

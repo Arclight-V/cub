@@ -11,7 +11,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/cub3D",
-		"args": ["maps/cub2.cub"],
+		"args": ["maps/cub2.cub",],
 		"stopAtEntry": true,
 		"cwd": "${workspaceFolder}",
 		"environment": [],

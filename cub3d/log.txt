@@ -1,14 +1,23 @@
-11111111111111111
-10022222222222001
-10000000000000001
-10000000000000001
-10000000000000001
-10000001000000001
-10000000000000001
-10020000000000001
-10000000000000001
-10000000N00000001
-10000000000000001
-11111111111111111
-11111111111111111
-11111111111111111
+Process:         cub3D [46072]
+Path:            /Volumes/VOLUME/*/cub3D
+Load Address:    0x10e3e1000
+Identifier:      cub3D
+Version:         0
+Code Type:       X86-64
+Parent Process:  make [46071]
+
+Date/Time:       2020-10-07 20:28:29.279 +0300
+Launch Time:     2020-10-07 20:28:11.002 +0300
+OS Version:      Mac OS X 10.14.6 (18G103)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 11.3.1 (11C505)
+
+Physical footprint:         49.7M
+Physical footprint (peak):  49.7M
+----
+
+leaks Report Version: 4.0, multi-line stacks
+Process 46072: 20216 nodes malloced for 20988 KB
+Process 46072: 0 leaks for 0 total leaked bytes.
+

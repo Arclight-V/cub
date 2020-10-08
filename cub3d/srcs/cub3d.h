@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:38:49 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 21:02:48 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 # define MALLOC_20 "Error : Malloc fail (creating_array_for_ray(distance_wall))"
 # define MALLOC_21 "Error : Malloc fail (creating_array_for_ray(distance_wall_not_corr))"
 # define MALLOC_22 "Error : Malloc fail (creating_array_for_ray(distan_of_sprites))"
+# define MALLOC_23 "Error : Malloc fail (drawing_sprites(sorting_of_distances_of_sprites))"
 
 
 
@@ -95,6 +96,7 @@
 # define MAP_2 "Error : The map content is not the last element"
 # define MAP_3 "Error : The .cub scene contains invalid characters"
 # define MAP_4 "Error : The map must contain only one player"
+# define END "End game"
 
 
 
@@ -327,9 +329,8 @@ void		take_texture_parameters(t_all *s, t_list *head, int item, char *filename);
 **	tools:
 */
 int			ft_skip_spaces(char *line, int *i);
-int			ft_strerror(t_all *s, t_list *head, int err);
 int			ft_atoi_mod(const char *nptr, int *i);
-int			ft_errorstr(t_all *s, t_list *head, char *str);
+void		ft_errorstr(t_all *s, t_list *head, char *str);
 int			ft_strnstrindex(char *big, char *little);
 void		make_map( t_all *s, t_list *head, int size);
 int			create_trgb(int t, int r, int g, int b);
@@ -347,14 +348,15 @@ void		first_vertical_intersection(t_map *map);
 void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
 void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst);
-int			loop_hook(t_all *s, void *mlx, void *win);
+void		loop_hook(t_all *s, t_list *head, void *mlx, void *win);
 void		drawing_walls(t_all *s, t_data *data, t_wall *wall);
 int			drawing_sprites(t_all *s, t_data *data, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 void		search_player_and_sprites(t_map *map, t_sprite *sprite, int x, int y);
 void		calculation_constant_values(t_all *s);
 void		calculating_nearest_distance_to_wall(t_map *map, t_data *data);
-int			keystroke(int keycode, t_all *s);
+// int			keystroke(t_all *s, t_list *head, int keycode);
+int			keystroke(int keycode, t_all *s, t_list *head);
 void		checking_direction(double *direction);
 void		ft_move_forward_back(t_map *map, int i);
 void		ft_rotate(double *direction, int i);
@@ -362,7 +364,7 @@ void		ft_move_left_right(t_map *map, int i);
 void        my_mlx_pixel_put(t_win *win, int x, int y, int color);
 void		calculation_of_parameters_of_sprites(t_all *s, t_data *data, t_sprite *sprite, t_const *cnst);
 // t_list		*ft_creat_list(t_list *head, t_all *s, char *line);
-int 		rendered_image_in_bmp(char *cub);
+void 		rendered_image_in_bmp(char *cub);
 void		checking_map(t_all *s, t_list *head, int size, int len);
 void		creating_array_for_ray(t_all *s, t_list *head);
 int			game_exit(t_all *s, t_list *head, int num);

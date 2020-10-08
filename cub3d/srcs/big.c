@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/07 19:32:50 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/07 20:46:16 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ void	take_texture_parameters(t_all *s, t_list *head, int item, char *filename)
 		if (!(s->sprite[i].adr))
 			ft_errorstr(s, head, TEXTURE_7);
 	}
-	ft_free_tmp(filename);
 	while (++j < 4)
 	{	
 		s->wall[j].img = mlx_xpm_file_to_image(s->win->mlx, s->wall[j].filename, &s->wall[j].width, &s->wall[j].height);
