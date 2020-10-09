@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 10:58:50 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 17:05:45 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 21:45:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		creating_array_for_ray(t_all *s)
 {
 	if (!(s->data->wall_h = ft_calloc((s->win->x), sizeof(double))))
 		ft_error_output(s, MALLOC_14);
-	if (!(s->data->wall_hFull = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->wall_hfull = ft_calloc((s->win->x), sizeof(double))))
 		ft_error_output(s, MALLOC_15);
 	if (!(s->data->celing_h = ft_calloc((s->win->x), sizeof(int))))
 		ft_error_output(s, MALLOC_16);
@@ -28,7 +28,8 @@ void		creating_array_for_ray(t_all *s)
 		ft_error_output(s, MALLOC_19);
 	if (!(s->data->distance_wall = ft_calloc((s->win->x), sizeof(double))))
 		ft_error_output(s, MALLOC_20);
-	if (!(s->data->distance_wall_not_corr = ft_calloc((s->win->x), sizeof(double))))
+	if (!(s->data->distance_wall_not_corr = ft_calloc((s->win->x),
+													sizeof(double))))
 		ft_error_output(s, MALLOC_21);
 	if (!(s->data->distan_of_sprites = ft_calloc((s->win->x), sizeof(double))))
 		ft_error_output(s, MALLOC_22);
@@ -92,7 +93,7 @@ t_data		*initializing_slice_parameters_structure(void)
 		return (NULL);
 	data->i = -1;
 	data->wall_h = NULL;
-	data->wall_hFull = NULL;
+	data->wall_hfull = NULL;
 	data->celing_h = NULL;
 	data->y_image = NULL;
 	data->side_of_world = NULL;

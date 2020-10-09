@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement_of_player.c                               :+:      :+:    :+:   */
+/*   keystroke.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:32:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_move_forward_back(t_map *map, int i)
+static	void	ft_move_forward_back(t_map *map, int i)
 {
-	{	
-		map->x_p += i * cos(map->a_p) * 10;
-		map->y_p -= i * sin(map->a_p) * 10;
-	}
+	map->x_p += i * cos(map->a_p) * 10;
+	map->y_p -= i * sin(map->a_p) * 10;
 }
 
-void			ft_rotate(double *direction, int i)
+static	void		ft_rotate(double *direction, int i)
 {
-	
 	*direction += (i * 0.03);
 	checking_direction(direction);
-
 }
 
-void	ft_move_left_right(t_map *map, int i)
+static	void	ft_move_left_right(t_map *map, int i)
 {
-	map->x_p += i * sin(map->a_p) * 10;	
+	map->x_p += i * sin(map->a_p) * 10;
 	map->y_p += i * cos(map->a_p) * 10;
 }
 
-
-int			keystroke(int keycode, t_all *s)
+int				keystroke(int keycode, t_all *s)
 {
 	if (keycode == W)
 		ft_move_forward_back(s->map, 1);
@@ -51,7 +46,5 @@ int			keystroke(int keycode, t_all *s)
 		ft_rotate(&s->map->a_p, 1);
 	else if (keycode == ESC)
 		ft_error_output(s, END);
-	else if (keycode == UP)
-		s->data->celing_h[s->data->i]--;
 	return (0);
 }

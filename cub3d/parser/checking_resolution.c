@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:33:26 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 17:44:17 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:49:19 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	checking_resolution(t_all *s, t_list *head, char *line, int *i)
+void	checking_resolution(t_all *s, char *line, int *i)
 {
 	if (s->win->x != 0 || s->win->y != 0)
 		ft_error_output(s, RESOLUTION_1);

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:02:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 17:05:18 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:45:32 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int		get_color_pixel_sprite(t_sprite *sprite, int ofset_x, int i,\
 static int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 {
 	int			color_pixel;
-	int			count;
 	int			offset_x;
 	double		y_sprite;
 

@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:13:33 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 17:44:17 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 21:06:50 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_forbid_characters_map(t_all *s, t_list *head, char *line, int *i)
+void	check_forbid_characters_map(t_all *s, char *line, int *i)
 {
 	int j;
 

@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 17:59:46 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 20:42:57 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 21:10:17 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ static void	checking_borders(t_all *s, char **map, int size)
 	}
 }
 
-static void	checking_player(t_all *s, char ch, int *player)
+static void	checking_player(char ch, int *player)
 {
 	if (ch == 'N' || ch == 'S' ||\
 		ch == 'E' || ch == 'W')
 		(*player)++;
-	
 }
 
 static void	checking_empty_line(t_all *s, char **map, int size)
@@ -62,7 +61,7 @@ static void	checking_empty_line(t_all *s, char **map, int size)
 	}
 }
 
-void		checking_map(t_all *s, int size, int len)
+void		checking_map(t_all *s, int size)
 {
 	int		i;
 	int		j;
@@ -77,7 +76,7 @@ void		checking_map(t_all *s, int size, int len)
 		j = 1;
 		while (s->map->map[i][j])
 		{
-			checking_player(s, map[i][j], &s->fd->player);
+			checking_player(map[i][j], &s->fd->player);
 			if (map[i][j] == '0' || map[i][j] == '2' || map[i][j] == 'S' || \
 				map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
 				if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ' || \

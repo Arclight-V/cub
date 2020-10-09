@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 17:48:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:25:20 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 21:45:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static double	calc_y(t_data *data, int y)
 {
-	return (floor(y + (data->wall_hFull[data->i] -\
+	return (floor(y + (data->wall_hfull[data->i] -\
 						data->wall_h[data->i]) / 2));
 }
 
@@ -41,22 +41,22 @@ void			drawing_walls(t_all *s, t_data *d, t_wall *wall, int y)
 	{
 		if (d->side_of_world[d->i] == 'N')
 		{
-			y_textur(s, calc_y(d, y), wall[0].height, d->wall_hFull[d->i]);
+			y_textur(s, calc_y(d, y), wall[0].height, d->wall_hfull[d->i]);
 			pix_put_wall(s, wall[0].adr, wall[0].size_line, wall[0].bps);
 		}
 		else if (d->side_of_world[d->i] == 'E')
 		{
-			y_textur(s, calc_y(d, y), wall[3].height, d->wall_hFull[d->i]);
+			y_textur(s, calc_y(d, y), wall[3].height, d->wall_hfull[d->i]);
 			pix_put_wall(s, wall[3].adr, wall[3].size_line, wall[3].bps);
 		}
 		else if (d->side_of_world[d->i] == 'W')
 		{
-			y_textur(s, calc_y(d, y), wall[2].height, d->wall_hFull[d->i]);
+			y_textur(s, calc_y(d, y), wall[2].height, d->wall_hfull[d->i]);
 			pix_put_wall(s, wall[2].adr, wall[2].size_line, wall[2].bps);
 		}
 		else
 		{
-			y_textur(s, calc_y(d, y), wall[1].height, d->wall_hFull[d->i]);
+			y_textur(s, calc_y(d, y), wall[1].height, d->wall_hfull[d->i]);
 			pix_put_wall(s, wall[1].adr, wall[1].size_line, wall[1].bps);
 		}
 	}

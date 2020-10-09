@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:11:23 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 17:14:34 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 22:04:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void			calculation_of_parameters_of_sprites(t_all *s, t_data *data,\
 		sp[i].distance = sqrt(pow(s->map->x_p - sp[i].x, 2) + pow(s->map->y_p\
 												- sp[i].y, 2));
 		sp[i].hight = (CUBE / (sp[i].distance * cos(s->map->a_p - \
-								sp[i].angle))) * cnst->DistProjectionPlan;
+								sp[i].angle))) * cnst->dist_projec_plan;
 		sp[i].hight_coor = sp[i].hight > s->win->y ? s->win->y : sp[i].hight;
-		sp[i].sprite_width = CUBE / sp[i].distance * cnst->DistProjectionPlan;
+		sp[i].sprite_width = CUBE / sp[i].distance * cnst->dist_projec_plan;
 		sp[i].hight_half = sp[i].hight_coor / 2;
 		delta = calculating_delta(s->map->a_p + M_PI_6, sp[i].angle);
 		sp[i].h_offset = delta / (s->cnst->delta_ray) - sp[i].hight_half;
-		sp[i].position_sprite = ((cnst->CenterProjection - sp[i].hight_half));
+		sp[i].position_sprite = ((cnst->center_project - sp[i].hight_half));
 	}
 	if (!(data->distan_of_sprites = sorting_of_distances_of_sprites(s, \
 											data->distan_of_sprites)))

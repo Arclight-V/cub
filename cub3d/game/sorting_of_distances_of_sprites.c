@@ -6,15 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:23:36 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 11:43:09 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 19:38:57 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
-
-
-static t_tre			*ft_creat_tre(double distance, t_tre *tree, int i)
+static t_tre	*ft_creat_tre(double distance, t_tre *tree, int i)
 {
 	if (!(tree = (t_tre *)malloc(sizeof(t_tre))))
 		return (NULL);
@@ -36,7 +34,7 @@ static void		freemem(t_tre *tree)
 	}
 }
 
-static t_tre			*ft_addnode(double distance, t_tre *tree, int i)
+static t_tre	*ft_addnode(double distance, t_tre *tree, int i)
 {
 	if (tree == NULL)
 	{
@@ -66,16 +64,16 @@ static int		creat_sort_arr(int *array, int *i, t_tre *tree)
 	{
 		creat_sort_arr(array, i, tree->left);
 		array[(*i)++] = (tree->num);
-		creat_sort_arr(array, i ,tree->right);
+		creat_sort_arr(array, i, tree->right);
 	}
-	return(*array);
+	return (*array);
 }
 
-int			*sorting_of_distances_of_sprites(t_all *s, int *array)
+int				*sorting_of_distances_of_sprites(t_all *s, int *array)
 {
-	t_tre	*tree;
+	t_tre		*tree;
+	int			i;
 
-	int i;
 	tree = NULL;
 	i = -1;
 	while (++i < s->map->item)

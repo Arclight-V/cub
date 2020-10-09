@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 15:11:02 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 22:07:43 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ t_map		*initializing_map_structure(void)
 	map->y_vertical = 0;
 	map->X_a_v = 0;
 	map->Y_a_v = 0;
-	map->PD = 0;
-	map->PE = 0;
-	map->flagPDPE = 0;
+	map->pd = 0;
+	map->pe = 0;
+	map->flag = 0;
 	map->floor = -1;
 	map->ceil = -1;
 	return (map);
@@ -81,15 +81,15 @@ t_const		*initializing_const_values_structure(void)
 
 	if (!(cnst = (t_const *)malloc(sizeof(t_const))))
 		return (NULL);
-	cnst->DistProjectionPlan = 0;
-	cnst->CenterProjection = 0;
+	cnst->dist_projec_plan = 0;
+	cnst->center_project = 0;
 	cnst->delta_ray = 0;
-	cnst->xMapMax = 0;
-	cnst->yMapMax = 0;
-	cnst->ratio_of_texture_width_to_CUBE_NORD = 0;
-	cnst->ratio_of_texture_width_to_CUBE_South = 0;
-	cnst->ratio_of_texture_width_to_CUBE_WEST = 0;
-	cnst->ratio_of_texture_width_to_CUBE_EAST = 0;
+	cnst->x_max = 0;
+	cnst->y_max = 0;
+	cnst->ratio_of_nord_width_to_cube = 0;
+	cnst->ratio_of_south_width_to_cube = 0;
+	cnst->ratio_of_west_width_to_cube = 0;
+	cnst->ratio_of_east_width_to_cube = 0;
 	return (cnst);
 }
 

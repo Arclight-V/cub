@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:40:49 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 17:44:17 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 21:03:46 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-void		checking_color(t_all *s, t_list *head, char *line, int *color)
+void		checking_color(t_all *s, char *line, int *color)
 {
 	int	r;
 	int	g;

@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:38:41 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 17:44:17 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:53:16 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		checking_textures_sprite(t_all *s, t_list *head, char *line, int *i)
+void		checking_textures_sprite(t_all *s, char *line, int *i)
 {
 	int		xpm;
 	int		j;

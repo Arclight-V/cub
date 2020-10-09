@@ -6,23 +6,24 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 21:04:36 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 21:11:10 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	run_game(char *cub)
+static void	run_game(char *cub)
 {
 	t_all	*s;
 
+	s = NULL;
 	s = initializing_structures(s);
 	s->head = parser_of_scene(s, s->head, cub);
 	s->head = ft_add_space(s, s->head);
 	make_map(s, s->map->size = ft_lstsize(s->head));
-	checking_map(s, s->map->size, ft_strlen(s->head->content));
+	checking_map(s, s->map->size);
 	make_windows(s->win);
-	take_texture_parameters(s, s->wall, s->map->item);
+	take_texture_parameters(s, s->map->item);
 	creating_array_for_ray(s);
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);

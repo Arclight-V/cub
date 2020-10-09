@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 17:11:19 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:55:37 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:45:33 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	drawing_celing(t_data *data, t_win *win, int ceil)
+static void		drawing_celing(t_data *data, t_win *win, int ceil)
 {
 	int	y;
 
@@ -21,13 +21,13 @@ static void	drawing_celing(t_data *data, t_win *win, int ceil)
 		my_mlx_pixel_put(win, data->i, y, ceil);
 }
 
-static void	drawing_floor(t_map *map, t_win *win, int index, int i)
+static void		drawing_floor(t_map *map, t_win *win, int index, int i)
 {
 	while (i < win->y - 1)
 		my_mlx_pixel_put(win, index, i++, map->floor);
 }
 
-void			drawing_screen(t_all *s, t_data *data, t_map *map, t_const *cnst)
+void			drawing_screen(t_all *s, t_data *data, t_map *map)
 {
 	data->i = -1;
 	while (++data->i < s->win->x)

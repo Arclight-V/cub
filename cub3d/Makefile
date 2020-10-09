@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/10/09 16:13:31 by anatashi         ###   ########.fr        #
+#    Updated: 2020/10/09 21:51:17 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(SRCS_DIR)/sorting_of_distances_of_sprites.c\
 		$(SRCS_DIR)/make_map.c \
 		$(SRCS_DIR)/make_windows.c \
-		$(SRCS_DIR)/movement_of_player.c\
+		$(SRCS_DIR)/keystroke.c\
 		$(SRCS_DIR)/first_horisont_intersection.c\
 		$(SRCS_DIR)/first_vertical_intersection.c\
 		$(SRCS_DIR)/horizontal_intersection_with_wall.c\
@@ -52,7 +52,13 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(SRCS_DIR)/take_texture_parameters.c\
 		$(SRCS_DIR)/search_player_and_sprites.c\
 		$(SRCS_DIR)/calculating_wall_length_in_one_slice.c\
-		$(SRCS_DIR)/for_bonus.c\
+		$(SRCS_DIR)/freeing_memory_from_win_structure.c\
+		$(SRCS_DIR)/freeing_memory_from_list.c\
+		$(SRCS_DIR)/freeing_memory_from_sprite_texture.c\
+		$(SRCS_DIR)/freeing_memory_from_map_structure.c\
+		$(SRCS_DIR)/freeing_memory_from_fd_structure.c\
+		$(SRCS_DIR)/freeing_memory_from_data_structure.c\
+		$(SRCS_DIR)/freeing_memory_form_wall_texture.c\
 		$(PARSER_DIR)/parser_of_scene.c \
 		$(PARSER_DIR)/checking_resolution.c\
 		$(PARSER_DIR)/checking_validity_map.c\
@@ -84,8 +90,7 @@ $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(FLAGS) -I$(HEADER_DIR) -lm -L$(LIBFT_DIR) -lft $(MLX_FLAGS)
 
 %.o: %.c $(HEADER) $(LIBFT) $(MLX)
-	# $(CC) -g $(FLAGS) -I$(HEADER_DIR) -c $< -o $@
-	$(CC) -g -I$(HEADER_DIR) -Imlx -c $< -o $@ 
+	$(CC) -I$(HEADER_DIR) -c $< -o $@
 
 
 $(LIBFT):

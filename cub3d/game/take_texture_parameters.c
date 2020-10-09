@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 18:17:58 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 21:27:24 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:47:24 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	take_texture_parameters(t_all *s, t_wall *wall, int item)
+void	take_texture_parameters(t_all *s, int item)
 {
 	int i;
 

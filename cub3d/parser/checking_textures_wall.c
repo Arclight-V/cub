@@ -6,13 +6,13 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:36:29 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 17:44:17 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 20:50:47 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	checking_textures_wall(t_all *s, t_list *head, char *line, int num)
+void	checking_textures_wall(t_all *s, char *line, int num)
 {
 	int			xpm;
 	int			j;

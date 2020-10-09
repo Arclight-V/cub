@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 15:47:21 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 15:51:07 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 22:03:23 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	horizontal_intersection_with_wall(t_map *m, t_const *cnst)
 {
-	if ((m->x_horizont > 0 && m->x_horizont < cnst->xMapMax) && \
-		(m->y_horizont > 0 && m->y_horizont < cnst->yMapMax))
+	if ((m->x_horizont > 0 && m->x_horizont < cnst->x_max) && \
+		(m->y_horizont > 0 && m->y_horizont < cnst->y_max))
 	{
 		if (m->map[(int)m->y_horizont >> 6][(int)m->x_horizont >> 6] != '1')
 		{
