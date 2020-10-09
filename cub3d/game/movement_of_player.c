@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 09:50:07 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int			keystroke(int keycode, t_all *s)
 	else if (keycode == ESC)
 		ft_error_output(s, END);
 	else if (keycode == UP)
-		s->data->celing_h[s->data->index]--;
+		s->data->celing_h[s->data->i]--;
 	return (0);
 }

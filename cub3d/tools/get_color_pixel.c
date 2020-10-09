@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_next_frame.c                                :+:      :+:    :+:   */
+/*   get_color_pixel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 20:50:47 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
+/*   Created: 2020/10/09 16:13:06 by anatashi          #+#    #+#             */
+/*   Updated: 2020/10/09 16:14:07 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
-
-int			render_next_frame(t_all *s)
+int		get_color_pixel(t_data *data, char *adr, int size_line,\
+							int bps)
 {
+	char	*color;
 
-	s->data->i = -1;
-	raycasting(s, s->data, s->map, s->cnst);
-	if ((drawing_screen(s, s->data, s->map, s->cnst)) < 0)
-		return (-1);
-	mlx_put_image_to_window(s->win->mlx, s->win->win, s->win->img, 0, 0);
-	mlx_do_sync(s->win->mlx);
-	return (0);
+	color = adr + (data->y_image[data->i] * size_line +\
+					data->x_image[data->i] * (bps >> 3));
+	return (*(unsigned int*)color);
 }

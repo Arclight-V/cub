@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/10/09 15:59:35 by anatashi         ###   ########.fr        #
+#    Updated: 2020/10/09 16:13:31 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,8 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(TOOLS_DIR)/ft_atoi_mod.c\
 		$(TOOLS_DIR)/ft_error_output.c \
 		$(TOOLS_DIR)/ft_max_len.c\
-		$(TOOLS_DIR)/my_mlx_pixel_put.c
+		$(TOOLS_DIR)/my_mlx_pixel_put.c\
+		$(TOOLS_DIR)/get_color_pixel.c
 		
 
 OBJ	= $(SRCS:%.c=%.o)

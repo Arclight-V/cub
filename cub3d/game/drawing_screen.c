@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 17:11:19 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 22:58:49 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:24:52 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	drawing_celing(t_data *data, t_win *win, int ceil)
 	int	y;
 
 	y = -1;
-	while (++y < data->celing_h[data->index])
-		my_mlx_pixel_put(win, data->index, y, ceil);
+	while (++y < data->celing_h[data->i])
+		my_mlx_pixel_put(win, data->i, y, ceil);
 }
 
 static void	drawing_floor(t_map *map, t_win *win, int index, int i)
@@ -29,13 +29,13 @@ static void	drawing_floor(t_map *map, t_win *win, int index, int i)
 
 int			drawing_screen(t_all *s, t_data *data, t_map *map, t_const *cnst)
 {
-	data->index = -1;
-	while (++data->index < s->win->x)
+	data->i = -1;
+	while (++data->i < s->win->x)
 	{
-		s->fd->i = data->celing_h[data->index];
+		s->fd->i = data->celing_h[data->i];
 		drawing_celing(data, s->win, map->ceil);
-		drawing_walls(s, data, s->wall);
-		drawing_floor(s->map, s->win, data->index, s->fd->i);
+		drawing_walls(s, data, s->wall, -1);
+		drawing_floor(s->map, s->win, data->i, s->fd->i);
 		if ((drawing_sprites(s, s->data, s->sprite)) < 0)
 			return (-1);
 	}

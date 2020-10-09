@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 15:37:51 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:23:44 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ typedef struct	t_data
 	double		*distance_wall;
 	double		*distance_wall_not_corr;
 	int			*distan_of_sprites;
-	int			index;
+	int			i;
 }				t_data;
 
 typedef struct	s_tre
@@ -349,7 +349,7 @@ void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
 void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst);
 void		loop_hook(t_all *s, void *mlx, void *win);
-void		drawing_walls(t_all *s, t_data *data, t_wall *wall);
+void		drawing_walls(t_all *s, t_data *data, t_wall *wall, int y);
 int			drawing_sprites(t_all *s, t_data *data, t_sprite *sprite);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 void		search_player_and_sprites(t_map *map, t_sprite *sprite, int x, int y);

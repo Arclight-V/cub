@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 20:49:44 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 15:39:03 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void raycasting(t_all *s, t_data *data, t_map *map, t_const *cnst)
 	double tang;
 
 	map->first_ray = map->a_p + M_PI_6;
-	while (++data->index < s->win->x)
+	while (++data->i < s->win->x)
 	{
 		tang = tan(map->first_ray);
 		checking_direction(&map->first_ray);

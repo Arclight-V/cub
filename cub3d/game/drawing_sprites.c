@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:02:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 13:27:14 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 						(s->sprite[i].sprite_screen_size_full)));
 	if (color_pixel <= 0)
 		return (s->fd->i + 1);
-	my_mlx_pixel_put(s->win, s->data->index, s->fd->i, color_pixel);
+	my_mlx_pixel_put(s->win, s->data->i, s->fd->i, color_pixel);
 	return (s->fd->i + 1);
 }
 
@@ -61,10 +61,10 @@ int	drawing_sprites(t_all *s, t_data *data, t_sprite *sprite)
 		k = data->distan_of_sprites[i];
 		while (++j < sprite[k].sprite_width)
 		{
-			if ((sprite[k].h_offset + j) == data->index)
+			if ((sprite[k].h_offset + j) == data->i)
 			{
 				s->fd->i = sprite[k].position_sprite;
-				if (sprite[k].distance < data->distance_wall_not_corr[data->index])
+				if (sprite[k].distance < data->distance_wall_not_corr[data->i])
 				{
 					y = -1;
 					while (++y < sprite[k].sprite_screen_size_coor)

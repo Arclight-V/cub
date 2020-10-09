@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 10:58:50 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 22:57:52 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_data		*initializing_slice_parameters_structure(void)
 	index = -1;
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (NULL);
-	data->index = -1;
+	data->i = -1;
 	data->wall_h = NULL;
 	data->wall_hFull = NULL;
 	data->celing_h = NULL;
