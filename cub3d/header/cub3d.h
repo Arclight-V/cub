@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 14:54:31 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 15:37:51 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct		s_map
 	double			Y_a_v;
 	double			PDvsPE;
 	double			a_p;
-	double			angle_start;
+	double			first_ray;
 	double			PD;
 	double			PE;
 	int				flagPDPE;
@@ -343,8 +343,8 @@ void		make_windows(t_win *win);
 int			render_next_frame(t_all *s);
 void 		raycasting(t_all *s, t_data *data, t_map *map, t_const *cnst);
 int			drawing_screen(t_all *s, t_data *data, t_map *map, t_const *cnst);
-void		first_horisont_intersection(t_map *map);
-void		first_vertical_intersection(t_map *map);
+void		first_horisont_intersection(t_map *map, double tang);
+void		first_vertical_intersection(t_map *map, double tang);
 void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
 void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst);

@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/19 14:24:49 by anatashi          #+#    #+#              #
-#    Updated: 2020/10/08 23:52:49 by anatashi         ###   ########.fr        #
+#    Updated: 2020/10/09 15:59:35 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,11 @@ SRCS = 	$(SRCS_DIR)/cub3d.c \
 		$(SRCS_DIR)/make_map.c \
 		$(SRCS_DIR)/make_windows.c \
 		$(SRCS_DIR)/movement_of_player.c\
-		$(SRCS_DIR)/calculation_of_parameters_for_horizontal_and_vertical_lines.c \
+		$(SRCS_DIR)/first_horisont_intersection.c\
+		$(SRCS_DIR)/first_vertical_intersection.c\
+		$(SRCS_DIR)/horizontal_intersection_with_wall.c\
+		$(SRCS_DIR)/vertical_intersection_with_wall.c\
+		$(SRCS_DIR)/calculating_nearest_distance_to_wall.c\
 		$(SRCS_DIR)/loop_hook.c\
 		$(SRCS_DIR)/drawing_screen.c\
 		$(SRCS_DIR)/drawing_walls.c\

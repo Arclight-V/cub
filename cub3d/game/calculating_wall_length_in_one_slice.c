@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:33:52 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 14:54:31 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 15:11:02 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, \
 								s->win->y : data->wall_hFull[data->index];
 	data->celing_h[data->index] = floor((cnst->CenterProjection -\
 											data->wall_h[data->index] / 2));
-	if (map->angle_start > 0 && map->angle_start < M_PI)
+	if (map->first_ray > 0 && map->first_ray < M_PI)
 	{
 		if (map->flagPDPE == 1)
 			calcu_ofsetx_in_texture(s, data, map, 'N');
-		else if (map->angle_start < M_PI_2 && map->flagPDPE == 0)
+		else if (map->first_ray < M_PI_2 && map->flagPDPE == 0)
 			calcu_ofsetx_in_texture(s, data, map, 'E');
 		else
 			calcu_ofsetx_in_texture(s, data, map, 'W');
@@ -51,7 +51,7 @@ void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, \
 	{
 		if (map->flagPDPE == 1)
 			calcu_ofsetx_in_texture(s, data, map, 'S');
-		else if (map->angle_start > TREE_PI_ON_2 && map->flagPDPE == 0)
+		else if (map->first_ray > TREE_PI_ON_2 && map->flagPDPE == 0)
 			calcu_ofsetx_in_texture(s, data, map, 'E');
 		else
 			calcu_ofsetx_in_texture(s, data, map, 'W');
