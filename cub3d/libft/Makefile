@@ -6,7 +6,7 @@
 #    By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/15 16:48:11 by anatashi          #+#    #+#              #
-#    Updated: 2020/09/25 11:44:45 by anatashi         ###   ########.fr        #
+#    Updated: 2020/10/08 17:20:13 by anatashi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS =	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c	ft_lstmap.c\
 		ft_lstdelone_f.c ft_putendl.c ft_putstr.c ft_putchar.c ft_strndup.c \
 		ft_strlenchar.c ft_strnjoin.c ft_free_tmp.c ft_str_add_char.c ft_freearrpoint.c \
-		ft_isspace.c ft_min.c ft_binary_tree_sorting.c
+		ft_isspace.c ft_min.c ft_binary_tree_sorting.c ft_strnstrindex.c
 
 
 

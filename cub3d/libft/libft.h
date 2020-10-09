@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 09:22:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/06 12:31:37 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/08 17:19:50 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ char				*ft_str_add_char(char *str, size_t count,  int ch);
 void				ft_freearrpoint(char **nstr, size_t j);
 int					ft_min(int value_1, int value_2);
 double				*ft_binary_tree_sorting(double *x,	int in);
+int					ft_strnstrindex(char *big, char *little);
 #endif
