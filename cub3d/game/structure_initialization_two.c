@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 10:58:50 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 17:05:45 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ t_sprite	*ft_creat_sprite_s(void)
 	sprite->width = 0;
 	sprite->x = 0;
 	sprite->y = 0;
-	sprite->sprite_angle = 0.0;
+	sprite->angle = 0.0;
 	sprite->distance = 0.0;
 	sprite->size_line = 0;
-	sprite->sprite_screen_size_full = 0.0;
-	sprite->sprite_screen_size_half = 0.0;
-	sprite->sprite_screen_size_coor = 0.0;
+	sprite->hight = 0.0;
+	sprite->hight_half = 0.0;
+	sprite->hight_coor = 0.0;
 	sprite->position_sprite = 0;
 	sprite->h_offset = 0;
 	sprite->v_offset = 0;

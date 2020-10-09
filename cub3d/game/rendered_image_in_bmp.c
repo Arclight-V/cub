@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:07:20 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 17:15:37 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ static void					render_frame(t_all *s)
 {
 	s->data->i = -1;
 	raycasting(s, s->data, s->map, s->cnst);
-	if ((drawing_screen(s, s->data, s->map, s->cnst)) < 0)
-		ft_error_output(s, MALLOC_22);
+	drawing_screen(s, s->data, s->map, s->cnst);
 }
 
 void						rendered_image_in_bmp(char *cub)

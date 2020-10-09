@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 16:23:44 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/09 17:05:45 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,11 +202,11 @@ typedef struct	s_sprite
 	int				endian;
 	int				x;
 	int				y;
-	double			sprite_angle;
+	double			angle;
 	double			distance;
-	double			sprite_screen_size_full;
-	double			sprite_screen_size_half;
-	double			sprite_screen_size_coor;
+	double			hight;
+	double			hight_half;
+	double			hight_coor;
 	int			sprite_width;
 	int				position_sprite;
 	int				h_offset;
@@ -342,7 +342,7 @@ void		make_map( t_all *s, int size);
 void		make_windows(t_win *win);
 int			render_next_frame(t_all *s);
 void 		raycasting(t_all *s, t_data *data, t_map *map, t_const *cnst);
-int			drawing_screen(t_all *s, t_data *data, t_map *map, t_const *cnst);
+void		drawing_screen(t_all *s, t_data *data, t_map *map, t_const *cnst);
 void		first_horisont_intersection(t_map *map, double tang);
 void		first_vertical_intersection(t_map *map, double tang);
 void		horizontal_intersection_with_wall(t_map *map, t_const *cnst);
@@ -350,7 +350,7 @@ void		vertical_intersection_with_wall(t_map *map, t_const *cnst);
 void		calculating_wall_length_in_one_slice(t_all *s, t_data *data, t_map *map, t_const *cnst);
 void		loop_hook(t_all *s, void *mlx, void *win);
 void		drawing_walls(t_all *s, t_data *data, t_wall *wall, int y);
-int			drawing_sprites(t_all *s, t_data *data, t_sprite *sprite);
+int			drawing_sprites(t_all *s, t_data *data, t_sprite *sprite, int i);
 int			take_texture_parameters_sprite(t_all *s, int item, char *filename);
 void		search_player_and_sprites(t_map *map, t_sprite *sprite, int x, int y);
 void		calculation_constant_values(t_all *s);
