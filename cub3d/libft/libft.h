@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 09:22:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/08 17:19:50 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/12 09:25:14 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct		s_gnl
 	struct s_gnl	*next;
 }					t_gnl;
 
-typedef struct	s_tree
+typedef struct		s_tree
 {
-	double		num;
-	struct		s_tree *left;
-	struct  	s_tree *right;
-}				t_tree;
+	double			num;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}					t_tree;
 
 void				*ft_memset(void *str, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
@@ -98,9 +98,9 @@ char				*ft_strndup(const char *src, size_t n);
 size_t				ft_strlenchar(const char *s, int ch);
 char				*ft_strjnoin(char **s1, char *s2, size_t size);
 void				ft_free_tmp(void *tmp);
-char				*ft_str_add_char(char *str, size_t count,  int ch);
+char				*ft_str_add_char(char *str, size_t count, int ch);
 void				ft_freearrpoint(char **nstr, size_t j);
 int					ft_min(int value_1, int value_2);
-double				*ft_binary_tree_sorting(double *x,	int in);
+double				*ft_binary_tree_sorting(double *x, int in);
 int					ft_strnstrindex(char *big, char *little);
 #endif

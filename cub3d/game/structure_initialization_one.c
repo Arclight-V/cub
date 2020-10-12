@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 08:23:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 22:07:43 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/12 09:09:43 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ t_map		*initializing_map_structure(void)
 	map->first_ray = 0;
 	map->x_horizont = 0;
 	map->y_horizont = 0;
-	map->X_a_h = 0;
-	map->Y_a_h = 0;
+	map->xa_h = 0;
+	map->ya_h = 0;
 	map->x_vertical = 0;
 	map->y_vertical = 0;
-	map->X_a_v = 0;
-	map->Y_a_v = 0;
+	map->xa = 0;
+	map->ya = 0;
 	map->pd = 0;
 	map->pe = 0;
 	map->flag = 0;

@@ -6,16 +6,14 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 09:42:27 by anatashi          #+#    #+#             */
-/*   Updated: 2020/09/25 11:45:38 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/12 09:22:41 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-static t_tree			*ft_creat_tree(double x, t_tree *tree)
+static t_tree	*ft_creat_tree(double x, t_tree *tree)
 {
-
 	if (!(tree = (t_tree *)malloc(sizeof(t_tree))))
 		return (NULL);
 	tree->num = x;
@@ -35,7 +33,7 @@ static void		freemem(t_tree *tree)
 	}
 }
 
-static t_tree			*ft_addnode(double x, t_tree *tree)
+static t_tree	*ft_addnode(double x, t_tree *tree)
 {
 	if (tree == NULL)
 	{
@@ -59,22 +57,22 @@ static t_tree			*ft_addnode(double x, t_tree *tree)
 	return (tree);
 }
 
-static double		creat_sort_arr(double *x, int *i, t_tree *tree)
+static double	creat_sort_arr(double *x, int *i, t_tree *tree)
 {
 	if (tree)
 	{
 		creat_sort_arr(x, i, tree->left);
 		x[(*i)++] = (tree->num);
-		creat_sort_arr(x, i ,tree->right);
+		creat_sort_arr(x, i, tree->right);
 	}
-	return(*x);
+	return (*x);
 }
 
-double				*ft_binary_tree_sorting(double *x,	int in)
+double			*ft_binary_tree_sorting(double *x, int in)
 {
 	t_tree	*tree;
+	int		i;
 
-	int i;
 	tree = NULL;
 	i = -1;
 	while (++i < in)

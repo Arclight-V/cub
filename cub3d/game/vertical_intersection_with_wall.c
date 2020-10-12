@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 15:51:38 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 22:03:23 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/12 09:08:37 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	vertical_intersection_with_wall(t_map *m, t_const *cnst)
 	{
 		if (m->map[(int)m->y_vertical >> 6][(int)m->x_vertical >> 6] != '1')
 		{
-			m->y_vertical += m->Y_a_v;
-			m->x_vertical += m->X_a_v;
+			m->y_vertical += m->ya;
+			m->x_vertical += m->xa;
 			vertical_intersection_with_wall(m, cnst);
 		}
 	}

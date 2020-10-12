@@ -6,11 +6,11 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 22:07:11 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/12 09:13:56 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CUB3D_H
+#ifndef CUB3D_H
 # define CUB3D_H
 # include <string.h>
 # include <math.h>
@@ -20,14 +20,15 @@
 # include <errno.h>
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
+
 /*
 ** constants to avoid repeated multiplication
 */
 # define CUBE 64
-# define FOV M_PI / 3 
+# define FOV M_PI / 3
 # define M_PI_6 0.52359877559829882
 # define TWO_PI 6.2831853071795862
-# define TREE_PI_ON_2 4.7123889803846897 
+# define TREE_PI_ON_2 4.7123889803846897
 
 /*
 ** key code of the keyboard keys
@@ -57,7 +58,7 @@
 # define MALLOC_4 "Error : Malloc fail (initializing_win_structure)"
 # define MALLOC_5 "Error : Malloc fail (initializing_cnst_structure)"
 # define MALLOC_6 "Error : Malloc fail (initializing_wall_structure)"
-# define MALLOC_7 "Error : Malloc fail (initializing_slice_parameters_structure)"
+# define MALLOC_7 "Error : Malloc fail (init_slice_parameters_structure)"
 # define MALLOC_8 "Error : Malloc fail (checking_textures_wall)"
 # define MALLOC_9 "Error : Malloc fail (checking_textures_sprite)"
 # define MALLOC_10 "Error : Malloc fail (ft_creat_list (ft_lstnew))"
@@ -71,9 +72,9 @@
 # define MALLOC_18 "Error : Malloc fail (creating_array_for_ray(side_of_world))"
 # define MALLOC_19 "Error : Malloc fail (creating_array_for_ray(x_image))"
 # define MALLOC_20 "Error : Malloc fail (creating_array_for_ray(distance_wall))"
-# define MALLOC_21 "Error : Malloc fail (creating_array_for_ray(distance_wall_not_corr))"
-# define MALLOC_22 "Error : Malloc fail (creating_array_for_ray(distan_of_sprites))"
-# define MALLOC_23 "Error : Malloc fail (drawing_sprites(sorting_of_distances_of_sprites))"
+# define MALLOC_21 "Error : Malloc fail (distance_wall_not_corr)"
+# define MALLOC_22 "Error : Malloc fail (distan_of_sprites)"
+# define MALLOC_23 "Error : Malloc fail (sorting_of_distances_of_sprites)"
 # define FD_1 "Error : Couldn't read fd (CUB)"
 # define FD_2 "Error : Readed fd complited with error (get_next_line)"
 # define FD_3 "Error : Couldn't read fd (checking_textures_wall)"
@@ -81,10 +82,10 @@
 # define RESOLUTION_1 "Error : Resolution specified twice"
 # define RESOLUTION_2 "Error : Invalid resolution"
 # define TEXTURE_1 "Error : Texture of the wall image twice"
-# define TEXTURE_2 "Error : Texture of the wall information contains invalid characters"
+# define TEXTURE_2 "Error : Texture of the wall inf-n contains invalid char-s"
 # define TEXTURE_3 "Error : Not available image format of the wall"
-# define TEXTURE_4 "Error : Texture of the sprite image twice"
-# define TEXTURE_5 "Error : Texture of the sprite information contains invalid characters"
+# define TEXTURE_4 "Error : Texture of sprite image twice"
+# define TEXTURE_5 "Error : Texture of sprite inf-on contains invalid char-s"
 # define TEXTURE_6 "Error : Not available image format of the sprite"
 # define TEXTURE_7 "Error : Broken file .xpm (sprite)"
 # define TEXTURE_8 "Error : Broken file .xpm (wall)"
@@ -115,7 +116,7 @@ typedef struct	s_fd
 /*
 ** variables for calculating the rays
 */
-typedef struct	s_map 
+typedef struct	s_map
 {
 	char		**map;
 	int			item;
@@ -124,12 +125,12 @@ typedef struct	s_map
 	float		y_p;
 	double		x_horizont;
 	double		y_horizont;
-	double		X_a_h;
-	double		Y_a_h;
+	double		xa_h;
+	double		ya_h;
 	double		x_vertical;
 	double		y_vertical;
-	double		X_a_v;
-	double		Y_a_v;
+	double		xa;
+	double		ya;
 	double		a_p;
 	double		first_ray;
 	double		pd;

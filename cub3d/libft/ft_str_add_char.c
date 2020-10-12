@@ -6,18 +6,18 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 14:45:36 by anatashi          #+#    #+#             */
-/*   Updated: 2020/08/22 14:53:23 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/12 09:18:57 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_str_add_char(char *str, size_t count,  int ch)
+char		*ft_str_add_char(char *str, size_t count, int ch)
 {
 	char	*new_str;
 	size_t	j;
 	size_t	i;
-	size_t  c;
+	size_t	c;
 
 	i = 0;
 	c = 0;
