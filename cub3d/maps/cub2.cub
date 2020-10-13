@@ -1,8 +1,8 @@
 
-R 1200 800  
+R 1980 1040  
 
 F 13,99,9
-C 55,91,3
+C 150,151,3
 
 NO ./textures/WALL_NORD.xpm
 SO ./textures/WALL_SOUTH.xpm

@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop_hook.c                                        :+:      :+:    :+:   */
+/*   ft_close.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/30 17:21:20 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/13 18:06:18 by anatashi         ###   ########.fr       */
+/*   Created: 2020/10/13 14:03:26 by anatashi          #+#    #+#             */
+/*   Updated: 2020/10/13 19:36:35 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	loop_hook(t_all *s, void *mlx, void *win)
+int	ft_close(t_all *s)
 {
-	mlx_hook(win, 2, 1L << 0, keystroke, s);
-	mlx_hook(win, 17, 1L << 17, ft_close, s);
-	mlx_loop_hook(mlx, render_next_frame, s);
-	mlx_loop(mlx);
+	mlx_destroy_window(s->win->mlx, s->win->win);
+	s->win->win = NULL;
+	mlx_destroy_image(s->win->mlx, s->win->img);
+	s->win->img = NULL;
+	game_exit(s, 0);
+	return (1);
 }

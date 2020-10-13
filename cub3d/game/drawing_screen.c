@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 17:11:19 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 20:45:33 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/13 09:48:34 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		drawing_celing(t_data *data, t_win *win, int ceil)
 
 static void		drawing_floor(t_map *map, t_win *win, int index, int i)
 {
-	while (i < win->y - 1)
+	while (i < win->y)
 		my_mlx_pixel_put(win, index, i++, map->floor);
 }
 

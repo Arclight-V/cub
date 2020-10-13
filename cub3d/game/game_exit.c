@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:28:24 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 19:35:40 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/13 19:12:31 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	game_exit(t_all *s, int num)
 	if (s->wall)
 		freeing_memory_form_wall_texture(s->wall);
 	ft_free_tmp(s);
-	// sleep(10000);
 	exit(num);
 }

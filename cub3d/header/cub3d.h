@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/12 09:13:56 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/13 19:36:14 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
-# include "../libft/libft.h"
+# include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
 
 /*
@@ -352,6 +352,7 @@ void			loop_hook(t_all *s, void *mlx, void *win);
 void			rendered_image_in_bmp(char *cub);
 void			make_map(t_all *s, int size);
 int				game_exit(t_all *s, int num);
+int				ft_close(t_all *s);
 /*
 ** free memory
 */

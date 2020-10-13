@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 21:41:49 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/13 10:15:29 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_bitmap_info_header	init_bmp_info_header_struct(int w, int h, int size)
 
 	bmp_info.size = sizeof(bmp_info);
 	bmp_info.width = w;
-	bmp_info.heigt = -h + 1;
+	bmp_info.heigt = -h;
 	bmp_info.planes = 1;
 	bmp_info.bit_count = 32;
 	bmp_info.compression = 0;
@@ -79,7 +79,10 @@ void						rendered_image_in_bmp(char *cub)
 	s->head = ft_add_space(s, s->head);
 	make_map(s, s->map->size = ft_lstsize(s->head));
 	checking_map(s, s->map->size);
-	make_windows(s->win);
+	s->win->mlx = mlx_init();
+	s->win->img = mlx_new_image(s->win->mlx, s->win->x, s->win->y);
+	s->win->addr = mlx_get_data_addr(s->win->img, &s->win->bps,
+					&s->win->line_lenght, &s->win->endian);
 	take_texture_parameters(s, s->map->item);
 	creating_array_for_ray(s);
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
