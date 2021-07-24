@@ -3,7 +3,7 @@
 This project is inspired by the world-famous Wolfenstein 3D game, which was the first FPS ever.
 
 The raycasting algorithm is taken from:
-[Ray-Casting Tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
+* [Ray-Casting Tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
 
 
 ### compilation
