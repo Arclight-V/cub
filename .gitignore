@@ -83,7 +83,6 @@ user_bin_for_leaks
 cmake-build-debug/
 CMakeFiles/
 CMakeCache.txt
-Makefile
 cmake_install.cmake
 Testing/
 ft_list_test
