@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 15:56:31 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 20:32:07 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:06:09 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	void	ft_move_forward_back(t_map *map, int i)
 	map->y_p -= i * sin(map->a_p) * 10;
 }
 
-static	void		ft_rotate(double *direction, int i)
+static	void	ft_rotate(double *direction, int i)
 {
 	*direction += (i * 0.03);
 	checking_direction(direction);

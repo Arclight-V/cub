@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:02:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/13 19:36:14 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:05:20 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <errno.h>
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
@@ -254,34 +253,6 @@ typedef struct	s_all
 	t_sprite	*sprite;
 	t_list		*head;
 }				t_all;
-
-/*
-** structures for bmp file
-*/
-typedef struct	s_bitmap_file_header
-{
-	char		type[2];
-	int			syze;
-	short		rezerved1;
-	short		rezerved2;
-	int			off_bits;
-}				t_bitmap_file_header;
-
-typedef struct	s_bitmap_info_header
-{
-	int			size;
-	int			width;
-	int			heigt;
-	short		planes;
-	short		bit_count;
-	int			compression;
-	int			size_image;
-	int			x_pels_per_meter;
-	int			y_pels_per_meter;
-	int			clr_used;
-	int			clr_important;
-
-}				t_bitmap_info_header;
 
 /*
 ** structure initialization

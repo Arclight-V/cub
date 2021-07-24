@@ -6,70 +6,91 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 11:17:15 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/13 10:15:29 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/17 17:40:00 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static t_bitmap_file_header	init_bmp_file_header_struct(int file_size)
+static	int			my_get_color(t_win *win, int x, int y)
 {
-	t_bitmap_file_header bmp_file;
+	char	*dst;
 
-	bmp_file.type[0] = 'B';
-	bmp_file.type[1] = 'M';
-	bmp_file.syze = file_size;
-	bmp_file.rezerved1 = 0;
-	bmp_file.rezerved2 = 0;
-	bmp_file.off_bits = 0;
-	return (bmp_file);
+	dst = win->addr + (y * win->line_lenght + x * (win->bps / 8));
+	return (*(unsigned int*)dst);
 }
 
-static t_bitmap_info_header	init_bmp_info_header_struct(int w, int h, int size)
+static	void		init_header(t_all *s, unsigned char *header_bmp,
+								int file_size, int width)
 {
-	t_bitmap_info_header bmp_info;
-
-	bmp_info.size = sizeof(bmp_info);
-	bmp_info.width = w;
-	bmp_info.heigt = -h;
-	bmp_info.planes = 1;
-	bmp_info.bit_count = 32;
-	bmp_info.compression = 0;
-	bmp_info.size_image = size;
-	bmp_info.x_pels_per_meter = 0;
-	bmp_info.y_pels_per_meter = 0;
-	bmp_info.clr_used = 0;
-	bmp_info.clr_important = 0;
-	return (bmp_info);
+	header_bmp[0] = (unsigned char)'B';
+	header_bmp[1] = (unsigned char)'M';
+	header_bmp[2] = (unsigned char)file_size;
+	header_bmp[3] = (unsigned char)(file_size >> 8);
+	header_bmp[4] = (unsigned char)(file_size >> 16);
+	header_bmp[5] = (unsigned char)(file_size >> 24);
+	header_bmp[10] = (unsigned char)54;
+	header_bmp[14] = (unsigned char)40;
+	header_bmp[18] = (unsigned char)width;
+	header_bmp[19] = (unsigned char)(width >> 8);
+	header_bmp[20] = (unsigned char)(width >> 16);
+	header_bmp[21] = (unsigned char)(width >> 24);
+	header_bmp[22] = (unsigned char)s->win->y;
+	header_bmp[23] = (unsigned char)(s->win->y >> 8);
+	header_bmp[24] = (unsigned char)(s->win->y >> 16);
+	header_bmp[25] = (unsigned char)(s->win->y >> 24);
+	header_bmp[26] = (unsigned char)1;
+	header_bmp[28] = (unsigned char)24;
 }
 
-static void					save_bmp(int width, int height, char *addr)
+static void			get_screenshot(t_all *s, int fd, int res)
 {
-	int8_t					fd;
-	t_bitmap_file_header	bmp_file;
-	t_bitmap_info_header	bmp_info;
-	int						image_size;
-	int						file_size;
+	int color;
+	int x;
+	int y;
+	int size_x;
 
-	image_size = height * width;
-	file_size = image_size;
-	bmp_file = init_bmp_file_header_struct(file_size);
-	bmp_info = init_bmp_info_header_struct(width, height, file_size);
-	fd = open("Cub3D.bmp", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
-	write(fd, &bmp_file, 14);
-	write(fd, &bmp_info, sizeof(bmp_info));
-	write(fd, addr, image_size * 4);
+	color = 0;
+	x = 0;
+	y = s->win->y - 1;
+	size_x = res;
+	while (y >= 0)
+	{
+		while (x < size_x)
+		{
+			color = my_get_color(s->win, x, y);
+			write(fd, &color, 3);
+			x++;
+		}
+		y--;
+		x = 0;
+	}
+}
+
+static void			save_bmp(t_all *s, int width, int height)
+{
+	int				fd;
+	int				file_size;
+	int				count;
+	unsigned char	header_bmp[54];
+
+	count = 0;
+	if (width % 4)
+		width -= width % 4;
+	file_size = width * height + 54;
+	fd = open("Cub3D.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	while (count < 54)
+	{
+		header_bmp[count] = (unsigned char)0;
+		count++;
+	}
+	init_header(s, header_bmp, file_size, width);
+	write(fd, header_bmp, 54);
+	get_screenshot(s, fd, width);
 	close(fd);
 }
 
-static void					render_frame(t_all *s)
-{
-	s->data->i = -1;
-	raycasting(s, s->data, s->map, s->cnst);
-	drawing_screen(s, s->data, s->map);
-}
-
-void						rendered_image_in_bmp(char *cub)
+void				rendered_image_in_bmp(char *cub)
 {
 	t_all	*s;
 
@@ -87,7 +108,9 @@ void						rendered_image_in_bmp(char *cub)
 	creating_array_for_ray(s);
 	search_player_and_sprites(s->map, s->sprite, 0, 0);
 	calculation_constant_values(s);
-	render_frame(s);
-	save_bmp(s->win->x, s->win->y, s->win->addr);
+	s->data->i = -1;
+	raycasting(s, s->data, s->map, s->cnst);
+	drawing_screen(s, s->data, s->map);
+	save_bmp(s, s->win->x, s->win->y);
 	game_exit(s, 0);
 }

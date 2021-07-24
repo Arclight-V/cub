@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 18:02:48 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/09 20:45:32 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/17 13:08:50 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int		print_pixel_of_sprite(t_all *s, int j, int i, int y)
 	int			offset_x;
 	double		y_sprite;
 
-	if (s->sprite[i].hight_coor == 0)
+	if (s->sprite[i].hight_coor == 0 || s->sprite[i].hight_coor >
+										s->win->y - 20)
 		return (s->fd->i + 1);
 	offset_x = floor((double)j * ((double)s->sprite[i].width /\
 									s->sprite[i].sprite_width));

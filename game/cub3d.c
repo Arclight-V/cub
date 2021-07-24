@@ -6,7 +6,7 @@
 /*   By: anatashi <anatashi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:08:43 by anatashi          #+#    #+#             */
-/*   Updated: 2020/10/13 13:15:55 by anatashi         ###   ########.fr       */
+/*   Updated: 2020/10/17 19:05:58 by anatashi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	run_game(char *cub)
 	loop_hook(s, s->win->mlx, s->win->win);
 }
 
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
