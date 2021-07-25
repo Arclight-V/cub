@@ -23,4 +23,5 @@ a card with the .cub extension is submitted to the entrance.
 ```
 ./cub3D maps/cub2.cub
 ```
-
+### map settings
+example of a map
