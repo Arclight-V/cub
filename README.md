@@ -26,3 +26,22 @@ a card with the .cub extension is submitted to the entrance.
 ```
 ### map settings
 example of a map
+```
+R 1411 1733
+F 140 0,90
+C 150,151,3
+
+NO ./textures/WALL_NORD.xpm
+SO ./textures/WALL_SOUTH.xpm
+WE ./textures/WALL_WEST.xpm
+EA ./textures/WALL_EAST.xpm
+S ./textures/SPRITE.xpm
+
+111111111111111111
+100000000000000001
+100000020000000001
+100000000000000001
+100000000000000001
+11000000N000000001
+111111111111111111
+```
