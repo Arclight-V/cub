@@ -38,8 +38,8 @@ EA ./textures/WALL_EAST.xpm   - East texture:       identifier: ES (path to the 
 S ./textures/SPRITE.xpm       - Sprite texture:     identifier: S (path to the sprite texure in .xpm format)
 
 111111                        - The map must be composed of only 7 possible characters: 0 for an empty space, 
-100101                          1 for a wall, and N,S,E or W for the player’s start position and spawning orientation
-101001
+120101                          1 for a wall, 2 for a sprite, and N,S,E or W for the player’s start position
+101001                          and spawning orientation
 1100N1
 111111
 ```
