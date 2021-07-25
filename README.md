@@ -24,24 +24,22 @@ a card with the .cub extension is submitted to the entrance.
 ```
 ./cub3D maps/cub2.cub
 ```
-### map settings
-example of a map
+### this is a simple valid map
+
 ```
-R 1411 1733
-F 140 0,90
-C 150,151,3
+R 1411 1733                   - Screen resolution:  identifier: R (resolution in range [1,∞])
+F 140, 0, 90                  - Floor color:        identifier: F (R,G,B colors in range [0,255])
+C 150, 151, 3                 - Ceiling color:      identifier: C (R,G,B colors in range [0,255])
 
-NO ./textures/WALL_NORD.xpm
-SO ./textures/WALL_SOUTH.xpm
-WE ./textures/WALL_WEST.xpm
-EA ./textures/WALL_EAST.xpm
-S ./textures/SPRITE.xpm
+NO ./textures/WALL_NORD.xpm   - North texture:      identifier: NO (path to the north texure in .xpm format)
+SO ./textures/WALL_SOUTH.xpm  - South texture:      identifier: SO (path to the south texure in .xpm format)
+WE ./textures/WALL_WEST.xpm   - West texture:       identifier: WE (path to the west texure in .xpm format)
+EA ./textures/WALL_EAST.xpm   - East texture:       identifier: ES (path to the east texure in .xpm format)
+S ./textures/SPRITE.xpm       - Sprite texture:     identifier: S (path to the sprite texure in .xpm format)
 
-111111111111111111
-100000000000000001
-100000020000000001
-100000000000000001
-100000000000000001
-11000000N000000001
-111111111111111111
+111111                        - The map must be composed of only 7 possible characters: 0 for an empty space, 
+100101                          1 for a wall, and N,S,E or W for the player’s start position and spawning orientation
+101001
+1100N1
+111111
 ```
